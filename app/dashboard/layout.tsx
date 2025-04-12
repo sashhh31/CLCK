@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import {
   BarChart3,
   Users,
@@ -40,8 +41,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Sidebar */}
       <div className="w-64 bg-[#2A3356] text-white flex flex-col h-screen fixed left-0 top-0 overflow-hidden">
                      <div className="p-6">
-        <Link href="/" className="flex items-center max-h-16 mt-max-w-40">
-          <img src="../logo1.png" alt="Logo" />
+        <Link href="/" className="flex items-center">
+          <Image src="/logo1.png" alt="Logo" height={150} width={150} />
         </Link>
       </div>
 

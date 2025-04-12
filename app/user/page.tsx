@@ -109,8 +109,8 @@ export default function DocumentsPage() {
                   <tr key={document.id} className={`transition hover:bg-gray-200 ${rowBg}`}>
                     <td className="px-4 py-4 text-sm text-gray-700">{document.id}</td>
                     <td className="px-4 py-4 text-sm text-gray-700 flex items-center gap-2">
-                      <img src="/api/placeholder/15/15" alt="File icon" className="h-4 w-4" />
-                      {document.fileName}
+                    <img src={"../File.png"} alt={""} height={15} width={15}/>
+                    {document.fileName}
                     </td>
                     <td className="px-4 py-4 text-sm text-gray-700">{document.fileType}</td>
                     <td className="px-4 py-4 text-sm text-gray-700">{document.addedOn}</td>

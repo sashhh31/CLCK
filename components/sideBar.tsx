@@ -20,7 +20,7 @@ const sideBar = () => {
     <div className="w-64 bg-[#2A3356] text-white flex flex-col">
       <div className="p-6 mt-8">
         <Link href="/" className="flex items-center">
-          <Image src="/Logo1.png" alt="Logo" height={150} width={150} />
+          <Image src="/logo1.png" alt="Logo" height={150} width={150} />
         </Link>
       </div>
 
