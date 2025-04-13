@@ -50,25 +50,25 @@ export default function SubscriptionPage() {
       <div className="border-t-2 mt-16"></div>
       <div className="p-8">
 
-      <h1 className="text-3xl font-bold mb-8">Subscription Plan</h1>
+      <h1 className="text-3xl font-inter font-bold mb-8">Subscription Plan</h1>
 
       <div className="bg-gray-100 border-2  rounded-xl p-6 mb-8">
         <div className="flex justify-between items-center">
           <div>
             <div className="flex items-center">
-              <h2 className="text-2xl font-bold">Basic Plan</h2>
+              <h2 className="text-2xl font-inter font-bold">Basic Plan</h2>
               <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm">Monthly</span>
             </div>
             <p className="text-gray-500 mt-2 mb-4">
               Nam ultrices lacus interdum neque sagittis met Integer porta sem eu.
             </p>
             <p className="text-gray-600">
-              Next renewal Date: <span className="font-medium">Apr 10, 2025</span>
+              Next renewal Date: <span className="font-inter font-medium">Apr 10, 2025</span>
             </p>
           </div>
           <div className="text-right">
-            <div className="text-4xl font-bold">
-              £49<span className="text-lg font-normal text-gray-500">/Month</span>
+            <div className="text-4xl font-inter font-bold">
+              £49<span className="text-lg font-inter font-normal text-gray-500">/Month</span>
             </div>
           </div>
         </div>
@@ -83,12 +83,12 @@ export default function SubscriptionPage() {
         </div>
       </div>
 
-      <h2 className="text-2xl font-bold mb-6">Subscription History</h2>
+      <h2 className="text-2xl font-inter font-bold mb-6">Subscription History</h2>
       <div className="bg-white rounded-lg shadow-sm p-6">
   <div className="overflow-x-auto rounded-2xl border-2  pb-10 bg-gray-100">
     <table className="w-full table-auto">
       <thead>
-        <tr className="bg-gray-100 text-left text-sm font-medium text-gray-500">
+        <tr className="bg-gray-100 text-left text-sm font-inter font-medium text-gray-500">
           <th className="px-4 py-3">Plan</th>
           <th className="px-4 py-3">Duration</th>
           <th className="px-4 py-3">Charges</th>

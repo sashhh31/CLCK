@@ -9,6 +9,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import FaqSection from "@/components/faq-section-landing"
 import FinancialServicesCard from "@/components/financialServiceCard"
+import { ArrowUpRight } from "lucide-react"
 
 export default function Home() {
   return (
@@ -19,7 +20,7 @@ export default function Home() {
       <HeroSection />
       <div className="py-8 border-b mt-[400px]">
         <div className="container flex justify-between items-center">
-        <div className="h-20 w-full scale-110">
+        <div className="h-20 w-full">
                   <img
                   src="../company.png"
                   height={50}
@@ -110,12 +111,13 @@ export default function Home() {
               Our payroll processing services take the hassle out of managing your payroll, allowing you to focus on running your business.
             </p>
             <a href="#" className="text-sm font-medium text-[#2A3356] underline inline-flex items-center gap-1 mt-auto">
-              View Detail <span>↗</span>
-            </a>
+  View Detail <ArrowUpRight className="w-4 h-4" />
+</a>
+
           </div>
 
           {/* Card 2 (Highlighted) */}
-          <div className="bg-[#2A3356] text-white rounded-2xl p-6 flex flex-col gap-4">
+          <div className="bg-[#2A3356] scale-105 text-white rounded-2xl p-6 flex flex-col gap-4">
             <div className="w-20 h-20">
               {/* Placeholder image tag */}
               <img src="../auditServices.png" alt="Audit Services Icon" className="w-full h-full object-contain" />
@@ -124,13 +126,14 @@ export default function Home() {
             <p className="text-gray-300 text-xl">
               Our payroll processing services take the hassle out of managing your payroll, allowing you to focus on running your business.
             </p>
-            <a href="#" className="text-sm font-medium text-[#F0D687] underline inline-flex items-center gap-1 mt-auto">
-              View Detail <span>↗</span>
-            </a>
+            <a href="#" className="text-sm font-normal text-yellow-200 underline inline-flex items-center gap-1 mt-auto">
+  View Detail <ArrowUpRight className="w-5 h-5" />
+</a>
+
           </div>
 
           {/* Card 3 */}
-          <div className="bg-gray-50 rounded-2xl p-6 flex flex-col gap-4">
+          <div className="bg-gray-100 rounded-2xl p-6 flex flex-col gap-4">
             <div className="w-20 h-20">
               {/* Placeholder image tag */}
               <img src="../TaxStrategy.png" alt="Tax Strategy Icon" className="w-full h-full object-contain" />
@@ -140,8 +143,9 @@ export default function Home() {
               Our payroll processing services take the hassle out of managing your payroll, allowing you to focus on running your business.
             </p>
             <a href="#" className="text-sm font-medium text-[#2A3356] underline inline-flex items-center gap-1 mt-auto">
-              View Detail <span>↗</span>
-            </a>
+  View Detail <ArrowUpRight className="w-4 h-4" />
+</a>
+
           </div>
         </div>
       </div>

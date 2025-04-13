@@ -2,7 +2,12 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Raleway, Montserrat } from "next/font/google"; 
 import "./globals.css";
+import { Inter } from 'next/font/google'
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
 // Import Raleway for general text
 const raleway = Raleway({
   subsets: ["latin"],
@@ -29,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${raleway.variable} ${montserrat.variable}`}>
+      <body className={`${raleway.variable} ${inter.variable} ${montserrat.variable}`}>
         <main>{children}</main>
       </body>
     </html>

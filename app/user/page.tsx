@@ -69,7 +69,7 @@ export default function DocumentsPage() {
       <div className="border-t-2 mt-16"></div>
       <div className="bg-white rounded-xl p-14">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Uploaded Documents</h1>
+          <h1 className="text-3xl font-inter font-bold text-gray-800">Uploaded Documents</h1>
           <div className="flex gap-7">
             <div className="relative w-xs md:max-w-xs h-10">
               <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
@@ -93,11 +93,11 @@ export default function DocumentsPage() {
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-100 text-left text-lg text-gray-800">
-                <th className="px-4 py-3 font-medium">Sr No.</th>
-                <th className="px-4 py-3 font-medium">File Name</th>
-                <th className="px-4 py-3 font-medium">File Type</th>
-                <th className="px-4 py-3 font-medium">Added On</th>
-                <th className="px-4 py-3 font-medium">Action</th>
+                <th className="px-4 py-3 font-inter font-medium">Sr No.</th>
+                <th className="px-4 py-3 font-inter font-medium">File Name</th>
+                <th className="px-4 py-3 font-inter font-medium">File Type</th>
+                <th className="px-4 py-3 font-inter font-medium">Added On</th>
+                <th className="px-4 py-3 font-inter font-medium">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -151,7 +151,7 @@ export default function DocumentsPage() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-lg max-w-xl w-full p-6">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">Upload File</h2>
+              <h2 className="text-2xl font-inter font-bold">Upload File</h2>
               <button onClick={closeUploadDialog} className="text-gray-500 hover:text-gray-700">
                 <X className="h-6 w-6" />
               </button>
@@ -161,14 +161,14 @@ export default function DocumentsPage() {
               <div className="mb-4 text-[#2A3356]">
                 <Upload className="h-12 w-12 mx-auto" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Upload Document</h3>
+              <h3 className="text-xl font-inter font-semibold mb-2">Upload Document</h3>
               <p className="text-gray-500 text-center text-sm">
                 Document type should be PDF, XLSX, DOCX etc and upto file size 20MB
               </p>
             </div>
             
             <div className="mb-6">
-              <label htmlFor="fileName" className="block text-lg font-medium mb-2">File Name</label>
+              <label htmlFor="fileName" className="block text-lg font-inter font-medium mb-2">File Name</label>
               <input
                 type="text"
                 id="fileName"
@@ -181,7 +181,7 @@ export default function DocumentsPage() {
             
             <button
               onClick={handleSubmit}
-              className="w-full py-2 bg-[#2A3356] hover:bg-[#1f2645] text-white font-medium rounded-full"
+              className="w-full py-2 bg-[#2A3356] hover:bg-[#1f2645] text-white font-inter font-medium rounded-full"
             >
               Add
             </button>

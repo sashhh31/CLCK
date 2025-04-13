@@ -43,7 +43,7 @@ export default function PricingSection() {
               Nam ultricies lacus interdum neque sagittis met integer porta sem eu.
             </p>
             <div className="mb-4">
-              <span className="text-3xl font-bold">£67.00</span>
+              <span className="text-3xl font-inter font-bold">£67.00</span>
               <span className="text-sm text-muted-foreground">/Month</span>
             </div>
             <Button className="w-full bg-[#2A3356] hover:bg-[#2A3356]/90 mb-6">Get Started</Button>
@@ -83,7 +83,7 @@ export default function PricingSection() {
     Nam ultricies lacus interdum neque sagittis met integer porta sem eu.
   </p>
   <div className="mb-4">
-    <span className="text-3xl font-bold text-[#F8D77E]">£99.00</span>
+    <span className="text-3xl font-bold font-inter text-[#F8D77E]">£99.00</span>
     <span className="text-sm text-[#F8D77E]">/Month</span>
   </div>
   <Button className="w-full bg-[#F8D77E] hover:bg-[#F8D77E]/90 text-[#2A3356] mb-6">
@@ -126,7 +126,7 @@ export default function PricingSection() {
               Nam ultricies lacus interdum neque sagittis met integer porta sem eu.
             </p>
             <div className="mb-4">
-              <span className="text-3xl font-bold">£166.67</span>
+              <span className="text-3xl font-inter font-bold">£166.67</span>
               <span className="text-sm text-muted-foreground">/Month</span>
             </div>
             <Button className="w-full bg-[#2A3356] hover:bg-[#2A3356]/90 mb-6">Get Started</Button>

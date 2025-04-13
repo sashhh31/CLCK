@@ -35,9 +35,9 @@ export default function ProfilePage() {
         <div className="bg-gray-100 border h-[600px] rounded-3xl shadow-sm p-6">
           <div className="flex flex-col items-center mb-6">
             <img
-              src="/placeholder.svg?height=100&width=100"
+              src="../sarah.png"
               alt="User"
-              className="h-24 w-24 rounded-full mb-4"
+              className="h-20 w-20 rounded-full mb-4"
             />
             <h2 className="text-xl font-bold">Alexender Alex</h2>
             <p className="text-sm text-gray-800">admin@clckbookkeeping.com</p>
@@ -114,14 +114,14 @@ export default function ProfilePage() {
 
           {activeSection === "personal" && (
             <>
-              <div className="flex items-start mb-8 gap-6">
+              <div className="flex items-center justify-center mb-8 gap-6">
                 <div className="relative">
                   <img
-                    src="/placeholder.svg?height=120&width=120"
+                    src="../sarah.png"
                     alt="User"
-                    className="h-32 w-32 rounded-full"
+                    className="h-32 w-32 rounded-full border border-black"
                   />
-                  <button className="absolute bottom-0 right-0 h-8 w-8 bg-[#2A3356] rounded-full flex items-center justify-center">
+                  <button className="absolute top-0 right-0 h-8 w-8 bg-[#2A3356] rounded-full flex items-center justify-center">
                     <Pencil className="h-4 w-4 text-white" />
                   </button>
                 </div>

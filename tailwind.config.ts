@@ -21,6 +21,8 @@ const config = {
     extend: { fontFamily: {
       raleway: ['var(--font-raleway)'],
       montserrat: ['var(--font-montserrat)'],
+      inter: ['var(--font-inter)'],
+
     },
       colors: {
         'navy': {

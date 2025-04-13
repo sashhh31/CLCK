@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown, ChevronUp } from "lucide-react"
+import { ChevronDown, ChevronUp, Minus, Plus } from "lucide-react"
 
 interface FaqItem {
   question: string
@@ -57,22 +57,22 @@ export default function FaqSection() {
     <section className="w-full py-12 md:py-24 bg-white">
       <div className="container px-4 md:px-6">
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-1 mt-10">
-            <ul className="space-y-2">
-              <li className="text-black font-medium flex items-center">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8  ">
+          <div className="md:col-span-1 mt-8 ml-20">
+            <ul className="space-y-5">
+              <li className="text-black font-medium  text-2xl flex items-center">
                 <span className="mr-2 text-black">•</span> General
               </li>
-              <li className="text-gray-600 font-medium flex items-center">
+              <li className="text-gray-600 font-normal text-2xl  flex items-center">
                 <span className="mr-2 text-gray-600">•</span> Promote
               </li>
-              <li className="text-gray-600 font-medium flex items-center">
+              <li className="text-gray-600 font-normal text-2xl  flex items-center">
                 <span className="mr-2 text-gray-600">•</span> Manage
               </li>
-              <li className="text-gray-600 font-medium flex items-center">
+              <li className="text-gray-600 font-normal text-2xl  flex items-center">
                 <span className="mr-2 text-gray-600">•</span> About
               </li>
-              <li className="text-gray-600 font-medium flex items-center">
+              <li className="text-gray-600 font-normal text-2xl  flex items-center">
                 <span className="mr-2 text-gray-600">•</span> Services
               </li>
             </ul>
@@ -92,9 +92,9 @@ export default function FaqSection() {
                   >
                     {faq.question}
                     {openIndex === index ? (
-                      <ChevronUp className="h-5 w-5 text-[#2A3356]" />
+                      <Minus className="h-8 w-8 text-[#2A3356] border rounded-full p-1" />
                     ) : (
-                      <ChevronDown className="h-5 w-5 text-[#2A3356]" />
+                      <Plus className="h-8 w-8 text-[#2A3356] border rounded-full p-1" />
                     )}
                   </button>
                   {openIndex === index && <div className="mt-2 text-sm text-muted-foreground">{faq.answer}</div>}

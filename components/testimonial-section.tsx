@@ -18,10 +18,10 @@ export default function TestimonialsSection() {
     },
     {
       id: 2,
-      text: "We've been working with CLCK Bookkeeping for the past three years, and their expertise has been invaluable to our business growth. Their attention to detail and financial insights have helped us make better decisions.",
-      name: "Michael Chen",
-      title: "Founder of Nexus Innovations",
-      avatar: "/placeholder.svg?height=80&width=80",
+      text: "Working with CLCK Accounting has been a game-changer for our small business. Their meticulous attention to detail and proactive tax planning have saved us. “I've been a client of CLCK Accounting for over a decade. Their team's expertise in navigating complex international ",
+      name: "Sarah Laura",
+      title: "CEO of pluz Company",
+      avatar: "../sarah.png",
     },
     {
       id: 3,
@@ -70,21 +70,24 @@ export default function TestimonialsSection() {
         index % 2 === 0 ? 'bg-gray-100 text-black ' : 'bg-[#2d3b55] text-white scale-110 mx-14'
       } p-8 md:p-12 rounded-2xl relative h-[450px] `}
     >
-      <Quote className={`mb-6 h-12 w-12 mt-12 ${index % 2 === 0 ? 'text-gray-400' : 'text-gray-600'}`} />
+<img
+  src="../comma.png"
+  className={`mb-6 h-12 w-12 mt-12 ${index % 1 === 0 ? 'filter grayscale brightness-50 invert' : 'filter grayscale brightness-75'}`}
+/>
       <p className="text-lg md:text-xl mb-12 ">{testimonial.text}</p>
       <div className="flex items-center mt-6">
-        <div className="h-16 w-16 rounded-full overflow-hidden mr-4">
+        <div className="h-20 w-20 rounded-full overflow-hidden mr-4">
           <Image
             src={testimonial.avatar || "/placeholder.svg"}
             alt={testimonial.name}
-            width={64}
-            height={64}
+            width={84}
+            height={84}
             className="object-cover"
           />
         </div>
         <div>
-          <h4 className="text-xl font-semibold">{testimonial.name}</h4>
-          <p className={index % 2 === 0 ? "text-gray-400" : "text-gray-600"}>
+          <h4 className="text-3xl font-medium">{testimonial.name}</h4>
+          <p className={index % 1 === 0 ? "text-gray-400 text-lg" : "text-gray-600"}>
             {testimonial.title}
           </p>
         </div>

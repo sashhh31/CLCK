@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown, ChevronUp } from "lucide-react"
+import { ChevronDown, ChevronUp, Minus, Plus } from "lucide-react"
 
 interface FaqItem {
   question: string
@@ -73,9 +73,9 @@ export default function FaqSection() {
                   >
                     {faq.question}
                     {openIndex === index ? (
-                      <ChevronUp className="h-5 w-5 text-[#2A3356]" />
+                      <Plus className="h-5 w-5 text-[#2A3356]" />
                     ) : (
-                      <ChevronDown className="h-5 w-5 text-[#2A3356]" />
+                      <Minus className="h-5 w-5 text-[#2A3356]" />
                     )}
                   </button>
                   {openIndex === index && <div className="mt-2 text-sm text-muted-foreground">{faq.answer}</div>}

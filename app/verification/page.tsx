@@ -57,13 +57,13 @@ const verification = () => {
         </p>
 
         {/* Verify Button */}
+        <Link href="/price">
         <button
           className="w-full bg-[#2E3B5B] text-white py-3 rounded-full font-medium  transition"
         >
-          <Link href="/user">
           Verify
-          </Link>
         </button>
+          </Link>
       </div>
     </div>
   );

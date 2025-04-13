@@ -52,8 +52,9 @@ export default function BlogSection() {
             </button>
           </div> */}
         </div>             
-        
-         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-[1120px] ml-32">
+        <div className="flex justify-center">
+
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-[1120px] ">
                 {[
                   {
                     title: "The Future of Blockchain in Accounting: Opportunities and Challenges",
@@ -91,6 +92,8 @@ export default function BlogSection() {
                   </div>
                 ))}
               </div>
+              </div>
+
             </div>
     </section>
   )

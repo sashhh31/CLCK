@@ -52,7 +52,7 @@ export default function DownloadsPage() {
       <div className="border-t-2 mt-16"></div>
       <div className="bg-white rounded-xl  p-14">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Downloaded Files</h1>
+          <h1 className="text-3xl font-inter font-bold text-gray-800">Downloaded Files</h1>
           <div className="flex gap-7">
           <div className="relative w-xs md:max-w-xs h-10 ">
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
@@ -68,11 +68,11 @@ export default function DownloadsPage() {
   <table className="w-full table-auto">
     <thead>
       <tr className="bg-gray-100 text-left text-lg text-gray-800">
-        <th className="px-4 py-3 font-medium">Sr No.</th>
-        <th className="px-4 py-3 font-medium">File Name</th>
-        <th className="px-4 py-3 font-medium">File Type</th>
-        <th className="px-4 py-3 font-medium">Added On</th>
-        <th className="px-4 py-3 font-medium">Action</th>
+        <th className="px-4 py-3 font-inter font-medium">Sr No.</th>
+        <th className="px-4 py-3 font-inter font-medium">File Name</th>
+        <th className="px-4 py-3 font-inter font-medium">File Type</th>
+        <th className="px-4 py-3 font-inter font-medium">Added On</th>
+        <th className="px-4 py-3 font-inter font-medium">Action</th>
       </tr>
     </thead>
     <tbody className="divide-y divide-gray-200">

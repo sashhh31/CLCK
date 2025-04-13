@@ -45,7 +45,7 @@ export default function EducationPage() {
       <div className="border-t-2 mt-16"></div>
       <div className="p-8">
 
-      <h1 className="text-3xl font-bold mb-8">Educational Content</h1>
+      <h1 className="text-3xl font-inter font-bold mb-8">Educational Content</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {educationalContent.map((content) => (
@@ -63,7 +63,7 @@ export default function EducationPage() {
               </div>
             </div>
             <div className="p-4">
-              <h3 className="font-semibold text-xl mb-2">{content.title}</h3>
+              <h3 className="font-inter font-semibold text-xl mb-2">{content.title}</h3>
               <p className="text-sm text-gray-500">{content.description}</p>
             </div>
           </div>
@@ -72,18 +72,18 @@ export default function EducationPage() {
 
       <div className="flex justify-end mt-8">
         <nav className="flex items-center space-x-2">
-          <button className="h-8 w-12  text-black font-medium border-2 border-black rounded-2xl flex items-center justify-center">1</button>
-          <button className="h-8 w-12 bg-transparent font-medium text-gray-700 hover:bg-gray-100 rounded-2xl flex items-center justify-center">
+          <button className="h-8 w-12  text-black font-inter font-medium border-2 border-black rounded-2xl flex items-center justify-center">1</button>
+          <button className="h-8 w-12 bg-transparent font-inter font-medium text-gray-700 hover:bg-gray-100 rounded-2xl flex items-center justify-center">
             2
           </button>
-          <button className="h-8 w-12 bg-transparent font-medium text-gray-700 hover:bg-gray-100 rounded-2xl flex items-center justify-center">
+          <button className="h-8 w-12 bg-transparent font-inter font-medium text-gray-700 hover:bg-gray-100 rounded-2xl flex items-center justify-center">
             3
           </button>
           <span className="px-2">...</span>
-          <button className="h-8 w-12 bg-transparent font-medium text-gray-700 hover:bg-gray-100 rounded-2xl flex items-center justify-center">
+          <button className="h-8 w-12 bg-transparent font-inter font-medium text-gray-700 hover:bg-gray-100 rounded-2xl flex items-center justify-center">
             7
           </button>
-          <button className="px-3 py-1 bg-black text-white border-2 font-medium border-black rounded-full">Next</button>
+          <button className="px-3 py-1 bg-black text-white border-2 font-inter font-medium border-black rounded-full">Next</button>
         </nav>
       </div>
       </div>
