@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import Footer from "@/components/footer"
 import Header from "@/components/header"
+
 export default function BrandNewsPage() {
   const blogPosts = [
     {
@@ -70,66 +71,74 @@ export default function BrandNewsPage() {
   ]
 
   return (
-    <div>
-<Header/>
+    <div className="flex flex-col min-h-screen">
+      <Header />
 
-    <div className="min-h-screen">
-      <section className="w-full py-12 md:py-24 bg-[#2A3356]">
-        <div className="container px-4 md:px-6 text-center">
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white">
-            Brand <span className="text-[#F8D77E]">News</span> & Updates
-          </h1>
-        </div>
-      </section>
-
-      <section className="w-full py-12 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-4">About Our News</h2>
-            <p className="text-muted-foreground">
-              We specialize in providing comprehensive financial services tailored to meet the unique needs of our
-              clients.
-            </p>
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 bg-[#2A3356]">
+          <div className="container px-4 md:px-6 text-center">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-white">
+              Brand <span className="text-[#F8D77E]">News</span> & Updates
+            </h1>
           </div>
+        </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {blogPosts.map((post) => (
-              <div key={post.id} className="group bg-gray-100 rounded-2xl">
-                <div className="overflow-hidden rounded-lg mb-4">
-                  <img
-                    src={post.image || "/placeholder.svg"}
-                    alt={post.title}
-                    className="w-full h-62 object-cover transition-transform duration-300 group-hover:scale-105"
-                    width={300}
-                    height={200}
+        {/* Content Section */}
+        <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24">
+          <div className="container px-4 md:px-6">
+            {/* About Section */}
+            <div className="mb-8 sm:mb-12">
+              <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">About Our News</h2>
+              <p className="text-muted-foreground text-sm sm:text-base">
+                We specialize in providing comprehensive financial services tailored to meet the unique needs of our
+                clients.
+              </p>
+            </div>
+
+            {/* Blog Posts Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {blogPosts.map((post) => (
+                <div key={post.id} className="group bg-gray-100 rounded-xl sm:rounded-2xl overflow-hidden flex flex-col h-full">
+                  <div className="overflow-hidden">
+                    <img
+                      src={post.image || "/placeholder.svg"}
+                      alt={post.title}
+                      className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
+                      width={300}
+                      height={200}
                     />
+                  </div>
+                  <div className="p-3 sm:p-4 md:p-5 flex flex-col flex-grow">
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-1 sm:mb-2">{post.date}</p>
+                    <h3 className="text-base sm:text-lg font-bold mb-2">{post.title}</h3>
+                    <Link 
+                      href={post.link} 
+                      className="text-xs sm:text-sm font-medium text-[#2A3356] hover:underline mt-auto"
+                    >
+                      Read More
+                    </Link>
+                  </div>
                 </div>
-                <div className="p-5">
+              ))}
+            </div>
 
-                <p className="text-sm text-muted-foreground mb-2">{post.date}</p>
-                <h3 className="text-lg font-bold ">{post.title}</h3>
-                <Link href={post.link} className="text-sm mb-3 font-medium text-[#2A3356] hover:underline">
-                  Read More
-                </Link>
-                </div>
+            {/* Pagination */}
+            <div className="flex justify-center mt-8 sm:mt-12">
+              <div className="flex flex-wrap gap-2 justify-center">
+                <Button className="bg-[#2A3356] hover:bg-[#2A3356]/90 h-8 w-8 sm:h-10 sm:w-10 p-0 text-xs sm:text-sm">1</Button>
+                <Button className="bg-transparent text-[#2A3356] hover:bg-slate-100 h-8 w-8 sm:h-10 sm:w-10 p-0 text-xs sm:text-sm">2</Button>
+                <Button className="bg-transparent text-[#2A3356] hover:bg-slate-100 h-8 w-8 sm:h-10 sm:w-10 p-0 text-xs sm:text-sm">3</Button>
+                <span className="flex items-center px-1 sm:px-2 text-xs sm:text-sm">...</span>
+                <Button className="bg-transparent text-[#2A3356] hover:bg-slate-100 h-8 w-8 sm:h-10 sm:w-10 p-0 text-xs sm:text-sm">7</Button>
+                <Button className="bg-[#2A3356] hover:bg-[#2A3356]/90 text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-10">Next</Button>
               </div>
-            ))}
+            </div>
           </div>
+        </section>
+      </main>
 
-          <div className="flex justify-center mt-12">
-            <div className="flex space-x-2">
-              <Button className="bg-[#2A3356] hover:bg-[#2A3356]/90 h-10 w-10 p-0">1</Button>
-              <Button className="bg-transparent text-[#2A3356] hover:bg-slate-100 h-10 w-10 p-0">2</Button>
-              <Button className="bg-transparent text-[#2A3356] hover:bg-slate-100 h-10 w-10 p-0">3</Button>
-              <span className="flex items-center px-2">...</span>
-              <Button className="bg-transparent text-[#2A3356] hover:bg-slate-100 h-10 w-10 p-0">7</Button>
-              <Button className="bg-[#2A3356] hover:bg-[#2A3356]/90">Next</Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Footer />
     </div>
-    <Footer/>
-            </div>
   )
 }

@@ -18,12 +18,13 @@ export default function Home() {
             <div className="relative">
 
       <HeroSection />
-      <div className="py-8 border-b mt-[400px]">
+      <div className="md:py-8 border-b md:mt-[400px] mt-40">
         <div className="container flex justify-between items-center">
-        <div className="h-20 w-full">
+        <div className="h-20 w-full scale-110">
                   <img
                   src="../company.png"
-                  height={50}
+                  height={100}
+                  width={1400}
                   />
             </div>
         </div>

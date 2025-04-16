@@ -1,124 +1,201 @@
-import { Search, Trash2 } from "lucide-react"
-import Image from "next/image";
+"use client"
+import { useState } from "react"
+import { Search, Trash2, Download, ChevronLeft, ChevronRight } from "lucide-react"
+import Image from "next/image"
 
 export default function DownloadsPage() {
+  const [searchQuery, setSearchQuery] = useState("")
+  const [currentPage, setCurrentPage] = useState(1)
+
   const downloads = [
     {
       id: "01",
       fileName: "testing file.pdf",
       fileType: "PDF",
       downloadedOn: "Apr 10, 2024 09:20 AM",
+      downloadedBy: {
+        name: "Alex Saprun",
+        email: "alexsaprun123@gmail.com",
+        avatar: "/placeholder.svg?height=40&width=40",
+      },
     },
     {
       id: "02",
       fileName: "Tax_Report_2024.pdf",
-      fileType: "PDF",
+      fileType: "XLSX",
       downloadedOn: "Apr 10, 2024 09:20 AM",
+      downloadedBy: {
+        name: "Sapstar",
+        email: "alexsaprun123@gmail.com",
+        avatar: null,
+      },
     },
     {
       id: "03",
       fileName: "Invoice_March_2025.xlsx",
-      fileType: "XLSX",
+      fileType: "DOCX",
       downloadedOn: "Apr 10, 2024 09:20 AM",
+      downloadedBy: {
+        name: "Naina Nohn",
+        email: "alexsaprun123@gmail.com",
+        avatar: "/placeholder.svg?height=40&width=40",
+      },
     },
     {
       id: "04",
       fileName: "Bookkeeping_Template.docx",
-      fileType: "DOCX",
+      fileType: "CSV",
       downloadedOn: "Apr 10, 2024 09:20 AM",
+      downloadedBy: {
+        name: "Alex Saprun",
+        email: "alexsaprun123@gmail.com",
+        avatar: "/placeholder.svg?height=40&width=40",
+      },
     },
     {
       id: "05",
-      fileName: "Financial_Summary_2024.pdf",
+      fileName: "Payroll_Record_Feb_2025.csv",
       fileType: "PDF",
       downloadedOn: "Apr 10, 2024 09:20 AM",
+      downloadedBy: {
+        name: "Alex Saprun",
+        email: "alexsaprun123@gmail.com",
+        avatar: "/placeholder.svg?height=40&width=40",
+      },
     },
     {
       id: "06",
-      fileName: "Payroll_Record_Feb_2025.csv",
-      fileType: "CSV",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-    },
-    {
-      id: "07",
       fileName: "Subscription_Invoice_#12345.pdf",
       fileType: "PDF",
       downloadedOn: "Apr 10, 2024 09:20 AM",
+      downloadedBy: {
+        name: "Naina Nohn",
+        email: "alexsaprun123@gmail.com",
+        avatar: null,
+      },
     },
   ]
 
-  return (
-    <div className="bg-white min-h-screen overflow-hidden">
-      <div className="border-t-2 mt-16"></div>
-      <div className="bg-white rounded-xl  p-14">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-          <h1 className="text-3xl font-inter font-bold text-gray-800">Downloaded Files</h1>
-          <div className="flex gap-7">
-          <div className="relative w-xs md:max-w-xs h-10 ">
-            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search documents..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2A3356]"
-              />
-          </div>
-              </div>
-        </div>
-        <div className="overflow-x-auto rounded-2xl border-2  pb-10 bg-gray-100">
-  <table className="w-full table-auto">
-    <thead>
-      <tr className="bg-gray-100 text-left text-lg text-gray-800">
-        <th className="px-4 py-3 font-inter font-medium">Sr No.</th>
-        <th className="px-4 py-3 font-inter font-medium">File Name</th>
-        <th className="px-4 py-3 font-inter font-medium">File Type</th>
-        <th className="px-4 py-3 font-inter font-medium">Added On</th>
-        <th className="px-4 py-3 font-inter font-medium">Action</th>
-      </tr>
-    </thead>
-    <tbody className="divide-y divide-gray-200">
-      {downloads.map((document, index) => {
-        const isEvenRow = index % 2 === 0;
-        const rowBg = isEvenRow ? 'bg-white' : 'bg-gray-100';
+  const itemsPerPage = 5;
+  const filteredDownloads = downloads.filter(download => 
+    download.fileName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  const totalPages = Math.ceil(filteredDownloads.length / itemsPerPage);
+  const paginatedDownloads = filteredDownloads.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
-        return (
-          <tr key={document.id} className={`transition hover:bg-gray-200 ${rowBg}`}>
-            <td className="px-4 py-4 text-sm text-gray-700">{document.id}</td>
-            <td className="px-4 py-4 text-sm text-gray-700 flex items-center gap-2">
-              <Image src={"../File.png"} alt={""} height={15} width={15}/>
-              {document.fileName}
-            </td>
-            <td className="px-4 py-4 text-sm text-gray-700">{document.fileType}</td>
-            <td className="px-4 py-4 text-sm text-gray-700">{document.downloadedOn}</td>
-            <td className="px-4 py-4 text-sm">
-              <div className="flex space-x-2">
-                <button className="text-red-500 hover:text-red-700 transition">
-                <Image src={"../Delete.png" }alt={""} height={15} width={15}/>
-                </button>
-                <button className="text-[#2A3356] hover:text-[#1f2645] transition">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                </button>
+  return (
+    <div className="p-4 sm:p-6 md:p-8">
+      <div className="border-t-2 mt-14"></div>
+      <h1 className="text-2xl sm:text-3xl font-bold mb-2">Downloaded Files</h1>
+      <p className="text-gray-500 mb-8">Total Downloads: {downloads.length}</p>
+
+      <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 md:p-8 border">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div className="relative w-full sm:max-w-md">
+            <input 
+              type="text" 
+              placeholder="Search files..." 
+              className="w-full pl-5 pr-10 py-2 border rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[#2A3356]"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setCurrentPage(1); // Reset to first page when searching
+              }}
+            />
+            <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
+          </div>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900">Sr No</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900">File Name</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900 hidden md:table-cell">Downloaded By</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900 hidden md:table-cell">File Type</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900 hidden md:table-cell">Downloaded On</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              {paginatedDownloads.map((download) => (
+                <tr key={download.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-4 text-xs sm:text-sm">{download.id}</td>
+                  <td className="px-4 py-4 text-xs sm:text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 flex-shrink-0">
+                        <Image 
+                          src="/File.png" 
+                          alt="" 
+                          height={15} 
+                          width={15} 
+                          className="object-contain"
+                        />
+                      </div>
+                      <span className="truncate max-w-[120px] sm:max-w-[180px] md:max-w-none">{download.fileName}</span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 hidden md:table-cell">
+                    <div className="flex items-center">
+                      {download.downloadedBy.avatar ? (
+                        <img
+                          src={download.downloadedBy.avatar}
+                          alt={download.downloadedBy.name}
+                          className="h-8 w-8 rounded-full mr-3"
+                        />
+                      ) : (
+                        <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+                          <span className="text-gray-500">{download.downloadedBy.name.charAt(0)}</span>
+                        </div>
+                      )}
+                      <div>
+                        <p className="text-xs sm:text-sm font-medium">{download.downloadedBy.name}</p>
+                        <p className="text-xs text-gray-500">{download.downloadedBy.email}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 text-xs sm:text-sm hidden md:table-cell">{download.fileType}</td>
+                  <td className="px-4 py-4 text-xs sm:text-sm hidden md:table-cell">{download.downloadedOn}</td>
+                  <td className="px-4 py-4 text-xs sm:text-sm">
+                    <div className="flex space-x-2">
+                      <button className="text-red-500 hover:text-red-700 transition">
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                      <button className="text-[#2A3356] hover:text-[#1f2645] transition">
+                        <Download className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+            
+          </table>
+          <div className="px-6 py-4 flex items-center justify-center border-t border-gray-200">
+            <div className="flex items-center">
+              <button className="p-1 rounded-md hover:bg-gray-100">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div className="inline-flex items-center justify-center w-8 h-8 mx-1 text-sm font-medium text-white bg-blue-800 rounded-full">
+                1
               </div>
-            </td>
-          </tr>
-        );
-      })}
-    </tbody>
-  </table>
-</div>
+              <button className="p-1 rounded-md hover:bg-gray-100">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+            <div className="text-sm text-gray-500">
+              Total : 01 Pages
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

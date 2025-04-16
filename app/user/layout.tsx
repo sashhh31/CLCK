@@ -11,7 +11,7 @@ export default function UserLayout({ children }: UserLayoutProps) {
       {/* Sidebar */}
       <SideBar />
       {/* Main content */}
-      <div className="flex-1 overflow-auto">{children}</div>
+      <div className="flex-1 overflow-auto md:ml-64">{children}</div>
     </div>
   )
 }

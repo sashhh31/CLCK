@@ -54,6 +54,7 @@ export default function NotificationsPage() {
 
   return (
     <div className="p-8">
+                           <div className="border-t-2 mt-14"></div>
       <h1 className="text-3xl font-bold mb-8">Notifications</h1>
 
       <div className="bg-white rounded-lg shadow-sm p-6">

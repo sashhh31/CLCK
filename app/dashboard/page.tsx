@@ -3,6 +3,7 @@ import { ArrowUp, Users, Download, FileText, Mail } from "lucide-react"
 export default function DashboardPage() {
   return (
     <div className="flex">
+                           <div className="border-t-2 mt-14"></div>
       {/* Main content */}
       <div className="flex-1 p-8 bg-white">
         <h1 className="text-3xl font-montserrat font-bold mb-8">Dashboard</h1>

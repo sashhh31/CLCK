@@ -106,17 +106,17 @@ export default function ServicesSection() {
     <section className="w-full py-12 md:py-24">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-          The Best Options For Your Finances
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter">
+            The Best Options For Your Finances
           </h2>
-          <p className="max-w-[700px] text-muted-foreground text-xl">
+          <p className="max-w-[700px] text-muted-foreground text-lg md:text-xl">
             We specialize in providing comprehensive financial services tailored to meet the unique needs of our
             clients.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 ml-5 gap-6 px-40 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-8">
           {services.map((service, index) => (
-            <div key={index} className="bg-gray-100 p-6 w-[320px] rounded-lg">
+            <div key={index} className="bg-gray-100 p-4 md:p-6 rounded-lg w-full">
               <div className="w-10 h-10 bg-[#2A3356] rounded-full flex items-center justify-center mb-4 text-white">
                 {service.icon}
               </div>
@@ -146,8 +146,8 @@ export default function ServicesSection() {
             </div>
           ))}
         </div>
-        <div className="mt-12 bg-gray-100 ml-44 p-6 rounded-lg w-[325px]">
-          <Image src={"../powerHour.png"} alt="" height={30} width={40}/>
+        <div className="mt-8 md:mt-12 bg-gray-100 p-4 md:p-6 rounded-lg w-full max-w-[325px] mx-auto">
+          <Image src={"../powerHour.png"} alt="Power Hour" height={30} width={40} className="w-10 h-8"/>
           <h3 className="text-lg font-bold mb-2 mt-4">Win a free Power Hour</h3>
           <p className="text-sm text-muted-foreground mb-4">
             Sign up for a free account. Like our socials, share our content, and you'll be in with a chance to win.
@@ -183,67 +183,44 @@ export default function ServicesSection() {
 
       {/* Modal/Dialog */}
       {isModalOpen && selectedService && (
-        <div className="fixed inset-0 z-50  bg-black bg-opacity-50 flex items-center justify-center overflow-auto">
-          <div className="fixed inset-0 z-50 w-[700px] p-5 bg-white overflow-auto max-w-4xl mx-auto my-8 rounded-lg shadow-lg">
-            <div className="container  px-4 py-8">
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center overflow-auto">
+          <div className="fixed inset-0 z-50 w-full max-w-[700px] p-4 md:p-5 bg-white overflow-auto max-h-[90vh] mx-auto my-4 md:my-8 rounded-lg shadow-lg">
+            <div className="container px-4 py-6 md:py-8">
               <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-semibold text-center">Services Detail</h1>
+                <h1 className="text-xl md:text-2xl font-semibold text-center">Services Detail</h1>
                 <button onClick={closeModal}>
                   <X className="h-6 w-6" />
                 </button>
               </div>
 
-              <div className="mb-8">
+              <div className="mb-6 md:mb-8">
                 <img
                   src="/image (8).png"
                   alt="Service"
-                  className="w-full h-auto rounded-lg mb-6"
-                  width={800}
-                  height={400}
+                  className="w-full h-auto rounded-lg mb-4 md:mb-6"
                 />
-<div className="flex justify-between">
-
-                <h2 className="text-3xl font-bold mb-2">{selectedService.title}</h2>
-                <div className="text-3xl font-bold text-[#266CA8] mb-6">
-                  {selectedService.price}<span className="text-xl font-normal text-gray-600">/{selectedService.duration}</span>
+                <h2 className="text-xl md:text-2xl font-bold mb-2">{selectedService.title}</h2>
+                <p className="text-gray-600 mb-4">{selectedService.description}</p>
+                <div className="flex items-center gap-4">
+                  <span className="text-lg font-semibold">{selectedService.price}</span>
+                  <span className="text-gray-500">{selectedService.duration}</span>
                 </div>
-</div>
+              </div>
 
-                <p className="text-muted-foreground mb-8">
-                  Eleifend mi in nulla posuere sollicitudin aliquam. Sagittis orci a scelerisque purus semper eget duis at tellus. Interdum varius sit amet mattis vulputate enim nulla. Dignissim sodales ut eu sem integer vitae justo eget magna. Quis hendrerit dolor magna eget est lorem. Nunc sed blandit libero volutpat sed cras. Vivamus arcu felis bibendum ut tristique et egestas. 
-                </p>
-
-                <h3 className="text-2xl font-bold mb-4">Get Service Now!!</h3>
-
-                <form className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="firstName" className="block text-sm font-medium mb-1">
-                        First Name
-                      </label>
-                      <Input id="firstName" placeholder="First name" className="w-full" />
-                    </div>
-                    <div>
-                      <label htmlFor="lastName" className="block text-sm font-medium mb-1">
-                        Last Name
-                      </label>
-                      <Input id="lastName" placeholder="Last name" className="w-full" />
-                    </div>
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-1">
-                      Email Address
-                    </label>
-                    <Input id="email" type="email" placeholder="Email Address" className="w-full" />
-                  </div>
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-1">
-                      Message
-                    </label>
-                    <Textarea id="message" placeholder="Leave Message" className="w-full min-h-[120px]" />
-                  </div>
-                  <Button className="w-full bg-[#2A3356] hover:bg-[#2A3356]/90">Send Message</Button>
-                </form>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Name</label>
+                  <Input type="text" placeholder="Your name" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Email</label>
+                  <Input type="email" placeholder="Your email" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Message</label>
+                  <Textarea placeholder="Your message" />
+                </div>
+                <Button className="w-full">Submit</Button>
               </div>
             </div>
           </div>

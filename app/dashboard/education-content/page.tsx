@@ -64,6 +64,7 @@ export default function EducationContentPage() {
 
   return (
     <div className="p-8">
+                           <div className="border-t-2 mt-14"></div>
       <h1 className="text-3xl font-bold mb-8">Educational Content</h1>
 
       <div className="bg-white rounded-3xl shadow-sm p-8 border">

@@ -76,6 +76,7 @@ export default function SubscriptionsPage() {
 
   return (
     <div className="p-8">
+                           <div className="border-t-2 mt-14"></div>
       <h1 className="text-3xl font-bold mb-2">Subscriptions</h1>
       <p className="text-gray-500 mb-8">Total Subscription added : 120</p>
 

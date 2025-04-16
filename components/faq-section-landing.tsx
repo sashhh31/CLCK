@@ -54,31 +54,32 @@ export default function FaqSection() {
   }
 
   return (
-    <section className="w-full py-12 md:py-24 bg-white">
-      <div className="container px-4 md:px-6">
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-       
-          <div className="md:col-span-3 bg-white rounded-lg  flex gap-40">
-            <div>
-
-            <h3 className="text-5xl font-bold mb-6">Frequently Asked Questions</h3>
+    <section className="w-full py-6 sm:py-8 md:py-12 lg:py-16 xl:py-24 bg-white">
+      <div className="container px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+          <div className="md:col-span-3 bg-white rounded-lg flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+            <div className="w-full md:w-auto">
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 sm:mb-4 md:mb-6">Frequently Asked Questions</h3>
             </div>
-            <div className="space-y-4 w-full">
+            <div className="space-y-2 sm:space-y-3 md:space-y-4 w-full">
               {faqs.map((faq, index) => (
-                <div key={index} className="border-b pb-4">
+                <div key={index} className="border-b pb-2 sm:pb-3 md:pb-4">
                   <button
-                    className="flex justify-between items-center w-full text-left text-lg text-gray-600 font-bold"
+                    className="flex justify-between items-center w-full text-left text-sm sm:text-base md:text-lg text-gray-600 font-bold pr-2"
                     onClick={() => toggleFaq(index)}
                   >
-                    {faq.question}
+                    <span className="pr-2 sm:pr-3 md:pr-4">{faq.question}</span>
                     {openIndex === index ? (
-                      <Plus className="h-5 w-5 text-[#2A3356]" />
+                      <Plus className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 flex-shrink-0 text-[#2A3356]" />
                     ) : (
-                      <Minus className="h-5 w-5 text-[#2A3356]" />
+                      <Minus className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 flex-shrink-0 text-[#2A3356]" />
                     )}
                   </button>
-                  {openIndex === index && <div className="mt-2 text-sm text-muted-foreground">{faq.answer}</div>}
+                  {openIndex === index && (
+                    <div className="mt-1 sm:mt-2 text-xs sm:text-sm md:text-base text-muted-foreground">
+                      {faq.answer}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

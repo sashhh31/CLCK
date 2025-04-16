@@ -10,6 +10,15 @@ interface FaqItem {
 
 export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const [activeCategory, setActiveCategory] = useState("General")
+
+  const categories = [
+    "General",
+    "Promote",
+    "Manage",
+    "About",
+    "Services"
+  ]
 
   const faqs: FaqItem[] = [
     {
@@ -54,50 +63,66 @@ export default function FaqSection() {
   }
 
   return (
-    <section className="w-full py-12 md:py-24 bg-white">
-      <div className="container px-4 md:px-6">
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8  ">
-          <div className="md:col-span-1 mt-8 ml-20">
-            <ul className="space-y-5">
-              <li className="text-black font-medium  text-2xl flex items-center">
-                <span className="mr-2 text-black">•</span> General
-              </li>
-              <li className="text-gray-600 font-normal text-2xl  flex items-center">
-                <span className="mr-2 text-gray-600">•</span> Promote
-              </li>
-              <li className="text-gray-600 font-normal text-2xl  flex items-center">
-                <span className="mr-2 text-gray-600">•</span> Manage
-              </li>
-              <li className="text-gray-600 font-normal text-2xl  flex items-center">
-                <span className="mr-2 text-gray-600">•</span> About
-              </li>
-              <li className="text-gray-600 font-normal text-2xl  flex items-center">
-                <span className="mr-2 text-gray-600">•</span> Services
-              </li>
+    <section className="w-full py-6 sm:py-8 md:py-12 lg:py-16 xl:py-24 bg-white">
+      <div className="container px-4 sm:px-6 md:px-8 mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+          {/* Sidebar Categories - Mobile Dropdown */}
+          <div className="md:hidden mb-4">
+            <select 
+              value={activeCategory}
+              onChange={(e) => setActiveCategory(e.target.value)}
+              className="w-full p-2 border rounded-md bg-white text-gray-800"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+          </div>
+          
+          {/* Sidebar Categories - Desktop */}
+          <div className="hidden md:block md:col-span-1 p-3 sm:p-4">
+            <ul className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-5">
+              {categories.map((category) => (
+                <li 
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`${
+                    activeCategory === category 
+                      ? "text-black font-medium" 
+                      : "text-gray-600 font-normal cursor-pointer hover:text-gray-800"
+                  } text-base sm:text-lg md:text-xl lg:text-2xl flex items-center transition-colors`}
+                >
+                  <span className={`mr-2 ${activeCategory === category ? "text-black" : "text-gray-600"}`}>•</span> {category}
+                </li>
+              ))}
             </ul>
           </div>
-          <div className="md:col-span-3 bg-white rounded-lg p-6">
-            <h3 className="text-5xl font-bold mb-6">General Questions</h3>
-            <p className="text-muted-foreground mb-8">
+          
+          <div className="md:col-span-3 bg-white rounded-lg p-3 sm:p-4 md:p-6">
+            <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3 md:mb-4 lg:mb-6">{activeCategory} Questions</h3>
+            <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-4 sm:mb-5 md:mb-6 lg:mb-8">
               We specialize in providing comprehensive financial services tailored to meet the unique needs of our
               clients.
             </p>
-            <div className="space-y-4">
+            <div className="space-y-2 sm:space-y-3 md:space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="border-b pb-4">
+                <div key={index} className="border-b pb-2 sm:pb-3 md:pb-4">
                   <button
-                    className="flex justify-between items-center w-full text-left text-lg text-gray-600 font-bold"
+                    className="flex justify-between items-center w-full text-left text-sm sm:text-base md:text-lg text-gray-600 font-bold"
                     onClick={() => toggleFaq(index)}
                   >
-                    {faq.question}
+                    <span className="pr-2 sm:pr-3 md:pr-4">{faq.question}</span>
                     {openIndex === index ? (
-                      <Minus className="h-8 w-8 text-[#2A3356] border rounded-full p-1" />
+                      <Minus className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 lg:h-8 lg:w-8 flex-shrink-0 text-[#2A3356] border rounded-full p-1" />
                     ) : (
-                      <Plus className="h-8 w-8 text-[#2A3356] border rounded-full p-1" />
+                      <Plus className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 lg:h-8 lg:w-8 flex-shrink-0 text-[#2A3356] border rounded-full p-1" />
                     )}
                   </button>
-                  {openIndex === index && <div className="mt-2 text-sm text-muted-foreground">{faq.answer}</div>}
+                  {openIndex === index && (
+                    <div className="mt-1 sm:mt-2 text-xs sm:text-sm md:text-base text-muted-foreground">
+                      {faq.answer}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

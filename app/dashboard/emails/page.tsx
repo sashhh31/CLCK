@@ -44,6 +44,7 @@ export default function EmailDashboard() {
 
   return (
     <div className="w-full min-h-screen bg-white p-8">
+                           <div className="border-t-2 mt-14"></div>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6">
