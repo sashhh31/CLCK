@@ -13,8 +13,7 @@ export default function PricingSection() {
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">Choose The Right Plan For You</h2>
           <p className="max-w-[700px] text-muted-foreground text-lg md:text-xl">
-            We specialize in providing comprehensive financial services tailored to meet the unique needs of our
-            clients.
+            We provide tailored financial services packages to meet the unique needs of small and medium-sized businesses.
           </p>
         </div>
         <div className="flex justify-center mt-12 md:mt-20">
@@ -22,7 +21,7 @@ export default function PricingSection() {
             <div className="bg-gray-100 border-2 p-4 md:p-6 rounded-3xl">
               <h3 className="text-xl md:text-2xl font-semibold">Basic</h3>
               <p className="text-sm text-muted-foreground my-3 md:my-4">
-                Nam ultricies lacus interdum neque sagittis met integer porta sem eu.
+                Perfect for sole traders and small businesses just starting out.
               </p>
               <div className="mb-4">
                 <span className="text-2xl md:text-3xl font-bold">£67.00</span>
@@ -63,7 +62,7 @@ export default function PricingSection() {
             <div className="bg-[#2A3356] border-2 p-4 md:p-6 rounded-3xl text-white md:scale-105 md:-translate-y-2">
               <h3 className="text-xl md:text-2xl font-semibold">Enterprise</h3>
               <p className="text-sm text-gray-300 my-3 md:my-4">
-                Nam ultricies lacus interdum neque sagittis met integer porta sem eu.
+                Ideal for growing businesses with more complex financial needs.
               </p>
               <div className="mb-4">
                 <span className="text-2xl md:text-3xl font-bold text-[#F8D77E]">£99.00</span>
@@ -106,7 +105,7 @@ export default function PricingSection() {
             <div className="bg-gray-100 border-2 p-4 md:p-6 rounded-3xl">
               <h3 className="text-xl md:text-2xl font-semibold">Professional</h3>
               <p className="text-sm text-muted-foreground my-3 md:my-4">
-                Nam ultricies lacus interdum neque sagittis met integer porta sem eu.
+                Comprehensive solution for established businesses requiring full financial support.
               </p>
               <div className="mb-4">
                 <span className="text-2xl md:text-3xl font-bold">£166.67</span>
@@ -120,7 +119,7 @@ export default function PricingSection() {
                     <div className="w-5 h-5 bg-[#2A3356] rounded-full flex items-center justify-center mr-2">
                       <Check className="h-3 w-3 text-white" />
                     </div>
-                    All the benefits of enterprise
+                    All the benefits of Enterprise
                   </li>
                   <li className="flex items-center text-sm">
                     <div className="w-5 h-5 bg-[#2A3356] rounded-full flex items-center justify-center mr-2">
@@ -138,7 +137,7 @@ export default function PricingSection() {
                     <div className="w-5 h-5 bg-[#2A3356] rounded-full flex items-center justify-center mr-2">
                       <Check className="h-3 w-3 text-white" />
                     </div>
-                    Quarterly 1 Hour Video meetings
+                    Quarterly 1-hour video meetings
                   </li>
                 </ul>
               </div>

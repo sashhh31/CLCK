@@ -45,18 +45,18 @@ export default function AboutUsPage() {
               <div className="w-full lg:w-1/2 space-y-6 md:space-y-8">
                 <div className="space-y-4">
                   <h2 className="text-2xl md:text-3xl text-[#2A3356] font-medium">About Us</h2>
-                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold">We are Serving Your Financial Records Needs</h3>
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold">We are an Award-Winning Accountancy practice with 20+ Years of Expertise</h3>
                 </div>
                 <p className="text-base md:text-lg lg:text-xl text-muted-foreground">
-                  We specialize in providing comprehensive financial services tailored to meet the unique needs of our clients.
+                  At CLCK Bookkeeping-Taxation, we are more than just another accountancy firm—we are your trusted outsourced finance department with a skilled approach to accessible communication skills in deafness and neurodiversity and use accessible language that you can understand.
                 </p>
                 <ul className="space-y-4 md:space-y-6">
                   {[
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
-                    "Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.",
-                    "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
-                    "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur.",
-                    "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit."
+                    "With over 20 years of experience both lived and advised, in both industry and practice, we have built a solid reputation for delivering first-class customer experience and expert financial support.",
+                    "Our award-winning team is dedicated to providing tailored solutions that meet the unique needs of small to medium-sized businesses and individuals based in the UK.",
+                    "We support many who have struggled to understand the labyrinth of access and issues that can come with deafness and neurodiverse understanding.",
+                    "Unlike larger firms where clients can feel like just another number, we stand out by giving you the time & attention you deserve.",
+                    "Our commitment is to help you streamline your finances so you can focus on what matters most—growing and developing your business."
                   ].map((item, index) => (
                     <li key={index} className="flex items-start">
                       <div className="w-5 h-5 bg-[#2A3356] rounded-full flex items-center justify-center mr-2 mt-1 flex-shrink-0">
@@ -80,7 +80,7 @@ export default function AboutUsPage() {
                 The Best Option For Your Financial Records
               </h2>
               <p className="text-gray-500 text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto">
-                We specialize in providing comprehensive financial services tailored to meet the unique needs of our clients.
+                We understand and champion the idea that no two businesses or individuals are the same. That's why we take the time to truly understand your goals, challenges, and aspirations whilst ensuring you comply with a fast-paced changing world of digital tax and financial compliance.
               </p>
             </div>
 
@@ -95,18 +95,18 @@ export default function AboutUsPage() {
                 {
                   title: "Tax Planning",
                   icon: "../TaxPlanning.png",
-                  description: "Our payroll processing services take the hassle out of managing your payroll, allowing you to focus on running your business."
+                  description: "We cater to small and medium-sized businesses, entrepreneurs, and individuals who require reliable and accessible financial support with comprehensive tax planning strategies."
                 },
                 {
                   title: "Audit services",
                   icon: "../auditServices.png",
-                  description: "Our payroll processing services take the hassle out of managing your payroll, allowing you to focus on running your business.",
+                  description: "Whether it's basic bookkeeping, automation, management accounts, or audit services, our expert team ensures you receive the highest quality service tailored to your needs.",
                   isHighlighted: true
                 },
                 {
                   title: "Tax strategy",
                   icon: "../TaxStrategy.png",
-                  description: "Our payroll processing services take the hassle out of managing your payroll, allowing you to focus on running your business."
+                  description: "We provide tax planning and advisory for compliance, or plain and simple support to help you stay in control around your busy schedules while building strong relationships that gets the best results."
                 }
               ].map((service, index) => (
                 <div

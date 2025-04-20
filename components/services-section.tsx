@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react"
-import { Clock, Users, GraduationCap, FileText, MessageSquare, BookOpen, X } from "lucide-react"
+import { Clock, Users, GraduationCap, FileText, MessageSquare, BookOpen, X , Award, Gift} from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,7 +15,7 @@ export default function ServicesSection() {
       icon: <Clock className="h-6 w-6" />,
       title: "Power Hour",
       description:
-        "Book a power hour and we will do all the research for you and have a 1-hour meeting with you to find the best way to help your business.",
+        "Tell us your needs, and we will do all the research for you and have a 1-hour chat so you can be on your way to doing your accounts.",
       link: "/services/power-hour",
       price: "£99",
       duration: "1 Hour"
@@ -24,7 +24,7 @@ export default function ServicesSection() {
       icon: <Users className="h-6 w-6" />,
       title: "Support",
       description:
-        "Our support team is here to help you with the bookkeeping and accounting of your business, for regular clients only.",
+        "This is a block of support per hour to help you with the bookkeeping and running of your company, for regular clients only.",
       link: "/services/support",
       price: "£99",
       duration: "1 Hour"
@@ -33,10 +33,10 @@ export default function ServicesSection() {
       icon: <GraduationCap className="h-6 w-6" />,
       title: "Training",
       description:
-        "Our professional services help you handle all of managing your accounts, allowing you to focus on running your business.",
+        "Professional training services to help you and your team understand and manage your financial accounts effectively.",
       link: "/services/training",
-      price: "£149",
-      duration: "Session"
+      price: "£450",
+      duration: "Day"
     },
     {
       icon: <FileText className="h-6 w-6" />,
@@ -44,53 +44,72 @@ export default function ServicesSection() {
       description:
         "Our payroll processing services take the hassle out of managing your payroll, allowing you to focus on running your business.",
       link: "/services/payroll",
-      price: "£199",
-      duration: "Month"
+      price: "£25",
+      duration: "Starting from"
     },
     {
       icon: <MessageSquare className="h-6 w-6" />,
       title: "Admin Services",
       description:
-        "Our payroll processing services take the hassle out of managing your payroll, allowing you to focus on running your business.",
+        "Administrative support to help you manage the day-to-day operations of your business with efficiency and expertise.",
       link: "/services/admin",
-      price: "£149",
-      duration: "Month"
+      price: "£50",
+      duration: "Per Hour"
     },
     {
       icon: <Users className="h-6 w-6" />,
       title: "New Client",
       description:
-        "Our payroll processing services take the hassle out of managing your payroll, allowing you to focus on running your business.",
+        "Set up a free account with your email address, and we can add you to a list of people who will receive free vlogs linked to the website.",
       link: "/services/new-client",
-      price: "£99",
-      duration: "Onboarding"
+      price: "Free",
+      duration: "Account"
     },
     {
       icon: <FileText className="h-6 w-6" />,
       title: "Onboarding for client services",
       description:
-        "We will help you get started with our services. We will guide you through the process and help you migrate services.",
+        "£75 set fee—a £30 refund fee will be charged to all clients who sign up for and pay for regular services.",
       link: "/services/onboarding",
-      price: "£149",
-      duration: "Process"
+      price: "£75",
+      duration: "Set Fee"
     },
     {
       icon: <MessageSquare className="h-6 w-6" />,
       title: "Communication Skills training",
-      description: "Improve how your staff gives and receives information. Helps your team - and you - get to success.",
+      description: "How you can help your staff grow your business—for up to 6 people.",
       link: "/services/communication",
-      price: "£199",
-      duration: "Session"
+      price: "£600",
+      duration: "Per Day"
     },
     {
       icon: <BookOpen className="h-6 w-6" />,
-      title: "Educational support only",
+      title: "Educational support",
       description:
-        "For your educational clients - from students to established experts. Get access to our resources - Add a year, 90% off for your students.",
+        "Free for first-year professional clients. First-year access is £6.00 per month / £60 a year. After this, £199 a year, or £165 if paid annually. NO REFUNDS!",
       link: "/services/educational",
-      price: "£49",
-      duration: "Year"
+      price: "£6",
+      duration: "Per Month"
     },
+    {
+      icon: <Award className="h-6 w-6" />,
+      title: "Win a free Power Hour",
+      description:
+        "To be in with a chance to win, sign up for a free account, like our socials, share our socials, and #tag_us. You must do all three.",
+      link: "/services/win-power-hour",
+      price: "Free",
+      duration: "Entry"
+    },
+    {
+      icon: <Gift className="h-6 w-6" />,
+      title: "Win a year's Digital Bookkeeping",
+      description:
+        "Win a year's worth of Digital bookkeeping software. £5.00 per entry. Winners are announced when cash limits are reached.",
+      link: "/services/win-bookkeeping",
+      price: "£5",
+      duration: "Per Entry"
+    },
+    
   ]
 
   const openModal = (service:any) => {
@@ -146,39 +165,7 @@ export default function ServicesSection() {
             </div>
           ))}
         </div>
-        <div className="mt-8 md:mt-12 bg-gray-100 p-4 md:p-6 rounded-lg w-full max-w-[325px] mx-auto">
-          <Image src={"../powerHour.png"} alt="Power Hour" height={30} width={40} className="w-10 h-8"/>
-          <h3 className="text-lg font-bold mb-2 mt-4">Win a free Power Hour</h3>
-          <p className="text-sm text-muted-foreground mb-4">
-            Sign up for a free account. Like our socials, share our content, and you'll be in with a chance to win.
-          </p>
-          <button
-            onClick={() => openModal({
-              title: "Win a Free Power Hour",
-              description: "Sign up for a free account. Like our socials, share our content, and you'll be in with a chance to win.",
-              price: "FREE",
-              duration: "Contest"
-            })}
-            className="text-xs font-medium text-[#2A3356] hover:underline inline-flex items-center"
-          >
-            View Detail
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="ml-1"
-            >
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
-          </button>
-        </div>
+      
       </div>
 
       {/* Modal/Dialog */}
