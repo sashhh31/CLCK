@@ -19,8 +19,22 @@ export default function Home() {
         <HeroSection />
         <div className="md:py-8 border-b md:mt-[400px] mt-40">
           <div className="container flex justify-between items-center">
-            <div className="h-20 w-full scale-110">
-              <img src="../company.png" height={100} width={1400} />
+            <div className="h-20 w-full scale-110 flex gap-40 mb-20 items-center justify-center ">
+              <div className="w-[150px] h-[150px] mt-12">
+                <img
+                  src="./prize.jpg"
+                  alt="Dashboard screenshot"
+                  className="w-full h-full object-contain shadow-lg"
+                />
+              </div>
+
+              <div className="w-[150px] h-[150px] mt-12">
+                <img
+                  src="./crest.jpg"
+                  alt="Dashboard screenshot"
+                  className="w-full h-full object-contain shadow-lg"
+                />
+              </div>
             </div>
           </div>
         </div>

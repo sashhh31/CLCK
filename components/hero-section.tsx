@@ -13,21 +13,21 @@ export default function HeroSection() {
       highlightWord: "Finances",
       description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
       buttonText: "Get Started Now",
-      image: "/c.png"
+      image: "/s.png.jpg"
     },
     {
       title: "Streamline Your Tax Preparation with Expert Tools",
       highlightWord: "Tax",
       description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
       buttonText: "Get Started Now",
-      image: "/c.png"
+      image: "/st.png.jpg"
     },
     {
       title: "Secure Document Management for Financial Peace",
       highlightWord: "Document",
       description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
       buttonText: "Get Started Now",
-      image: "/c.png"
+      image: "/se.png.jpg"
     }
   ];
 
@@ -77,13 +77,14 @@ export default function HeroSection() {
                 </button>
               </Link>
 
-              <div className="mt-12 w-full max-w-7xl">
-                <img
-                  src={slide.image}
-                  alt="Dashboard screenshot"
-                  className="w-full shadow-lg"
-                />
-              </div>
+              <div className="w-[1300px] h-[600px] mt-12">
+  <img
+    src={slide.image}
+    alt="Dashboard screenshot"
+    className="w-full h-full object-cover shadow-lg"
+  />
+</div>
+
             </div>
           </div>
         ))}

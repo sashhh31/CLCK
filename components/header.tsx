@@ -38,7 +38,7 @@ export default function Header() {
           <Link href="/about-us" className={linkClass("/about-us")}>About Us</Link>
           <Link href="/services" className={linkClass("/services")}>Services</Link>
           <Link href="/pricing" className={linkClass("/pricing")}>Pricing</Link>
-          <Link href="/brand-news" className={linkClass("/brand-news")}>Brand News</Link>
+          <Link href="/blog-news" className={linkClass("/blog-news")}>Blog/News</Link>
           <Link href="/faqs" className={linkClass("/faqs")}>FAQs</Link>
           <Link href="/contact-us" className={linkClass("/contact-us")}>Contact Us</Link>
         </nav>
@@ -64,7 +64,7 @@ export default function Header() {
             <Link href="/about-us" className={mobileLinkClass("/about-us")}>About Us</Link>
             <Link href="/services" className={mobileLinkClass("/services")}>Services</Link>
             <Link href="/pricing" className={mobileLinkClass("/pricing")}>Pricing</Link>
-            <Link href="/brand-news" className={mobileLinkClass("/brand-news")}>Brand News</Link>
+            <Link href="/blog-news" className={mobileLinkClass("/blog-news")}>Blog/News</Link>
             <Link href="/faqs" className={mobileLinkClass("/faqs")}>FAQs</Link>
             <Link href="/contact-us" className={mobileLinkClass("/contact-us")}>Contact Us</Link>
           </nav>

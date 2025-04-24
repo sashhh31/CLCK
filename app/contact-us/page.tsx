@@ -101,9 +101,9 @@ export default function ContactUsPage() {
               </div>
               <div className="rounded-lg flex items-center justify-center">
                 <img
-                  src="/human.png"
+                  src="/human.jpg"
                   alt="Customer support"
-                  className="w-full h-auto max-w-[600px] rounded-lg"
+                  className="w-full h-full max-w-[600px] object-cover rounded-lg"
                   width={600}
                   height={1500}
                 />
