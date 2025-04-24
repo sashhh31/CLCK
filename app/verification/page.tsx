@@ -33,7 +33,7 @@ const verification = () => {
         <div className="absolute right-4 text-xl cursor-pointer"><X/></div>
         <h1 className="text-2xl font-semibold mb-2">Verification</h1>
         </div>
-        <p className="text-gray-500 text-sm mb-1">We have sent you an OTP on your given email address</p>
+        <p className="text-black text-sm mb-1">We have sent you an OTP on your given email address</p>
         <p className="text-sm font-medium mb-4">ahmadraza123@gmail.com</p>
 
         {/* OTP Fields */}

@@ -15,7 +15,7 @@ export default function PricingPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-4">Choose The Right Plan For You</h1>
-          <p className="text-gray-500 max-w-2xl mx-auto">
+          <p className="text-black max-w-2xl mx-auto">
             We specialize in providing comprehensive financial services tailored to
             meet the unique needs of our clients.
           </p>
@@ -29,7 +29,7 @@ export default function PricingPage() {
               className={`py-2 px-6 rounded-full ${
                 billingCycle === 'monthly'
                   ? 'bg-slate-700 text-white'
-                  : 'text-gray-500'
+                  : 'text-black'
               }`}
             >
               Monthly
@@ -39,7 +39,7 @@ export default function PricingPage() {
               className={`py-2 px-6 rounded-full ${
                 billingCycle === 'yearly'
                   ? 'bg-slate-700 text-white'
-                  : 'text-gray-500'
+                  : 'text-black'
               }`}
             >
               Yearly
@@ -52,12 +52,12 @@ export default function PricingPage() {
           {/* Basic Plan */}
           <div className="bg-gray-100 rounded-xl p-6">
             <h2 className="text-xl font-bold mb-2">Basic</h2>
-            <p className="text-gray-500 text-sm mb-6">
+            <p className="text-black text-sm mb-6">
               Nam ultrices lacus interdum neque sagittis met integer porta sem eu.
             </p>
             <div className="text-4xl font-bold text-slate-700 mb-6 font-inter">
               £49
-              <span className="text-lg font-normal text-gray-500">/Month</span>
+              <span className="text-lg font-normal text-black">/Month</span>
             </div>
             
             <button className="w-full py-3 px-4 bg-slate-700 text-white rounded-md mb-6">
@@ -73,7 +73,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Morbi aliquet ex sit amet pretium.</span>
+                  <span className="text-black text-sm">Morbi aliquet ex sit amet pretium.</span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-slate-700 rounded-full p-1 mt-0.5 mr-2">
@@ -81,7 +81,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Vivamus sit amet erat turpis.</span>
+                  <span className="text-black text-sm">Vivamus sit amet erat turpis.</span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-slate-700 rounded-full p-1 mt-0.5 mr-2">
@@ -89,7 +89,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Phasellus eu porta dolor.</span>
+                  <span className="text-black text-sm">Phasellus eu porta dolor.</span>
                 </li>
               </ul>
             </div>
@@ -98,12 +98,12 @@ export default function PricingPage() {
           {/* Enterprise Plan */}
           <div className="bg-gray-100 rounded-xl p-6">
             <h2 className="text-xl font-bold mb-2">Enterprise</h2>
-            <p className="text-gray-500 text-sm mb-6">
+            <p className="text-black text-sm mb-6">
               Nam ultrices lacus interdum neque sagittis met integer porta sem eu.
             </p>
             <div className="text-4xl font-bold text-slate-700 mb-6 font-inter">
               £129
-              <span className="text-lg font-normal text-gray-500">/Month</span>
+              <span className="text-lg font-normal text-black">/Month</span>
             </div>
             
             <button className="w-full py-3 px-4 bg-slate-700 text-white rounded-md mb-6">
@@ -119,7 +119,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Morbi aliquet ex sit amet pretium.</span>
+                  <span className="text-black text-sm">Morbi aliquet ex sit amet pretium.</span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-slate-700 rounded-full p-1 mt-0.5 mr-2">
@@ -127,7 +127,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Vivamus sit amet erat turpis.</span>
+                  <span className="text-black text-sm">Vivamus sit amet erat turpis.</span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-slate-700 rounded-full p-1 mt-0.5 mr-2">
@@ -135,7 +135,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Phasellus eu porta dolor.</span>
+                  <span className="text-black text-sm">Phasellus eu porta dolor.</span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-slate-700 rounded-full p-1 mt-0.5 mr-2">
@@ -143,7 +143,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Phasellus eu porta dolor.</span>
+                  <span className="text-black text-sm">Phasellus eu porta dolor.</span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-slate-700 rounded-full p-1 mt-0.5 mr-2">
@@ -151,7 +151,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Pellentesque lorem est.</span>
+                  <span className="text-black text-sm">Pellentesque lorem est.</span>
                 </li>
               </ul>
             </div>
@@ -160,12 +160,12 @@ export default function PricingPage() {
           {/* Professional Plan */}
           <div className="bg-gray-100 rounded-xl p-6">
             <h2 className="text-xl font-bold mb-2">Professional</h2>
-            <p className="text-gray-500 text-sm mb-6">
+            <p className="text-black text-sm mb-6">
               Nam ultrices lacus interdum neque sagittis met integer porta sem eu.
             </p>
             <div className="text-4xl font-bold text-slate-700 mb-6 font-inter">
               £90
-              <span className="text-lg font-normal text-gray-500">/Month</span>
+              <span className="text-lg font-normal text-black">/Month</span>
             </div>
             
             <button className="w-full py-3 px-4 bg-slate-700 text-white rounded-md mb-6">
@@ -181,7 +181,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Morbi aliquet ex sit amet pretium.</span>
+                  <span className="text-black text-sm">Morbi aliquet ex sit amet pretium.</span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-slate-700 rounded-full p-1 mt-0.5 mr-2">
@@ -189,7 +189,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Vivamus sit amet erat turpis.</span>
+                  <span className="text-black text-sm">Vivamus sit amet erat turpis.</span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-slate-700 rounded-full p-1 mt-0.5 mr-2">
@@ -197,7 +197,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Phasellus eu porta dolor.</span>
+                  <span className="text-black text-sm">Phasellus eu porta dolor.</span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-slate-700 rounded-full p-1 mt-0.5 mr-2">
@@ -205,7 +205,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Vivamus sit amet erat turpis.</span>
+                  <span className="text-black text-sm">Vivamus sit amet erat turpis.</span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-slate-700 rounded-full p-1 mt-0.5 mr-2">
@@ -213,7 +213,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Pellentesque lorem est.</span>
+                  <span className="text-black text-sm">Pellentesque lorem est.</span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-slate-700 rounded-full p-1 mt-0.5 mr-2">
@@ -221,7 +221,7 @@ export default function PricingPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                     </svg>
                   </div>
-                  <span className="text-gray-600 text-sm">Phasellus eu porta dolor.</span>
+                  <span className="text-black text-sm">Phasellus eu porta dolor.</span>
                 </li>
               </ul>
             </div>

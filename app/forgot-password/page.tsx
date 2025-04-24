@@ -21,7 +21,7 @@ export default function ForgotPassword() {
           <h2 className="text-xl font-bold">Forget Password</h2>
           <X className="cursor-pointer w-5 h-5" />
         </div>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-black mb-4">
           Please enter your email address so that you can change your password.
         </p>
         <label className="font-semibold block mb-1">Email Address</label>
@@ -31,7 +31,7 @@ export default function ForgotPassword() {
             placeholder="Enter Email Address"
             className="w-full p-3 pl-10 border rounded-full  focus:outline-none"
           />
-          <div className="absolute top-1/2 left-3 -translate-y-1/2 bg-gr text-gray-400 w-4 h-4" >
+          <div className="absolute top-1/2 left-3 -translate-y-1/2 bg-gr text-black w-4 h-4" >
           <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M0 4a2 2 0 012-2h12a2 2 0 012 2v.217l-8 4.8-8-4.8V4zm0 1.383l7.555 4.533a.5.5 0 00.445 0L16 5.383V12a2 2 0 01-2 2H2a2 2 0 01-2-2V5.383z"/>
                 </svg>

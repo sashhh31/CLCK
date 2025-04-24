@@ -88,9 +88,9 @@ export default function DownloadsPage() {
 
   return (
     <div className="p-4 sm:p-6 md:p-8">
-      <div className="border-t-2 mt-14"></div>
+      <div className="border-t-2 mt-6 mb-2"></div>
       <h1 className="text-2xl sm:text-3xl font-bold mb-2">Downloaded Files</h1>
-      <p className="text-gray-500 mb-8">Total Downloads: {downloads.length}</p>
+      <p className="text-black mb-8">Total Downloads: {downloads.length}</p>
 
       <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 md:p-8 border">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
@@ -105,7 +105,7 @@ export default function DownloadsPage() {
                 setCurrentPage(1); // Reset to first page when searching
               }}
             />
-            <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
+            <Search className="absolute right-3 top-2.5 h-5 w-5 text-black" />
           </div>
         </div>
 
@@ -113,12 +113,12 @@ export default function DownloadsPage() {
           <table className="w-full">
             <thead>
               <tr className="bg-gray-50">
-                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900">Sr No</th>
-                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900">File Name</th>
-                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900 hidden md:table-cell">Downloaded By</th>
-                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900 hidden md:table-cell">File Type</th>
-                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900 hidden md:table-cell">Downloaded On</th>
-                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-900">Action</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black">Sr No</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black">File Name</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black hidden md:table-cell">Downloaded By</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black hidden md:table-cell">File Type</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black hidden md:table-cell">Downloaded On</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y">
@@ -149,12 +149,12 @@ export default function DownloadsPage() {
                         />
                       ) : (
                         <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                          <span className="text-gray-500">{download.downloadedBy.name.charAt(0)}</span>
+                          <span className="text-black">{download.downloadedBy.name.charAt(0)}</span>
                         </div>
                       )}
                       <div>
                         <p className="text-xs sm:text-sm font-medium">{download.downloadedBy.name}</p>
-                        <p className="text-xs text-gray-500">{download.downloadedBy.email}</p>
+                        <p className="text-xs text-black">{download.downloadedBy.email}</p>
                       </div>
                     </div>
                   </td>
@@ -191,7 +191,7 @@ export default function DownloadsPage() {
                 </svg>
               </button>
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-black">
               Total : 01 Pages
             </div>
           </div>

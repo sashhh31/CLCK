@@ -26,7 +26,7 @@ export default function SignupPage() {
                 placeholder="Enter Username"
                 className="pl-10 rounded-full"
               />
-              <span className="absolute left-3 top-3 text-gray-400">
+              <span className="absolute left-3 top-3 text-black">
                 <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M8 9a4 4 0 100-8 4 4 0 000 8zm0 1c-3.07 0-5 1.57-5 3.5V15h10v-1.5C13 11.57 11.07 10 8 10z"/>
                 </svg>
@@ -45,7 +45,7 @@ export default function SignupPage() {
                 placeholder="Enter Email Address"
                 className="pl-10 rounded-full"
               />
-              <span className="absolute left-3 top-3 text-gray-400">
+              <span className="absolute left-3 top-3 text-black">
                 <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M0 4a2 2 0 012-2h12a2 2 0 012 2v.217l-8 4.8-8-4.8V4zm0 1.383l7.555 4.533a.5.5 0 00.445 0L16 5.383V12a2 2 0 01-2 2H2a2 2 0 01-2-2V5.383z"/>
                 </svg>
@@ -64,10 +64,10 @@ export default function SignupPage() {
                 placeholder="Enter Your Password"
                 className="pl-10 pr-10 rounded-full"
               />
-              <span className="absolute left-3 top-3 text-gray-400">
+              <span className="absolute left-3 top-3 text-black">
                 <Image src={"./lock.png"} alt={""} height={18} width={15} />
               </span>
-              <EyeIcon className="absolute right-3 top-2.5 w-4 h-4 text-gray-400" />
+              <EyeIcon className="absolute right-3 top-2.5 w-4 h-4 text-black" />
             </div>
           </div>
 
@@ -82,11 +82,11 @@ export default function SignupPage() {
                 placeholder="Enter Your Password"
                 className="pl-10 pr-10 rounded-full"
               />
-              <span className="absolute left-3 top-3 text-gray-400">
+              <span className="absolute left-3 top-3 text-black">
               <Image src={"./lock.png"} alt={""} height={18} width={15} />
 
               </span>
-              <EyeIcon className="absolute right-3 top-2.5 w-4 h-4 text-gray-400" />
+              <EyeIcon className="absolute right-3 top-2.5 w-4 h-4 text-black" />
             </div>
           </div>
 
@@ -98,7 +98,7 @@ export default function SignupPage() {
         </form>
 
         <div className="mt-6 text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-black">
             Already have an account?{" "}
             <Link href="/login" className="text-[#2A3356] font-medium hover:underline">
               Login

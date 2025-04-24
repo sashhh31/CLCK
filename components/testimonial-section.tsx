@@ -84,7 +84,7 @@ export default function TestimonialsSection() {
   }
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-7xl mx-auto overflow-hidden">
+    <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-7xl mx-auto ">
       <div className="mb-6 sm:mb-8 md:mb-10 lg:mb-14">
         <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-gray-500 mb-2 md:mb-3">Testimonials</h3>
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-3 sm:gap-4 md:gap-6">
@@ -97,7 +97,7 @@ export default function TestimonialsSection() {
       </div>
 
       <div className="relative mt-6 sm:mt-8 md:mt-10 lg:mt-12">
-        <div className="overflow-hidden" ref={sliderRef}>
+        <div className="" ref={sliderRef}>
           <div
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${activeIndex * 100}%)` }}
@@ -134,7 +134,7 @@ export default function TestimonialsSection() {
                       <h4 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-medium">
                         {testimonial.name}
                       </h4>
-                      <p className={`text-xs sm:text-sm md:text-base lg:text-lg ${index % 1 === 0 ? "text-gray-400" : "text-gray-300"}`}>
+                      <p className={`text-xs sm:text-sm md:text-base lg:text-lg ${index % 1 === 0 ? "text-white" : "text-black"}`}>
                         {testimonial.title}
                       </p>
                     </div>

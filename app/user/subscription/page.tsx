@@ -102,7 +102,7 @@ export default function SubscriptionPage() {
 
   return (
     <div className="flex-1 space-y-4 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
-                     <div className="border-t-2 mt-14"></div>
+                     <div className="border-t-2 mt-6 mb-2"></div>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Subscription Plan</h1>
       </div>
@@ -113,18 +113,18 @@ export default function SubscriptionPage() {
             <div className="space-y-2">
               <div className="flex flex-wrap items-center gap-2">
                 <h2 className="text-xl sm:text-2xl font-bold">Basic Plan</h2>
-                <span className="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-xs sm:text-sm">Monthly</span>
+                <span className="px-3 py-1 bg-gray-200 text-black rounded-full text-xs sm:text-sm">Monthly</span>
               </div>
-              <p className="text-gray-500 text-sm sm:text-base">
+              <p className="text-black text-sm sm:text-base">
                 Nam ultrices lacus interdum neque sagittis met Integer porta sem eu.
               </p>
-              <p className="text-gray-600 text-sm sm:text-base">
+              <p className="text-black text-sm sm:text-base">
                 Next renewal Date: <span className="font-medium">Apr 10, 2025</span>
               </p>
             </div>
             <div className="text-right">
               <div className="text-2xl sm:text-4xl font-bold">
-                £49<span className="text-sm sm:text-lg font-normal text-gray-500">/Month</span>
+                £49<span className="text-sm sm:text-lg font-normal text-black">/Month</span>
               </div>
             </div>
           </div>
@@ -133,7 +133,7 @@ export default function SubscriptionPage() {
               <Crown className="mr-2 h-4 w-4" />
               Upgrade Plan
             </Button>
-            <Button variant="outline" className="text-gray-700 border-gray-300 hover:bg-gray-100 rounded-lg h-9 px-4 py-2 text-sm">
+            <Button variant="outline" className="text-black border-gray-300 hover:bg-gray-100 rounded-lg h-9 px-4 py-2 text-sm">
               Cancel Subscription
             </Button>
           </div>
@@ -143,7 +143,7 @@ export default function SubscriptionPage() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0">
         <h2 className="text-xl sm:text-2xl font-bold tracking-tight">Subscription History</h2>
         <div className="relative w-full sm:w-64">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-2.5 h-4 w-4 text-black" />
           <input
             type="text"
             placeholder="Search history..."
@@ -181,10 +181,10 @@ export default function SubscriptionPage() {
 
                   return (
                     <tr key={subscription.id} className={`transition hover:bg-gray-200 ${rowBg}`}>
-                      <td className="px-4 py-3 text-xs sm:text-sm text-gray-700">{subscription.plan}</td>
-                      <td className="px-4 py-3 text-xs sm:text-sm text-gray-700">{subscription.duration}</td>
-                      <td className="px-4 py-3 text-xs sm:text-sm text-gray-700">{subscription.charges}</td>
-                      <td className="px-4 py-3 text-xs sm:text-sm text-gray-700 hidden md:table-cell">
+                      <td className="px-4 py-3 text-xs sm:text-sm text-black">{subscription.plan}</td>
+                      <td className="px-4 py-3 text-xs sm:text-sm text-black">{subscription.duration}</td>
+                      <td className="px-4 py-3 text-xs sm:text-sm text-black">{subscription.charges}</td>
+                      <td className="px-4 py-3 text-xs sm:text-sm text-black hidden md:table-cell">
                         <div className="flex items-center">
                           {subscription.subscriber.avatar ? (
                             <img
@@ -194,17 +194,17 @@ export default function SubscriptionPage() {
                             />
                           ) : (
                             <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                              <span className="text-gray-500">{subscription.subscriber.name.charAt(0)}</span>
+                              <span className="text-black">{subscription.subscriber.name.charAt(0)}</span>
                             </div>
                           )}
                           <div>
                             <p className="text-xs sm:text-sm font-medium">{subscription.subscriber.name}</p>
-                            <p className="text-xs text-gray-500">{subscription.subscriber.email}</p>
+                            <p className="text-xs text-black">{subscription.subscriber.email}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-xs sm:text-sm text-gray-700 hidden md:table-cell">{subscription.billingDate}</td>
-                      <td className="px-4 py-3 text-xs sm:text-sm text-gray-700 hidden md:table-cell">{subscription.expiryDate}</td>
+                      <td className="px-4 py-3 text-xs sm:text-sm text-black hidden md:table-cell">{subscription.billingDate}</td>
+                      <td className="px-4 py-3 text-xs sm:text-sm text-black hidden md:table-cell">{subscription.expiryDate}</td>
                     </tr>
                   );
                 })}
@@ -226,7 +226,7 @@ export default function SubscriptionPage() {
                 </svg>
               </button>
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-black">
               Total : 01 Pages
             </div>
           </div>

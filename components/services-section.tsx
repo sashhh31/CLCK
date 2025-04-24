@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import Link from "next/link"
 
 export default function ServicesSection() {
   const [selectedService, setSelectedService] = useState<any>(null)
@@ -17,7 +18,7 @@ export default function ServicesSection() {
       description:
         "Tell us your needs, and we will do all the research for you and have a 1-hour chat so you can be on your way to doing your accounts.",
       link: "/services/power-hour",
-      price: "£99",
+      price: "£300",
       duration: "1 Hour"
     },
     {
@@ -141,8 +142,7 @@ export default function ServicesSection() {
               </div>
               <h3 className="text-lg font-bold mb-2">{service.title}</h3>
               <p className="text-sm text-muted-foreground mb-4">{service.description}</p>
-              <button
-                onClick={() => openModal(service)}
+              <Link href="/services/detailsPage"
                 className="text-xs font-medium text-[#2A3356] hover:underline inline-flex items-center"
               >
                 View Detail
@@ -161,7 +161,7 @@ export default function ServicesSection() {
                   <path d="M5 12h14" />
                   <path d="m12 5 7 7-7 7" />
                 </svg>
-              </button>
+              </Link>
             </div>
           ))}
         </div>

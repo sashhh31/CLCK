@@ -24,6 +24,9 @@ const config = {
       inter: ['var(--font-inter)'],
 
     },
+    backgroundImage: {
+      'hero-bg': "url('/bg-image.png')",
+    },
       colors: {
         'navy': {
           700: '#2c3e50', // This matches the dark blue in your testimonial slider

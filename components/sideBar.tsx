@@ -61,9 +61,15 @@ const Sidebar = () => {
           isOpen ? 'translate-x-0 ' : '-translate-x-full '
         } fixed md:fixed top-0 left-0 z-40 h-full md:h-screen md:w-64 w-[250px] bg-[#2A3356] text-white flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0`}
       >
-        <div className="p-4 md:p-6 mt-2 md:mt-4">
-          <Link href="/" className="flex items-center justify-center md:justify-start">
-            <Image src="/logo1.png" alt="Logo" height={120} width={120} className="h-auto w-auto max-h-[80px] md:max-h-[120px]" />
+       <div className="p-4 md:p-6">
+          <Link href="/" className="flex items-center">
+            <Image 
+              src="/logo1.png" 
+              alt="Logo" 
+              height={150} 
+              width={150}
+              className="w-auto h-8 md:h-10"
+            />
           </Link>
         </div>
 

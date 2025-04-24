@@ -51,7 +51,7 @@ export default function SubscriptionPlans() {
             Skip
           </a>
         </div>
-        <p className="text-center text-gray-500 max-w-xl mx-auto mb-6">
+        <p className="text-center text-black max-w-xl mx-auto mb-6">
           We specialize in providing comprehensive financial services tailored to
           meet the unique needs of our clients.
         </p>
@@ -65,7 +65,7 @@ export default function SubscriptionPlans() {
                 className={`px-6 py-2 rounded-full text-sm font-medium ${
                   billingCycle === cycle
                     ? "bg-blue-900 text-white"
-                    : "text-gray-700"
+                    : "text-black"
                 }`}
               >
                 {cycle}
@@ -81,19 +81,19 @@ export default function SubscriptionPlans() {
               className="border rounded-xl p-6 bg-gray-50 hover:shadow-lg transition-shadow"
             >
               <h3 className="text-lg font-semibold mb-1">{plan.name}</h3>
-              <p className="text-sm text-gray-500 mb-4">
+              <p className="text-sm text-black mb-4">
                 Nam ultrices lacus interdum neque sagittis met Integer porta sem eu.
               </p>
               <div className="text-3xl font-bold text-blue-900 mb-4">
                 {plan.price}
-                <span className="text-base font-medium text-gray-600">/Month</span>
+                <span className="text-base font-medium text-black">/Month</span>
               </div>
               <button className="w-full bg-blue-900 text-white rounded-full py-2 font-medium mb-4">
                 Get Started
               </button>
 
               <h4 className="font-semibold mb-2">Plan Includes</h4>
-              <ul className="space-y-2 text-sm text-gray-700">
+              <ul className="space-y-2 text-sm text-black">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <CheckCircle className="text-blue-900 w-4 h-4 mt-[2px]" />

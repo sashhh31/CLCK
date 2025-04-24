@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Check } from "lucide-react"
+import { ArrowUpRight, Check } from "lucide-react"
 import StatsSection from "@/components/stats-section"
 import PricingSection from "@/components/pricing-section"
 import CtaSection from "@/components/cta-section"
@@ -11,8 +11,8 @@ export default function AboutUsPage() {
   return (
     <div className="w-full">
       <Header/>
-      <div className="min-h-screen w-full mb-24 overflow-hidden">
-        <section className="w-full py-8 md:py-24 bg-[#2A3356]">
+      <div className="min-h-screen w-full mb-24 ">
+        <section className="w-full py-8 md:py-24 bg-hero-bg bg-cover bg-center">
           <div className="container px-4 md:px-6 text-center">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-white">About Us</h1>
           </div>
@@ -20,7 +20,7 @@ export default function AboutUsPage() {
 
         <div className="py-4 md:py-8 border-b">
           <div className="container flex justify-center items-center">
-            <div className="h-16 md:h-20 w-full max-w-[1500px] md:max-w-[1500px]">
+            <div className="h-16 md:h-20 w-full max-w-full md:max-w-full">
               <img
                 src="../company.png"
                 alt="Company Logo"
@@ -31,9 +31,9 @@ export default function AboutUsPage() {
         </div>
 
         <section className="w-full py-8 md:py-24">
-          <div className="container px-4 md:px-12">
-            <div className="flex flex-col lg:flex-row gap-8 md:gap-12 items-center">
-              <div className="w-full lg:w-1/2">
+          <div className="container">
+            <div className="flex flex-col lg:flex-col gap-8 md:gap-12 items-center">
+              <div className="w-full ">
                 <img
                   src="/image (8).png"
                   alt="About Us"
@@ -42,12 +42,13 @@ export default function AboutUsPage() {
                   height={400}
                 />
               </div>
-              <div className="w-full lg:w-1/2 space-y-6 md:space-y-8">
-                <div className="space-y-4">
+              <div className="w-full  space-y-6 md:space-x-12 md:space-y-8 flex">
+                <div className="space-y-4 ">
                   <h2 className="text-2xl md:text-3xl text-[#2A3356] font-medium">About Us</h2>
                   <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold">We are an Award-Winning Accountancy practice with 20+ Years of Expertise</h3>
                 </div>
-                <p className="text-base md:text-lg lg:text-xl text-muted-foreground">
+                <div className="">
+                <p className="text-base md:text-lg mb-10 lg:text-xl text-muted-foreground">
                   At CLCK Bookkeeping-Taxation, we are more than just another accountancy firm—we are your trusted outsourced finance department with a skilled approach to accessible communication skills in deafness and neurodiversity and use accessible language that you can understand.
                 </p>
                 <ul className="space-y-4 md:space-y-6">
@@ -66,6 +67,8 @@ export default function AboutUsPage() {
                     </li>
                   ))}
                 </ul>
+                </div>
+
               </div>
             </div>
           </div>
@@ -79,7 +82,7 @@ export default function AboutUsPage() {
               <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold mb-4">
                 The Best Option For Your Financial Records
               </h2>
-              <p className="text-gray-500 text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto">
+              <p className="text-black text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto">
                 We understand and champion the idea that no two businesses or individuals are the same. That's why we take the time to truly understand your goals, challenges, and aspirations whilst ensuring you comply with a fast-paced changing world of digital tax and financial compliance.
               </p>
             </div>
@@ -128,7 +131,7 @@ export default function AboutUsPage() {
                     {service.title}
                   </h3>
                   <p className={`text-base md:text-lg ${
-                    service.isHighlighted ? "text-gray-300" : "text-gray-500"
+                    service.isHighlighted ? "text-gray-300" : "text-black"
                   }`}>
                     {service.description}
                   </p>
@@ -138,7 +141,7 @@ export default function AboutUsPage() {
                       service.isHighlighted ? "text-[#F0D687]" : "text-[#2A3356]"
                     } underline inline-flex items-center gap-1 mt-auto`}
                   >
-                    View Detail <span>↗</span>
+                    View Detail <ArrowUpRight className="w-5 h-5" />
                   </a>
                 </div>
               ))}

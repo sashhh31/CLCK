@@ -76,7 +76,7 @@ export default function BrandNewsPage() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 bg-[#2A3356]">
+        <section className="w-full py-8 sm:py-12 md:py-16 lg:py-24 bg-hero-bg bg-cover bg-center">
           <div className="container px-4 md:px-6 text-center">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-white">
               Brand <span className="text-[#F8D77E]">News</span> & Updates

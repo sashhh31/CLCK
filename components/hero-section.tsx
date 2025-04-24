@@ -1,42 +1,93 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+
+"use client"
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function HeroSection() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  // Define multiple hero content slides
+  const slides = [
+    {
+      title: "Simplify Your Finances with Secure Bookkeeping & Tax Services",
+      highlightWord: "Finances",
+      description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
+      buttonText: "Get Started Now",
+      image: "/c.png"
+    },
+    {
+      title: "Streamline Your Tax Preparation with Expert Tools",
+      highlightWord: "Tax",
+      description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
+      buttonText: "Get Started Now",
+      image: "/c.png"
+    },
+    {
+      title: "Secure Document Management for Financial Peace",
+      highlightWord: "Document",
+      description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
+      buttonText: "Get Started Now",
+      image: "/c.png"
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Helper function to highlight specific word
+  const formatTitle = (title:any, highlightWord:any) => {
+    const parts = title.split(highlightWord);
+    return (
+      <div className="max-w-6xl">
+       <div className=" mb-4">
+         {parts[0]}<span className="text-[#F8D77E]">{highlightWord}</span></div>
+         <div>
+        {parts[1]}</div>
+      </div>
+    );
+  };
+
   return (
-    <section className=" w-full md:min-h-[700px] min-h-[500px] bg-[#2A3356] pt-12 md:pt-24 relative">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col gap-6 lg:gap-12">
-          <div className="flex justify-center items-center">
-            <div className="space-y-4 text-center items-center justify-center max-w-4xl">
-              <h1 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl mb-6 md:mb-10">
-                Simplify Your <span className="text-yellow-200">
-                Finances
-                  </span> with Secure Bookkeeping & Tax Services
+<section className="w-full md:min-h-[700px] min-h-[500px] bg-hero-bg bg-cover bg-center pt-12 md:pt-24 relative">
+<div className="container px-4 md:px-6 mx-auto">
+        {slides.map((slide, index) => (
+          <div 
+            key={index}
+            className={`transition-opacity duration-1000 absolute w-full left-0 right-0 ${
+              currentSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
+            }`}
+          >
+            <div className="flex flex-col items-center text-center">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 ">
+                {formatTitle(slide.title, slide.highlightWord)}
               </h1>
-              <p className="text-gray-300 text-base md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.
+
+              <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto mb-8">
+                {slide.description}
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
-                <Link href="/signup">
-                <Button className="bg-[#F8D77E] text-[#2A3356] hover:bg-[#F8D77E]/90 rounded-full text-lg md:text-2xl py-6 px-6 md:p-8 font-medium">Get Started Now</Button>
-                </Link>
+              
+              <Link href="/signup">
+                <button className="bg-[#F8D77E] text-[#272E48] hover:bg-[#F8D77E]/90 rounded-full text-lg px-8 py-3 font-medium">
+                  {slide.buttonText}
+                </button>
+              </Link>
+
+              <div className="mt-12 w-full max-w-7xl">
+                <img
+                  src={slide.image}
+                  alt="Dashboard screenshot"
+                  className="w-full shadow-lg"
+                />
               </div>
             </div>
           </div>
-
-          <div className="flex justify-center items-end mt-8 md:mt-0">
-            <div className="relative w-full max-w-full md:w-[90%] lg:w-[1200px] -mb-[200px] md:-mb-96 ">
-              <img
-                src="../c.png"
-                alt="Dashboard screenshot"
-                className="object-contain w-full"
-                width={600}
-                height={400}
-              />
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
-  )
+  );
 }

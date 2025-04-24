@@ -64,7 +64,7 @@ export default function EducationPage() {
             </div>
             <div className="p-4">
               <h3 className="font-inter font-semibold text-xl mb-2">{content.title}</h3>
-              <p className="text-sm text-gray-500">{content.description}</p>
+              <p className="text-sm text-black">{content.description}</p>
             </div>
           </div>
         ))}
@@ -73,14 +73,14 @@ export default function EducationPage() {
       <div className="flex justify-end mt-8">
         <nav className="flex items-center space-x-2">
           <button className="h-8 w-12  text-black font-inter font-medium border-2 border-black rounded-2xl flex items-center justify-center">1</button>
-          <button className="h-8 w-12 bg-transparent font-inter font-medium text-gray-700 hover:bg-gray-100 rounded-2xl flex items-center justify-center">
+          <button className="h-8 w-12 bg-transparent font-inter font-medium text-black hover:bg-gray-100 rounded-2xl flex items-center justify-center">
             2
           </button>
-          <button className="h-8 w-12 bg-transparent font-inter font-medium text-gray-700 hover:bg-gray-100 rounded-2xl flex items-center justify-center">
+          <button className="h-8 w-12 bg-transparent font-inter font-medium text-black hover:bg-gray-100 rounded-2xl flex items-center justify-center">
             3
           </button>
           <span className="px-2">...</span>
-          <button className="h-8 w-12 bg-transparent font-inter font-medium text-gray-700 hover:bg-gray-100 rounded-2xl flex items-center justify-center">
+          <button className="h-8 w-12 bg-transparent font-inter font-medium text-black hover:bg-gray-100 rounded-2xl flex items-center justify-center">
             7
           </button>
           <button className="px-3 py-1 bg-black text-white border-2 font-inter font-medium border-black rounded-full">Next</button>

@@ -35,13 +35,13 @@ export default function ProfilePage() {
 
   return (
     <div className="flex-1 space-y-4 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
-               <div className="border-t-2 mt-14"></div>
+               <div className="border-t-2 mt-6 mb-2"></div>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0 mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Profile</h1>
         
         {/* Mobile menu toggle */}
         <Button 
-          className="md:hidden bg-gray-100 hover:bg-gray-200 text-gray-800"
+          className="md:hidden bg-gray-100 hover:bg-gray-200 text-black"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -62,8 +62,8 @@ export default function ProfilePage() {
                 />
               </div>
               <h2 className="text-xl font-bold">Alexender Alex</h2>
-              <p className="text-sm text-gray-800 text-center">admin@clckbookkeeping.com</p>
-              <div className="mt-2 px-3 py-1 bg-gray-200 rounded-full text-sm text-gray-700">Super Admin</div>
+              <p className="text-sm text-black text-center">admin@clckbookkeeping.com</p>
+              <div className="mt-2 px-3 py-1 bg-gray-200 rounded-full text-sm text-black">Super Admin</div>
             </div>
 
             <div className="space-y-2">
@@ -115,7 +115,7 @@ export default function ProfilePage() {
                 </div>
                 <div>
                   <h2 className="text-lg font-bold">Alexender Alex</h2>
-                  <p className="text-xs text-gray-800">admin@clckbookkeeping.com</p>
+                  <p className="text-xs text-black">admin@clckbookkeeping.com</p>
                 </div>
               </div>
 
@@ -162,7 +162,7 @@ export default function ProfilePage() {
               <>
                 <div className="mb-6 sm:mb-8">
                   <h2 className="font-semibold text-xl sm:text-2xl mb-2">Change Password</h2>
-                  <p className="text-sm sm:text-base text-gray-600">
+                  <p className="text-sm sm:text-base text-black">
                     Enter your old and new password to change your password
                   </p>
                 </div>
@@ -254,7 +254,7 @@ export default function ProfilePage() {
               <>
                 <div className="mb-4 sm:mb-6">
                   <h2 className="font-semibold text-xl sm:text-2xl mb-2">Change Email Address</h2>
-                  <p className="text-sm sm:text-base text-gray-600">
+                  <p className="text-sm sm:text-base text-black">
                     Enter your email address
                   </p>
                 </div>

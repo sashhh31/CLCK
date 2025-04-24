@@ -10,7 +10,7 @@ export default function ContactUsPage() {
     <div>
       <Header />
       <div className="min-h-screen">
-        <section className="w-full py-12 md:py-24 bg-[#2A3356]">
+        <section className="w-full py-12 md:py-24 bg-hero-bg bg-cover bg-center">
           <div className="container px-4 md:px-6 text-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-white flex items-center justify-center">
               <span className="text-yellow-200 mr-4">Get</span> 

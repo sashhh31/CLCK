@@ -16,8 +16,8 @@ export default function ResetPassword() {
             placeholder="Enter Your Password"
             className="w-full p-3 pl-10 pr-10 border rounded-full  focus:outline-none"
           />
-          <Lock className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 w-4 h-4" />
-          <Eye className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 w-4 h-4 cursor-pointer" />
+          <Lock className="absolute top-1/2 left-3 -translate-y-1/2 text-black w-4 h-4" />
+          <Eye className="absolute top-1/2 right-3 -translate-y-1/2 text-black w-4 h-4 cursor-pointer" />
         </div>
         <label className="font-semibold block mb-1">Confirm New Password</label>
         <div className="relative mb-6">
@@ -26,8 +26,8 @@ export default function ResetPassword() {
             placeholder="Enter Your Password"
             className="w-full p-3 pl-10 pr-10 border rounded-full  focus:outline-none"
           />
-          <Lock className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400 w-4 h-4" />
-          <Eye className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 w-4 h-4 cursor-pointer" />
+          <Lock className="absolute top-1/2 left-3 -translate-y-1/2 text-black w-4 h-4" />
+          <Eye className="absolute top-1/2 right-3 -translate-y-1/2 text-black w-4 h-4 cursor-pointer" />
         </div>
         <div className='mt-28'>
 

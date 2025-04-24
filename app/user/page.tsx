@@ -129,12 +129,12 @@ export default function DocumentsPage() {
 
   return (
     <div className="flex-1 space-y-4 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
-      <div className="border-t-2 mt-14"></div>
+      <div className="border-t-2 mt-6 mb-2"></div>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Uploaded Documents</h1>
         <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4">
           <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-black" />
             <input
               type="text"
               placeholder="Search documents..."
@@ -180,8 +180,8 @@ export default function DocumentsPage() {
 
                   return (
                     <tr key={document.id} className={`transition hover:bg-gray-200 ${rowBg}`}>
-                      <td className="px-4 py-3 text-xs sm:text-sm text-gray-700">{document.id}</td>
-                      <td className="px-4 py-3 text-xs sm:text-sm text-gray-700">
+                      <td className="px-4 py-3 text-xs sm:text-sm text-black">{document.id}</td>
+                      <td className="px-4 py-3 text-xs sm:text-sm text-black">
                         <div className="flex items-center gap-2">
                           <div className="w-4 h-4 flex-shrink-0">
                             <Image src="/File.png" alt="" height={15} width={15} className="object-contain" />
@@ -189,7 +189,7 @@ export default function DocumentsPage() {
                           <span className="truncate max-w-[120px] sm:max-w-[200px] md:max-w-none">{document.fileName}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-xs sm:text-sm text-gray-700 hidden md:table-cell">
+                      <td className="px-4 py-3 text-xs sm:text-sm text-black hidden md:table-cell">
                         <div className="flex items-center">
                           {document.uploadedBy.avatar ? (
                             <img
@@ -199,17 +199,17 @@ export default function DocumentsPage() {
                             />
                           ) : (
                             <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                              <span className="text-gray-500">{document.uploadedBy.name.charAt(0)}</span>
+                              <span className="text-black">{document.uploadedBy.name.charAt(0)}</span>
                             </div>
                           )}
                           <div>
                             <p className="text-xs sm:text-sm font-medium">{document.uploadedBy.name}</p>
-                            <p className="text-xs text-gray-500">{document.uploadedBy.email}</p>
+                            <p className="text-xs text-black">{document.uploadedBy.email}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-xs sm:text-sm text-gray-700 hidden md:table-cell">{document.fileType}</td>
-                      <td className="px-4 py-3 text-xs sm:text-sm text-gray-700 hidden md:table-cell">{document.addedOn}</td>
+                      <td className="px-4 py-3 text-xs sm:text-sm text-black hidden md:table-cell">{document.fileType}</td>
+                      <td className="px-4 py-3 text-xs sm:text-sm text-black hidden md:table-cell">{document.addedOn}</td>
                       <td className="px-4 py-3 text-xs sm:text-sm">
                         <div className="flex space-x-2">
                           <button className="text-red-500 hover:text-red-700 transition">
@@ -239,46 +239,26 @@ export default function DocumentsPage() {
                 })}
               </tbody>
             </table>
-            <div className="px-6 py-4 flex items-center justify-between border-t border-gray-200">
-              <div className="flex items-center">
-                <button 
-                  className={`p-1 rounded-md ${currentPage > 1 ? 'text-gray-700 hover:bg-gray-100' : 'text-gray-300 cursor-not-allowed'}`}
-                  onClick={handlePreviousPage}
-                  disabled={currentPage <= 1}
-                >
-                  <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
-                
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                  <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`inline-flex items-center justify-center w-8 h-8 mx-1 text-sm font-medium rounded-full ${
-                      currentPage === page
-                        ? 'text-white bg-[#2A3356]'
-                        : 'text-gray-700 hover:bg-gray-100'
-                    }`}
-                  >
-                    {page}
-                  </button>
-                ))}
-                
-                <button 
-                  className={`p-1 rounded-md ${currentPage < totalPages ? 'text-gray-700 hover:bg-gray-100' : 'text-gray-300 cursor-not-allowed'}`}
-                  onClick={handleNextPage}
-                  disabled={currentPage >= totalPages}
-                >
-                  <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
+            <div className="px-6 py-4 flex items-center justify-center border-t border-gray-200">
+            <div className="flex items-center">
+              <button className="p-1 rounded-md hover:bg-gray-100">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div className="inline-flex items-center justify-center w-8 h-8 mx-1 text-sm font-medium text-white bg-blue-800 rounded-full">
+                1
               </div>
-              <div className="text-sm text-gray-500">
-                Page {currentPage} of {totalPages}
-              </div>
+              <button className="p-1 rounded-md hover:bg-gray-100">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
+            <div className="text-sm text-black">
+              Total : 01 Pages
+            </div>
+          </div>
           </div>
         </CardContent>
       </Card>
@@ -291,7 +271,7 @@ export default function DocumentsPage() {
           <div className="bg-white rounded-lg shadow-lg max-w-xl w-full p-4 sm:p-6">
             <div className="flex justify-between items-center mb-4 sm:mb-6">
               <h2 className="text-xl sm:text-2xl font-bold">Upload File</h2>
-              <button onClick={closeUploadDialog} className="text-gray-500 hover:text-gray-700">
+              <button onClick={closeUploadDialog} className="text-black hover:text-black">
                 <X className="h-5 w-5 sm:h-6 sm:w-6" />
               </button>
             </div>
@@ -301,7 +281,7 @@ export default function DocumentsPage() {
                 <Upload className="h-8 w-8 sm:h-12 sm:w-12 mx-auto" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold mb-2">Upload Document</h3>
-              <p className="text-gray-500 text-center text-xs sm:text-sm">
+              <p className="text-black text-center text-xs sm:text-sm">
                 Document type should be PDF, XLSX, DOCX etc and upto file size 20MB
               </p>
             </div>
