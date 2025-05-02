@@ -13,7 +13,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="overflow-hidden">
       <Header />
       <div className="relative">
         <HeroSection />
@@ -42,13 +42,13 @@ export default function Home() {
       <section className="py-16 px-4 md:px-12 lg:px-24 bg-white">
         <div className="flex justify-center my-10">
           <h2 className="text-3xl md:text-5xl font-bold max-w-4xl text-center mb-12">
-            Our Customer Platform Everyone’s Business
+            Our Customer Platform Everyone's Business
           </h2>
         </div>
         <div className="flex justify-center">
           <div className="grid md:grid-cols-3 gap-14 w-[1200px] justify-center">
             {/* Stress-Free Taxes */}
-            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-gray-50">
+            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-[#F0F5FF]">
               <div className="w-20 h-20 mb-10">
                 <img
                   src="../tax.png"
@@ -66,7 +66,7 @@ export default function Home() {
             </div>
 
             {/* Secure & Smart */}
-            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-gray-50">
+            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-[#F0FBFF]">
               <div className="w-20 h-20 mb-10">
                 <img
                   src="../secure.png"
@@ -82,7 +82,7 @@ export default function Home() {
             </div>
 
             {/* Exclusive Perks */}
-            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-gray-50">
+            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-[#F7F0FF]">
               <div className="w-20 h-20 mb-10">
                 <img
                   src="../perks.png"
@@ -127,7 +127,7 @@ export default function Home() {
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 */}
-            <div className="bg-[#F5F5F5] rounded-2xl p-6 flex flex-col gap-4 h-[400px]">
+            <div className="bg-[#EFF4FF] rounded-2xl p-6 flex flex-col gap-4 h-[400px]">
               <div className="w-20 h-20">
                 {/* Placeholder image tag */}
                 <img
@@ -150,7 +150,7 @@ export default function Home() {
             </div>
 
             {/* Card 2 (Highlighted) */}
-            <div className="bg-[#2A3356] scale-105 text-white rounded-2xl p-6 flex flex-col gap-4">
+            <div className="bg-[#1C2442] scale-105 text-white rounded-2xl p-6 flex flex-col gap-4">
               <div className="w-20 h-20">
                 {/* Placeholder image tag */}
                 <img
@@ -173,7 +173,7 @@ export default function Home() {
             </div>
 
             {/* Card 3 */}
-            <div className="bg-gray-100 rounded-2xl p-6 flex flex-col gap-4">
+            <div className="bg-[#334166] rounded-2xl p-6 flex flex-col gap-4 text-white">
               <div className="w-20 h-20">
                 {/* Placeholder image tag */}
                 <img
@@ -183,13 +183,13 @@ export default function Home() {
                 />
               </div>
               <h3 className="text-3xl font-semibold mt-12">Tax strategy</h3>
-              <p className="text-black text-xl">
+              <p className="text-white text-xl">
                 Our payroll processing services take the hassle out of managing
                 your payroll, allowing you to focus on running your business.
               </p>
               <a
                 href="#"
-                className="text-sm font-medium text-[#2A3356] underline inline-flex items-center gap-1 mt-auto"
+                className="text-sm font-medium text-yellow-100 underline inline-flex items-center gap-1 mt-auto"
               >
                 View Detail <ArrowUpRight className="w-4 h-4" />
               </a>
