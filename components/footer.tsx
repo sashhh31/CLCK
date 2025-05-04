@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react"
-
+import Image from "next/image"
 export default function Footer() {
   return (
     <div className="w-full">
@@ -14,11 +14,15 @@ export default function Footer() {
 
       <footer className="bg-[#1E1E1E12] text-black px-4 md:px-8 lg:px-20">
         <div className="container px-4 py-8 md:py-12 lg:py-16">
+        <Link href="/" className="flex justify-left mr-10 mb-10">
+          <div className="relative h-8 w-32 md:w-40 md:mr-10">
+            <Image src={"/logo.png"} alt="Logo" fill className="object-contain" />
+          </div>
+        </Link>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             <div className="max-w-lg">
-              <p className="text-base md:text-lg lg:text-xl text-gray-800 mb-6">
-                Tristirue nulla aliquet enim tortor at auctor urnanmassa enim nec dui nunc mattis enim ut tellusnaute irure repreaen. enim tortor at auctor urnanmassa.
-              </p>
+              <p className="text-base md:text-lg lg:text-xl text-gray-900 mb-6">
+              At CLCK Bookkeeping-Taxation, we are more than just another accountancy firm—we are your trusted outsourced finance department with a skilled approach to accessible communication skills in deafness and neurodiversity and use accessible language that you can understand.              </p>
               <div className="flex space-x-4">
                 <Link href="#" className="bg-gray-700 p-2 rounded-full hover:bg-gray-600 transition">
                   <Youtube className="h-4 w-4 text-white" />
@@ -40,32 +44,32 @@ export default function Footer() {
                 <h3 className="text-lg md:text-xl font-semibold mb-4">About</h3>
                 <ul className="space-y-2 md:space-y-3">
                   <li>
-                    <Link href="/" className="text-base md:text-lg text-gray-800 hover:text-white transition">
+                    <Link href="/" className="text-base md:text-lg text-black hover:text-white transition">
                       Home
                     </Link>
                   </li>
                   <li>
-                    <Link href="/about-us" className="text-base md:text-lg text-gray-800 hover:text-white transition">
+                    <Link href="/about-us" className="text-base md:text-lg text-black hover:text-white transition">
                       About Us
                     </Link>
                   </li>
                   <li>
-                    <Link href="/services" className="text-base md:text-lg text-gray-800 hover:text-white transition">
+                    <Link href="/services" className="text-base md:text-lg text-black hover:text-white transition">
                       Services
                     </Link>
                   </li>
                   <li>
-                    <Link href="/brand-news" className="text-base md:text-lg text-gray-800 hover:text-white transition">
+                    <Link href="/brand-news" className="text-base md:text-lg text-black hover:text-white transition">
                       Brand News
                     </Link>
                   </li>
                   <li>
-                    <Link href="/faqs" className="text-base md:text-lg text-gray-800 hover:text-white transition">
+                    <Link href="/faqs" className="text-base md:text-lg text-black hover:text-white transition">
                       FAQs
                     </Link>
                   </li>
                   <li>
-                    <Link href="/contact-us" className="text-base md:text-lg text-gray-800 hover:text-white transition">
+                    <Link href="/contact-us" className="text-base md:text-lg text-black hover:text-white transition">
                       Contact Us
                     </Link>
                   </li>
@@ -74,17 +78,17 @@ export default function Footer() {
               <div>
                 <h3 className="text-lg md:text-xl font-bold mb-4">Working Hours</h3>
                 <ul className="space-y-4 md:space-y-6">
-                  <li className="text-base md:text-lg text-gray-800">
+                  <li className="text-base md:text-lg text-black">
                     Mon-Sat
                     <br />
                     12:00 PM - 14:45 PM
                   </li>
-                  <li className="text-base md:text-lg text-gray-800">
+                  <li className="text-base md:text-lg text-black">
                     Sat-Thu
                     <br />
                     17:30 PM - 00:00 AM
                   </li>
-                  <li className="text-base md:text-lg text-gray-800">
+                  <li className="text-base md:text-lg text-black">
                     Fri-Sat
                     <br />
                     17:30 PM - 00:00 AM
@@ -115,7 +119,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <p className="text-base md:text-lg font-medium">Location</p>
-                    <p className="text-base md:text-lg text-gray-800">
+                    <p className="text-base md:text-lg text-black">
                       CLCK Bookkeeping-Taxation, 29 South view, Austerfield Doncaster
                       <br />
                       South Yorkshire, DN106QR
@@ -141,7 +145,7 @@ export default function Footer() {
                   </div>
                   <div>
                     <p className="text-base md:text-lg font-medium">Email Address</p>
-                    <p className="text-base md:text-lg text-gray-800">hello@cooper-king.com</p>
+                    <p className="text-base md:text-lg text-black">hello@cooper-king.com</p>
                   </div>
                 </div>
               </div>

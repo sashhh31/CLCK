@@ -19,8 +19,8 @@ export default function FinancialServicesCard() {
           </div>
 
           {/* Right content - full width on mobile, half width on desktop */}
-          <div className="w-full lg:w-2/3 bg-[#2E3B5B] p-6 sm:p-8 md:p-10 lg:p-12 xl:p-16 text-gray-200 lg:-ml-16 lg:mt-8 xl:mt-12">
-            <h3 className="mb-3 sm:mb-4 md:mb-6 lg:mb-8 text-base sm:text-lg md:text-xl font-medium uppercase text-yellow-400">About Us</h3>
+          <div className="w-full lg:w-2/3 bg-[#1C1C5A] p-6 sm:p-8 md:p-10 lg:p-12 xl:p-16 text-gray-200 lg:-ml-16 lg:mt-8 xl:mt-12">
+            <h3 className="mb-3 sm:mb-4 md:mb-6 lg:mb-8 text-base sm:text-lg md:text-xl font-medium uppercase text-[#FFA500]">About Us</h3>
             
             <h2 className="mb-4 sm:mb-6 md:mb-8 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
               We Serving Your Financial Needs
@@ -41,7 +41,7 @@ export default function FinancialServicesCard() {
                 { number: "100+", text: "Expert Accountants" }
               ].map((stat, index) => (
                 <div key={index} className="mb-2">
-                  <h3 className="font-montserrat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-yellow-400">{stat.number}</h3>
+                  <h3 className="font-montserrat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-[#FFA500]">{stat.number}</h3>
                   <p className="text-sm sm:text-base md:text-lg lg:text-xl">{stat.text}</p>
                 </div>
               ))}

@@ -44,7 +44,7 @@ export default function AboutUsPage() {
               </div>
               <div className="w-full  space-y-6 md:space-x-12 md:space-y-8 flex">
                 <div className="space-y-4 ">
-                  <h2 className="text-2xl md:text-3xl text-[#2A3356] font-medium">About Us</h2>
+                  <h2 className="text-2xl md:text-3xl text-[#1C1C5A] font-medium">About Us</h2>
                   <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold">We are an Award-Winning Accountancy practice with 20+ Years of Expertise</h3>
                 </div>
                 <div className="">
@@ -60,8 +60,8 @@ export default function AboutUsPage() {
                     "Our commitment is to help you streamline your finances so you can focus on what matters most—growing and developing your business."
                   ].map((item, index) => (
                     <li key={index} className="flex items-start">
-                      <div className="w-5 h-5 bg-[#2A3356] rounded-full flex items-center justify-center mr-2 mt-1 flex-shrink-0">
-                        <Check className="h-3 w-3 text-white" />
+                      <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2 mt-1 flex-shrink-0">
+                        <Check className="h-3 w-3 text-[#1C1C5A]" />
                       </div>
                       <span className="text-sm md:text-base">{item}</span>
                     </li>
@@ -88,7 +88,7 @@ export default function AboutUsPage() {
             </div>
 
             <div className="text-center mb-8 md:mb-16">
-              <button className="bg-[#2A3356] text-white text-base md:text-lg font-medium px-6 md:px-8 py-2 md:py-3 rounded-full hover:bg-[#1f2946] transition">
+              <button className="bg-[#FFA500] text-white text-base md:text-lg font-medium px-6 md:px-8 py-2 md:py-3 rounded-full hover:bg-[#FFA500]/90 transition duration-200">
                 Explore All Services
               </button>
             </div>
@@ -114,10 +114,10 @@ export default function AboutUsPage() {
               ].map((service, index) => (
                 <div
                   key={index}
-                  className={`rounded-2xl p-6 flex flex-col gap-4 h-full ${
+                  className={`rounded-2xl p-6 flex flex-col gap-4 h-full transition-all duration-200 ${
                     service.isHighlighted
-                      ? "bg-[#2A3356] text-white"
-                      : "bg-[#F5F5F5]"
+                      ? "bg-[#1C1C5A] text-white border-2 border-[#FFA500]"
+                      : "bg-[#1C1C5A] text-white hover:border hover:border-[#FFA500]"
                   }`}
                 >
                   <div className="w-16 h-16 md:w-20 md:h-20">
@@ -127,19 +127,15 @@ export default function AboutUsPage() {
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-semibold mt-4 md:mt-12">
+                  <h3 className="text-2xl md:text-3xl font-semibold mt-4 md:mt-12 text-[#FFA500]">
                     {service.title}
                   </h3>
-                  <p className={`text-base md:text-lg ${
-                    service.isHighlighted ? "text-gray-300" : "text-black"
-                  }`}>
+                  <p className="text-base md:text-lg text-gray-300">
                     {service.description}
                   </p>
                   <a
                     href="#"
-                    className={`text-sm font-medium ${
-                      service.isHighlighted ? "text-[#F0D687]" : "text-[#2A3356]"
-                    } underline inline-flex items-center gap-1 mt-auto`}
+                    className="text-sm font-medium text-[#FFA500] hover:text-white transition-colors duration-200 inline-flex items-center gap-1 mt-auto"
                   >
                     View Detail <ArrowUpRight className="w-5 h-5" />
                   </a>

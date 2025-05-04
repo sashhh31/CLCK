@@ -11,14 +11,14 @@ export default function CtaSection() {
   <div className="container px-4 md:px-6">
         <div className="max-w-[780px]">
           <h2 className="text-4xl font-medium sm:text-6xl text-white">
-            Achieve Financial Freedom & <span className="text-[#F8D77E]">Keep Record</span> of Your Finance Now!
+            Achieve Financial Freedom & <span className="text-[#FFA500]">Keep Record</span> of Your Finance Now!
           </h2>
           <p className="mt-4 text-2xl text-gray-300">
             We specialize in providing comprehensive financial services tailored to meet the unique needs of our
             clients.
           </p>
           <div className="mt-16 ">
-            <Button className="bg-[#F8D77E] text-3xl p-8 rounded-full text-medium text-[#2A3356] hover:bg-[#F8D77E]/90">Contact Us</Button>
+            <Button className="bg-[#FFA500] text-3xl p-8 rounded-full text-medium text-white hover:bg-[#FFA500]/90 transition-colors duration-200">Contact Us</Button>
           </div>
         </div>
       </div>

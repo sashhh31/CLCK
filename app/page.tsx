@@ -7,7 +7,7 @@ import BlogSection from "@/components/blog-section";
 import CtaSection from "@/components/cta-section";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import FaqSection from "@/components/faq-section-landing";
+import FaqSection from "@/components/faq-section";
 import FinancialServicesCard from "@/components/financialServiceCard";
 import { ArrowUpRight } from "lucide-react";
 
@@ -48,50 +48,50 @@ export default function Home() {
         <div className="flex justify-center">
           <div className="grid md:grid-cols-3 gap-14 w-[1200px] justify-center">
             {/* Stress-Free Taxes */}
-            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-[#F0F5FF]">
-              <div className="w-20 h-20 mb-10">
+            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-[#1C1C5A] text-white hover:border-[#FFA500]">
+            <div className="w-14 h-14 mb-10 bg-[#f0d687] rounded-full flex items-center justify-center p-2">
                 <img
-                  src="../tax.png"
-                  alt="Icon for Stress-Free Taxes"
-                  className="w-full h-full object-contain"
+                  src="../Banknote copy.png"
+                  alt="Icon for Secure & Smart"
+                  className="w-20 h-20 object-contain"  
                 />
               </div>
-              <h3 className="text-2xl font-semibold mb-2 ">
+              <h3 className="text-2xl font-semibold mb-2 text-[#FFA500]">
                 Stress-Free Taxes
               </h3>
-              <p className="text-black">
+              <p className="text-gray-300">
                 Our system automates bookkeeping and tax processes, keeping your
                 records accurate and up to date with minimal effort.
               </p>
             </div>
 
             {/* Secure & Smart */}
-            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-[#F0FBFF]">
-              <div className="w-20 h-20 mb-10">
+            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-[#1C1C5A] text-white hover:border-[#FFA500]">
+            <div className="w-14 h-14 mb-10 bg-[#f0d687] rounded-full flex items-center justify-center p-2">
                 <img
-                  src="../secure.png"
+                  src="../Shield copy.png"
                   alt="Icon for Secure & Smart"
-                  className="w-full h-full object-contain"
+                  className="w-20 h-20 object-contain"  
                 />
               </div>
-              <h3 className="text-2xl font-semibold mb-2">Secure & Smart</h3>
-              <p className="text-black">
+              <h3 className="text-2xl font-semibold mb-2 text-[#FFA500]">Secure & Smart</h3>
+              <p className="text-gray-300">
                 Our platform ensures secure document management, easy
                 navigation, and accessibility for a seamless experience.
               </p>
             </div>
 
             {/* Exclusive Perks */}
-            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-[#F7F0FF]">
-              <div className="w-20 h-20 mb-10">
+            <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-[#1C1C5A] text-white hover:border-[#FFA500]">
+              <div className="w-14 h-14 mb-10 bg-[#f0d687] rounded-full flex items-center justify-center p-2">
                 <img
-                  src="../perks.png"
+                  src="../Pie Chart copy.png"
                   alt="Icon for Exclusive Perks"
-                  className="w-full h-full object-contain"
+                  className="w-20 h-20 object-contain"  
                 />
               </div>
-              <h3 className="text-2xl font-semibold mb-2">Exclusive Perks</h3>
-              <p className="text-black">
+              <h3 className="text-2xl font-semibold mb-2 text-[#FFA500]">Exclusive Perks</h3>
+              <p className="text-gray-300">
                 Gain access to expert resources, secure storage, and one-on-one
                 consultations. Our private members' area offers exclusive
                 content to keep your finances in check.
@@ -119,7 +119,7 @@ export default function Home() {
 
           {/* Button */}
           <div className="text-center mb-16">
-            <button className="bg-[#2A3356] text-white text-lg font-medium px-8 py-3 rounded-full hover:bg-[#1f2946] transition">
+            <button className="bg-[#1C1C5A] text-white text-lg font-medium px-8 py-3 rounded-full hover:bg-[#1C1C5A]/70 transition duration-200">
               Explore All Services
             </button>
           </div>
@@ -127,69 +127,66 @@ export default function Home() {
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 */}
-            <div className="bg-[#EFF4FF] rounded-2xl p-6 flex flex-col gap-4 h-[400px]">
-              <div className="w-20 h-20">
-                {/* Placeholder image tag */}
+            <div className="bg-[#1C1C5A] rounded-2xl p-6 flex flex-col gap-4 h-[400px] text-white hover:border hover:border-[#FFA500] transition-all duration-200">
+            <div className="w-20 h-20 bg-[#f0d687] rounded-full flex items-center justify-center p-3">
                 <img
-                  src="../TaxPlanning.png"
-                  alt="Tax Planning Icon"
-                  className="w-full h-full object-contain"
+                  src="../RTM_taxation copy.png"
+                  alt="Icon for Secure & Smart"
+                  className="w-20 h-20 object-contain"  
                 />
               </div>
-              <h3 className="text-3xl font-semibold mt-12">Tax Planning</h3>
-              <p className="text-black text-xl">
+              <h3 className="text-3xl font-semibold mt-12 text-[#FFA500]">Tax Planning</h3>
+              <p className="text-gray-300 text-xl">
                 Our payroll processing services take the hassle out of managing
                 your payroll, allowing you to focus on running your business.
               </p>
               <a
                 href="#"
-                className="text-sm font-medium text-[#2A3356] underline inline-flex items-center gap-1 mt-auto"
+                className="text-sm font-medium text-[#FFA500] hover:text-white transition-colors duration-200 inline-flex items-center gap-1 mt-auto"
               >
                 View Detail <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
 
             {/* Card 2 (Highlighted) */}
-            <div className="bg-[#1C2442] scale-105 text-white rounded-2xl p-6 flex flex-col gap-4">
-              <div className="w-20 h-20">
-                {/* Placeholder image tag */}
+            <div className="bg-[#1C1C5A] scale-105 text-white rounded-2xl p-6 flex flex-col gap-4 border-2 border-[#FFA500]">
+            <div className="w-20 h-20 bg-[#f0d687] rounded-full flex items-center justify-center p-3">
                 <img
-                  src="../auditServices.png"
-                  alt="Audit Services Icon"
-                  className="w-full h-full object-contain"
+                  src="../RTM_taxes copy.png"
+                  alt="Icon for Secure & Smart"
+                  className="w-20 h-20 object-contain"  
                 />
               </div>
-              <h3 className="text-3xl font-semibold mt-12">Audit services</h3>
+              <h3 className="text-3xl font-semibold mt-12 text-[#FFA500]">Audit services</h3>
               <p className="text-white text-xl">
                 Our payroll processing services take the hassle out of managing
                 your payroll, allowing you to focus on running your business.
               </p>
               <a
                 href="#"
-                className="text-sm font-normal text-yellow-200 underline inline-flex items-center gap-1 mt-auto"
+                className="text-sm font-normal text-[#FFA500] hover:text-white transition-colors duration-200 inline-flex items-center gap-1 mt-auto"
               >
                 View Detail <ArrowUpRight className="w-5 h-5" />
               </a>
             </div>
 
             {/* Card 3 */}
-            <div className="bg-[#334166] rounded-2xl p-6 flex flex-col gap-4 text-white">
-              <div className="w-20 h-20">
-                {/* Placeholder image tag */}
+            <div className="bg-[#1C1C5A] rounded-2xl p-6 flex flex-col gap-4 text-white hover:border hover:border-[#FFA500] transition-all duration-200">
+            <div className="w-20 h-20 bg-[#f0d687] rounded-full flex items-center justify-center p-3">
                 <img
-                  src="../TaxStrategy.png"
-                  alt="Tax Strategy Icon"
-                  className="w-full h-full object-contain"
+                  src="../RTM_tax-law copy.png"
+                  alt="Icon for Secure & Smart"
+                  className="w-20 h-20 object-contain"  
                 />
               </div>
-              <h3 className="text-3xl font-semibold mt-12">Tax strategy</h3>
+              <h3 className="text-3xl font-semibold mt-12 text-[#FFA500]">Tax strategy</h3>
               <p className="text-white text-xl">
                 Our payroll processing services take the hassle out of managing
                 your payroll, allowing you to focus on running your business.
               </p>
               <a
                 href="#"
-                className="text-sm font-medium text-yellow-100 underline inline-flex items-center gap-1 mt-auto"
+                className="text-sm font-medium text-[#FFA500] hover:text-white transition-colors duration-200 inline-flex items-center gap-1 mt-auto"
               >
                 View Detail <ArrowUpRight className="w-4 h-4" />
               </a>
@@ -199,9 +196,7 @@ export default function Home() {
       </section>
       <CtaSection />
       <PricingSection />
-      <div className="container mx-48 ">
         <FaqSection />
-      </div>
       <TestimonialSection />
       <BlogSection />
       <Footer />

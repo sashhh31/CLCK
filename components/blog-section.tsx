@@ -33,24 +33,6 @@ export default function BlogSection() {
           <p className="max-w-[700px] text-muted-foreground text-xl text-medium">
           We specialize in providing comprehensive financial services tailored to meet the unique needs of our clients.
           </p>
-          {/* <div className="flex items-center space-x-2 bg-slate-100 p-1 rounded-lg">
-            <button
-              onClick={() => setBillingCycle("monthly")}
-              className={`px-4 py-2 text-sm rounded-md ${
-                billingCycle === "monthly" ? "bg-[#2A3356] text-white" : "bg-transparent"
-              }`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBillingCycle("yearly")}
-              className={`px-4 py-2 text-sm rounded-md ${
-                billingCycle === "yearly" ? "bg-[#2A3356] text-white" : "bg-transparent"
-              }`}
-            >
-              Yearly
-            </button>
-          </div> */}
         </div>             
         <div className="flex justify-center">
 
@@ -72,7 +54,7 @@ export default function BlogSection() {
                     link: "/brand-news/ai-financial-reporting",
                   },
                 ].map((post, index) => (
-                  <div key={index} className="group bg-gray-100 rounded-2xl">
+                  <div key={index} className="group bg-gray-200 rounded-2xl transition-all duration-200 hover:shadow-md hover:border hover:border-[#FFA500]">
                     <div className="overflow-hidden rounded-lg mb-4">
                       <img
                         src={post.image || "/placeholder.svg"}
@@ -84,8 +66,8 @@ export default function BlogSection() {
                     </div>
                     <div className="p-4">
 
-                    <h3 className="text-sm font-bold mb-3">{post.title}</h3>
-                    <Link href={post.link} className="text-xs font-medium text-[#2A3356] hover:underline">
+                    <h3 className="text-sm font-bold mb-3 text-black">{post.title}</h3>
+                    <Link href={post.link} className="text-xs font-medium text-black hover:text-black transition-colors duration-200">
                       Read More
                     </Link>
                     </div>

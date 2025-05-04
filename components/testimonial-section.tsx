@@ -86,7 +86,7 @@ export default function TestimonialsSection() {
   return (
     <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-7xl mx-auto ">
       <div className="mb-6 sm:mb-8 md:mb-10 lg:mb-14">
-        <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-gray-500 mb-2 md:mb-3">Testimonials</h3>
+        <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[#1C1C5A] mb-2 md:mb-3">Testimonials</h3>
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-3 sm:gap-4 md:gap-6">
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 max-w-md">Client Reviews About CLCK Bookkeeping</h2>
           <p className="text-gray-500 max-w-md text-sm sm:text-base md:text-lg lg:text-xl">
@@ -107,14 +107,14 @@ export default function TestimonialsSection() {
                 <div
                   className={`${
                     index % 2 === 0 
-                      ? 'bg-gray-100 text-black' 
-                      : 'bg-[#2d3b55] text-white sm:scale-[1.02] md:scale-[1.05] sm:mx-2 md:mx-4 lg:mx-6 xl:mx-8'
+                      ? 'bg-[#1C1C5A] text-white transition-all duration-200 hover:border hover:border-[#FFA500] hover:shadow-md' 
+                      : 'bg-[#1C1C5A] text-white sm:scale-[1.02] md:scale-[1.05] sm:mx-2 md:mx-4 lg:mx-6 xl:mx-8 transition-all duration-200 hover:border hover:border-[#FFA500] hover:shadow-md'
                   } p-4 sm:p-5 md:p-6 lg:p-8 xl:p-10 rounded-2xl relative h-auto min-h-[250px] sm:min-h-[300px] md:min-h-[350px] lg:min-h-[400px]`}
                 >
                   <img
                     src="../comma.png"
                     className={`mb-3 sm:mb-4 md:mb-6 h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 mt-3 sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 ${
-                      index % 1 === 0 ? 'filter grayscale brightness-50 invert' : 'filter grayscale brightness-75'
+                      index % 2 !== 0 ? 'filter grayscale brightness-50 invert' : 'filter grayscale brightness-0 invert-0 opacity-50'
                     }`}
                   />
                   <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-4 sm:mb-5 md:mb-6 lg:mb-8 xl:mb-10 line-clamp-6 md:line-clamp-none">
@@ -134,7 +134,9 @@ export default function TestimonialsSection() {
                       <h4 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-medium">
                         {testimonial.name}
                       </h4>
-                      <p className={`text-xs sm:text-sm md:text-base lg:text-lg ${index % 1 === 0 ? "text-white" : "text-black"}`}>
+                      <p className={`text-xs sm:text-sm md:text-base lg:text-lg ${
+                        index % 2 !== 0 ? "text-[#FFA500]" : "text-[#FFA500]"
+                      }`}>
                         {testimonial.title}
                       </p>
                     </div>
@@ -147,7 +149,7 @@ export default function TestimonialsSection() {
 
         <button
           onClick={prevSlide}
-          className="absolute top-1/2 left-0 -translate-y-1/2 bg-white rounded-full p-1 sm:p-2 shadow-lg z-10"
+          className="absolute top-1/2 left-0 -translate-y-1/2 bg-white rounded-full p-1 sm:p-2 shadow-lg z-10 hover:text-[#FFA500] transition-colors duration-200"
           aria-label="Previous testimonial"
         >
           <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-700" />
@@ -155,7 +157,7 @@ export default function TestimonialsSection() {
 
         <button
           onClick={nextSlide}
-          className="absolute top-1/2 right-0 -translate-y-1/2 bg-white rounded-full p-1 sm:p-2 shadow-lg z-10"
+          className="absolute top-1/2 right-0 -translate-y-1/2 bg-white rounded-full p-1 sm:p-2 shadow-lg z-10 hover:text-[#FFA500] transition-colors duration-200"
           aria-label="Next testimonial"
         >
           <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-700" />
@@ -168,7 +170,7 @@ export default function TestimonialsSection() {
             key={index}
             onClick={() => goToSlide(index)}
             className={`h-1 sm:h-2 rounded-full transition-all duration-300 ${
-              activeIndex === index ? "w-4 sm:w-6 md:w-8 bg-[#2d3b55]" : "w-1 sm:w-2 bg-gray-300"
+              activeIndex === index ? "w-4 sm:w-6 md:w-8 bg-[#FFA500]" : "w-1 sm:w-2 bg-gray-300"
             }`}
             aria-label={`Go to testimonial ${index + 1}`}
           />

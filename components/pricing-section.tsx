@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
+import { Progress } from "@/components/ui/progress"
 
 export default function PricingSection() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly")
@@ -18,40 +19,44 @@ export default function PricingSection() {
         </div>
         <div className="flex justify-center mt-12 md:mt-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 w-full max-w-[1000px]">
-            <div className="bg-[#E0EAFF] border-2 border-[#2A3356] p-4 md:p-6 rounded-3xl">
-              <h3 className="text-xl md:text-2xl font-semibold text-[#1A1A1A]">Basic</h3>
-              <p className="text-sm text-[#333333] my-3 md:my-4">
+            <div className="bg-[#1C1C5A] border-2 border-[#1C1C5A] p-4 md:p-6 rounded-3xl transition-all duration-200 hover:border-[#FFA500] hover:shadow-md text-white">
+              <h3 className="text-xl md:text-2xl font-semibold text-white">Basic</h3>
+              <p className="text-sm text-gray-300 my-3 md:my-4">
                 Perfect for sole traders and small businesses just starting out.
               </p>
               <div className="mb-4">
-                <span className="text-2xl md:text-3xl font-bold text-[#1A1A1A]">£67.00</span>
-                <span className="text-sm text-[#333333]">/Month</span>
+                <span className="text-2xl md:text-3xl font-bold text-[#FFA500]">£67.00</span>
+                <span className="text-sm text-gray-300">/Month</span>
               </div>
-              <Button className="w-full bg-[#2A3356] hover:bg-[#1C2442] text-white font-semibold mb-4 md:mb-6">Get Started</Button>
+              <Button className="w-full bg-[#FFA500] hover:bg-[#FFA500]/90 text-white font-semibold mb-4 md:mb-6">Get Started</Button>
+              <div className="mb-4">
+                <span className="text-sm text-gray-300 mb-2 block">Basic plan features</span>
+                <Progress value={33} className="h-2" />
+              </div>
               <div>
-                <h4 className="font-medium mb-3 text-[#1A1A1A]">Plan Includes</h4>
+                <h4 className="font-medium mb-3 text-white">Plan Includes</h4>
                 <ul className="space-y-2">
-                  <li className="flex items-center text-sm text-[#1A1A1A]">
-                    <div className="w-5 h-5 bg-[#2A3356] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-white" />
+                  <li className="flex items-center text-sm text-white">
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     1x Self-Assessment
                   </li>
-                  <li className="flex items-center text-sm text-[#1A1A1A]">
-                    <div className="w-5 h-5 bg-[#2A3356] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-white" />
+                  <li className="flex items-center text-sm text-white">
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     Monthly Digital Bookkeeping Licence
                   </li>
-                  <li className="flex items-center text-sm text-[#1A1A1A]">
-                    <div className="w-5 h-5 bg-[#2A3356] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-white" />
+                  <li className="flex items-center text-sm text-white">
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     Quarterly Bookkeeping
                   </li>
-                  <li className="flex items-center text-sm text-[#1A1A1A]">
-                    <div className="w-5 h-5 bg-[#2A3356] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-white" />
+                  <li className="flex items-center text-sm text-white">
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     Profit & Loss Account
                   </li>
@@ -59,42 +64,46 @@ export default function PricingSection() {
               </div>
             </div>
 
-            <div className="bg-[#1C2442] border-2 border-[#F8D77E] p-4 md:p-6 rounded-3xl text-white md:scale-105 md:-translate-y-2">
+            <div className="bg-[#1C1C5A] border-2 border-[#FFA500] p-4 md:p-6 rounded-3xl text-white md:scale-105 md:-translate-y-2 transition-all duration-200 hover:shadow-md">
               <h3 className="text-xl md:text-2xl font-semibold">Enterprise</h3>
               <p className="text-sm text-white my-3 md:my-4">
                 Ideal for growing businesses with more complex financial needs.
               </p>
               <div className="mb-4">
-                <span className="text-2xl md:text-3xl font-bold text-[#FFDE8A]">£99.00</span>
-                <span className="text-sm text-[#FFDE8A]">/Month</span>
+                <span className="text-2xl md:text-3xl font-bold text-[#FFA500]">£99.00</span>
+                <span className="text-sm text-[#FFA500]">/Month</span>
               </div>
-              <Button className="w-full bg-[#FFDE8A] hover:bg-[#FFD35E] text-[#1A1A1A] font-bold mb-4 md:mb-6">
+              <Button className="w-full bg-[#FFA500] hover:bg-[#FFA500]/90 text-white font-bold mb-4 md:mb-6">
                 Get Started
               </Button>
+              <div className="mb-4">
+                <span className="text-sm text-white mb-2 block">Enterprise plan features</span>
+                <Progress value={66} className="h-2" />
+              </div>
               <div>
                 <h4 className="font-medium mb-3 text-white">Plan Includes</h4>
                 <ul className="space-y-2">
                   <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFDE8A] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1A1A1A]" />
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     All the benefits of Basic
                   </li>
                   <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFDE8A] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1A1A1A]" />
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     Monthly Bookkeeping
                   </li>
                   <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFDE8A] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1A1A1A]" />
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     VAT Returns
                   </li>
                   <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFDE8A] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1A1A1A]" />
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     Educational subscription Access
                   </li>
@@ -102,40 +111,44 @@ export default function PricingSection() {
               </div>
             </div>
 
-            <div className="bg-[#E9F0FF] border-2 border-[#334166] p-4 md:p-6 rounded-3xl">
-              <h3 className="text-xl md:text-2xl font-semibold text-[#1A1A1A]">Professional</h3>
-              <p className="text-sm text-[#333333] my-3 md:my-4">
+            <div className="bg-[#1C1C5A] border-2 border-[#1C1C5A] p-4 md:p-6 rounded-3xl transition-all duration-200 hover:border-[#FFA500] hover:shadow-md text-white">
+              <h3 className="text-xl md:text-2xl font-semibold text-white">Professional</h3>
+              <p className="text-sm text-gray-300 my-3 md:my-4">
                 Comprehensive solution for established businesses requiring full financial support.
               </p>
               <div className="mb-4">
-                <span className="text-2xl md:text-3xl font-bold text-[#1A1A1A]">£166.67</span>
-                <span className="text-sm text-[#333333]">/Month</span>
+                <span className="text-2xl md:text-3xl font-bold text-[#FFA500]">£166.67</span>
+                <span className="text-sm text-gray-300">/Month</span>
               </div>
-              <Button className="w-full bg-[#334166] hover:bg-[#2A3356] text-white font-semibold mb-4 md:mb-6">Get Started</Button>
+              <Button className="w-full bg-[#FFA500] hover:bg-[#FFA500]/90 text-white font-semibold mb-4 md:mb-6">Get Started</Button>
+              <div className="mb-4">
+                <span className="text-sm text-gray-300 mb-2 block">Professional plan features</span>
+                <Progress value={100} className="h-2" />
+              </div>
               <div>
-                <h4 className="font-medium mb-3 text-[#1A1A1A]">Plan Includes</h4>
+                <h4 className="font-medium mb-3 text-white">Plan Includes</h4>
                 <ul className="space-y-2">
-                  <li className="flex items-center text-sm text-[#1A1A1A]">
-                    <div className="w-5 h-5 bg-[#334166] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-white" />
+                  <li className="flex items-center text-sm text-white">
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     All the benefits of Enterprise
                   </li>
-                  <li className="flex items-center text-sm text-[#1A1A1A]">
-                    <div className="w-5 h-5 bg-[#334166] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-white" />
+                  <li className="flex items-center text-sm text-white">
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     FRS 105
                   </li>
-                  <li className="flex items-center text-sm text-[#1A1A1A]">
-                    <div className="w-5 h-5 bg-[#334166] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-white" />
+                  <li className="flex items-center text-sm text-white">
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     Corporation Tax
                   </li>
-                  <li className="flex items-center text-sm text-[#1A1A1A]">
-                    <div className="w-5 h-5 bg-[#334166] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-white" />
+                  <li className="flex items-center text-sm text-white">
+                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
+                      <Check className="h-3 w-3 text-[#1C1C5A]" />
                     </div>
                     Quarterly 1-hour video meetings
                   </li>

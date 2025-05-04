@@ -31,6 +31,15 @@ const config = {
         'navy': {
           700: '#2c3e50', // This matches the dark blue in your testimonial slider
         },
+        'orange': {
+          500: '#FFA500', // Our primary orange accent color
+        },
+        'neutral-light': {
+          100: '#F2F2F2', // Light neutral for card backgrounds
+        },
+        'dark-blue': {
+          900: '#1C1C5A', // Dark blue for contrast with orange
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
