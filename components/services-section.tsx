@@ -185,7 +185,6 @@ function ServicesGrid({ services }: { services: ServiceItem[] }) {
               {service.icon ? getIconComponent(service.icon) : <Clock className="h-6 w-6" />}
             </div>
             <h3 className="text-lg font-bold mb-2 text-white">{service.title}</h3>
-            <p className="text-sm text-gray-300 mb-4">{service.description}</p>
             <Link 
               href={service.slug ? `/services/${service.slug}` : `/services/${service.sys.id}`}
               className="text-xs font-medium text-[#FFA500] hover:text-white transition-colors duration-200 inline-flex items-center"
