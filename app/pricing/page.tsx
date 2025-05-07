@@ -2,7 +2,10 @@ import PricingSection from "@/components/pricing-section"
 import CtaSection from "@/components/cta-section"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-export default function PricingPage() {
+import { fetchPricingPlans, fetchCtaSectionData } from "@/lib/contentful"
+export default async function PricingPage() {
+  const pricingPlans = await fetchPricingPlans();
+  const ctaData = await fetchCtaSectionData();
   return (
     <div>
 <Header/>
@@ -14,8 +17,8 @@ export default function PricingPage() {
           </h1>
         </div>
       </section>
-      <PricingSection />
-      <CtaSection />
+      <PricingSection pricingPlans={pricingPlans} />
+      <CtaSection ctaData={ctaData} />
     </div>
     <Footer/>
     </div>

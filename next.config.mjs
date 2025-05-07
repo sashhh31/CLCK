@@ -22,6 +22,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  images: {
+    domains: ['images.ctfassets.net'], // Add Contentful's image domain
+  },
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,

@@ -1,12 +1,23 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Check } from "lucide-react"
-import { Progress } from "@/components/ui/progress"
+// File: components/pricing-section.tsx (Client Component)
+import PricingCards, { PricingPlan } from "@/components/PricingCards"
+import React from "react"
 
-export default function PricingSection() {
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly")
+type Props = {
+  pricingPlans: PricingPlan[];
+};
+
+// Main Pricing Section component (Client Component)
+export default function PricingSection({ pricingPlans = [] }: Props) {
+  // If no pricing plans are provided, show a placeholder message
+  if (!pricingPlans.length) {
+    return (
+      <section className="w-full py-16 px-4 max-w-7xl mx-auto">
+        <p className="text-center text-gray-500">No pricing plans available.</p>
+      </section>
+    );
+  }
 
   return (
     <section className="w-full py-12 md:py-24">
@@ -18,144 +29,7 @@ export default function PricingSection() {
           </p>
         </div>
         <div className="flex justify-center mt-12 md:mt-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 w-full max-w-[1000px]">
-            <div className="bg-[#1C1C5A] border-2 border-[#1C1C5A] p-4 md:p-6 rounded-3xl transition-all duration-200 hover:border-[#FFA500] hover:shadow-md text-white">
-              <h3 className="text-xl md:text-2xl font-semibold text-white">Basic</h3>
-              <p className="text-sm text-gray-300 my-3 md:my-4">
-                Perfect for sole traders and small businesses just starting out.
-              </p>
-              <div className="mb-4">
-                <span className="text-2xl md:text-3xl font-bold text-[#FFA500]">£67.00</span>
-                <span className="text-sm text-gray-300">/Month</span>
-              </div>
-              <Button className="w-full bg-[#FFA500] hover:bg-[#FFA500]/90 text-white font-semibold mb-4 md:mb-6">Get Started</Button>
-              <div className="mb-4">
-                <span className="text-sm text-gray-300 mb-2 block">Basic plan features</span>
-                <Progress value={33} className="h-2" />
-              </div>
-              <div>
-                <h4 className="font-medium mb-3 text-white">Plan Includes</h4>
-                <ul className="space-y-2">
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    1x Self-Assessment
-                  </li>
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    Monthly Digital Bookkeeping Licence
-                  </li>
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    Quarterly Bookkeeping
-                  </li>
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    Profit & Loss Account
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-[#1C1C5A] border-2 border-[#FFA500] p-4 md:p-6 rounded-3xl text-white md:scale-105 md:-translate-y-2 transition-all duration-200 hover:shadow-md">
-              <h3 className="text-xl md:text-2xl font-semibold">Enterprise</h3>
-              <p className="text-sm text-white my-3 md:my-4">
-                Ideal for growing businesses with more complex financial needs.
-              </p>
-              <div className="mb-4">
-                <span className="text-2xl md:text-3xl font-bold text-[#FFA500]">£99.00</span>
-                <span className="text-sm text-[#FFA500]">/Month</span>
-              </div>
-              <Button className="w-full bg-[#FFA500] hover:bg-[#FFA500]/90 text-white font-bold mb-4 md:mb-6">
-                Get Started
-              </Button>
-              <div className="mb-4">
-                <span className="text-sm text-white mb-2 block">Enterprise plan features</span>
-                <Progress value={66} className="h-2" />
-              </div>
-              <div>
-                <h4 className="font-medium mb-3 text-white">Plan Includes</h4>
-                <ul className="space-y-2">
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    All the benefits of Basic
-                  </li>
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    Monthly Bookkeeping
-                  </li>
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    VAT Returns
-                  </li>
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    Educational subscription Access
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-[#1C1C5A] border-2 border-[#1C1C5A] p-4 md:p-6 rounded-3xl transition-all duration-200 hover:border-[#FFA500] hover:shadow-md text-white">
-              <h3 className="text-xl md:text-2xl font-semibold text-white">Professional</h3>
-              <p className="text-sm text-gray-300 my-3 md:my-4">
-                Comprehensive solution for established businesses requiring full financial support.
-              </p>
-              <div className="mb-4">
-                <span className="text-2xl md:text-3xl font-bold text-[#FFA500]">£166.67</span>
-                <span className="text-sm text-gray-300">/Month</span>
-              </div>
-              <Button className="w-full bg-[#FFA500] hover:bg-[#FFA500]/90 text-white font-semibold mb-4 md:mb-6">Get Started</Button>
-              <div className="mb-4">
-                <span className="text-sm text-gray-300 mb-2 block">Professional plan features</span>
-                <Progress value={100} className="h-2" />
-              </div>
-              <div>
-                <h4 className="font-medium mb-3 text-white">Plan Includes</h4>
-                <ul className="space-y-2">
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    All the benefits of Enterprise
-                  </li>
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    FRS 105
-                  </li>
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    Corporation Tax
-                  </li>
-                  <li className="flex items-center text-sm text-white">
-                    <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-                      <Check className="h-3 w-3 text-[#1C1C5A]" />
-                    </div>
-                    Quarterly 1-hour video meetings
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <PricingCards pricingPlans={pricingPlans} />
         </div>
       </div>
     </section>

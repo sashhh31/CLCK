@@ -1,97 +1,93 @@
-"use client"
+// app/components/TestimonialsSection.tsx
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
+import Image from 'next/image';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 
-export default function TestimonialsSection() {
-  // Set initial index to 1 (the middle testimonial)
-  const [activeIndex, setActiveIndex] = useState(1)
-  const [touchStart, setTouchStart] = useState(0)
-  const [touchEnd, setTouchEnd] = useState(0)
-  const sliderRef = useRef<HTMLDivElement>(null)
+type Testimonial = {
+  sys: { id: string };
+  feedback: string;
+  name: string;
+  companyName: string;
+  feedbackerImage?: {
+    url: string;
+    title: string;
+  } | null;
+};
 
-  const testimonials = [
-    {
-      id: 1,
-      text: "Working with CLCK Accounting has been a game-changer for our small business. Their meticulous attention to detail and proactive tax planning have saved us. I've been a client of CLCK Accounting for over a decade. Their team's expertise in navigating complex international",
-      name: "Sarah Laura",
-      title: "CEO of pluz Company",
-      avatar: "/placeholder.svg?height=80&width=80",
-    },
-    {
-      id: 2,
-      text: "Working with CLCK Accounting has been a game-changer for our small business. Their meticulous attention to detail and proactive tax planning have saved us. I've been a client of CLCK Accounting for over a decade. Their team's expertise in navigating complex international",
-      name: "Sarah Laura",
-      title: "CEO of pluz Company",
-      avatar: "../sarah.png",
-    },
-    {
-      id: 3,
-      text: "CLCK Bookkeeping transformed our financial operations. Their team is responsive, professional, and incredibly knowledgeable. I highly recommend their services to any business looking for reliable bookkeeping.",
-      name: "Jessica Miller",
-      title: "Operations Director at Elevate Solutions",
-      avatar: "/placeholder.svg?height=80&width=80",
-    },
-  ]
+type Props = {
+  testimonials: Testimonial[];
+};
+
+export default function TestimonialsSection({ testimonials }: Props) {
+  const [activeIndex, setActiveIndex] = useState(1);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   // Handle swipe on mobile
   useEffect(() => {
     const handleTouchStart = (e: TouchEvent) => {
-      setTouchStart(e.targetTouches[0].clientX)
-    }
+      setTouchStart(e.targetTouches[0].clientX);
+    };
     
     const handleTouchMove = (e: TouchEvent) => {
-      setTouchEnd(e.targetTouches[0].clientX)
-    }
+      setTouchEnd(e.targetTouches[0].clientX);
+    };
     
     const handleTouchEnd = () => {
       if (touchStart - touchEnd > 50) {
-        // Swipe left
-        nextSlide()
+        nextSlide();
       }
       
       if (touchStart - touchEnd < -50) {
-        // Swipe right
-        prevSlide()
+        prevSlide();
       }
-    }
+    };
     
-    const slider = sliderRef.current
+    const slider = sliderRef.current;
     if (slider) {
-      slider.addEventListener('touchstart', handleTouchStart)
-      slider.addEventListener('touchmove', handleTouchMove)
-      slider.addEventListener('touchend', handleTouchEnd)
+      slider.addEventListener('touchstart', handleTouchStart);
+      slider.addEventListener('touchmove', handleTouchMove);
+      slider.addEventListener('touchend', handleTouchEnd);
       
       return () => {
-        slider.removeEventListener('touchstart', handleTouchStart)
-        slider.removeEventListener('touchmove', handleTouchMove)
-        slider.removeEventListener('touchend', handleTouchEnd)
-      }
+        slider.removeEventListener('touchstart', handleTouchStart);
+        slider.removeEventListener('touchmove', handleTouchMove);
+        slider.removeEventListener('touchend', handleTouchEnd);
+      };
     }
-  }, [touchStart, touchEnd])
+  }, [touchStart, touchEnd]);
 
   const nextSlide = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length)
-  }
+    setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+  };
 
   const prevSlide = () => {
-    setActiveIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length)
-  }
+    setActiveIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
+  };
 
   const goToSlide = (index: number) => {
-    setActiveIndex(index)
+    setActiveIndex(index);
+  };
+
+  if (!testimonials.length) {
+    return (
+      <section className="py-16 px-4 max-w-7xl mx-auto">
+        <p className="text-center text-gray-500">No testimonials available.</p>
+      </section>
+    );
   }
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-7xl mx-auto ">
+    <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-7xl mx-auto">
       <div className="mb-6 sm:mb-8 md:mb-10 lg:mb-14">
         <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[#1C1C5A] mb-2 md:mb-3">Testimonials</h3>
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-3 sm:gap-4 md:gap-6">
           <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 max-w-md">Client Reviews About CLCK Bookkeeping</h2>
           <p className="text-gray-500 max-w-md text-sm sm:text-base md:text-lg lg:text-xl">
-            We specialize in providing comprehensive financial services tailored to meet the unique needs of our
-            clients.
+            We specialize in providing comprehensive financial services tailored to meet the unique needs of our clients.
           </p>
         </div>
       </div>
@@ -103,7 +99,7 @@ export default function TestimonialsSection() {
             style={{ transform: `translateX(-${activeIndex * 100}%)` }}
           >
             {testimonials.map((testimonial, index) => (
-              <div key={testimonial.id} className="w-full flex-shrink-0 px-1 sm:px-2 md:px-4">
+              <div key={testimonial.sys.id} className="w-full flex-shrink-0 px-1 sm:px-2 md:px-4">
                 <div
                   className={`${
                     index % 2 === 0 
@@ -112,19 +108,19 @@ export default function TestimonialsSection() {
                   } p-4 sm:p-5 md:p-6 lg:p-8 xl:p-10 rounded-2xl relative h-auto min-h-[250px] sm:min-h-[300px] md:min-h-[350px] lg:min-h-[400px]`}
                 >
                   <img
-                    src="../comma.png"
+                    src="/comma.png"
                     className={`mb-3 sm:mb-4 md:mb-6 h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 mt-3 sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 ${
                       index % 2 !== 0 ? 'filter grayscale brightness-50 invert' : 'filter grayscale brightness-0 invert-0 opacity-50'
                     }`}
                   />
                   <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-4 sm:mb-5 md:mb-6 lg:mb-8 xl:mb-10 line-clamp-6 md:line-clamp-none">
-                    {testimonial.text}
+                    {testimonial.feedback}
                   </p>
                   <div className="flex items-center mt-3 sm:mt-4 md:mt-6 absolute bottom-4 sm:bottom-5 md:bottom-6 lg:bottom-8">
                     <div className="h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 rounded-full overflow-hidden mr-2 sm:mr-3 md:mr-4">
                       <Image
-                        src={testimonial.avatar || "/placeholder.svg"}
-                        alt={testimonial.name}
+                        src={testimonial.feedbackerImage?.url || "/placeholder.svg"}
+                        alt={testimonial.feedbackerImage?.title || testimonial.name}
                         width={84}
                         height={84}
                         className="object-cover h-full w-full"
@@ -134,10 +130,8 @@ export default function TestimonialsSection() {
                       <h4 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-medium">
                         {testimonial.name}
                       </h4>
-                      <p className={`text-xs sm:text-sm md:text-base lg:text-lg ${
-                        index % 2 !== 0 ? "text-[#FFA500]" : "text-[#FFA500]"
-                      }`}>
-                        {testimonial.title}
+                      <p className="text-xs sm:text-sm md:text-base lg:text-lg text-[#FFA500]">
+                        {testimonial.companyName}
                       </p>
                     </div>
                   </div>
@@ -177,5 +171,5 @@ export default function TestimonialsSection() {
         ))}
       </div>
     </section>
-  )
+  );
 }

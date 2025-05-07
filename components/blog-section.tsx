@@ -1,82 +1,65 @@
 import Link from "next/link"
+import Image from "next/image"
+import { ArrowRight } from "lucide-react"
+import { fetchBlogNewsItems } from "@/lib/contentful"
+import { formatDate } from "@/lib/utils"
 
-export default function BlogSection() {
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Bookkeeping 101: Why Keeping Track of Your Finances Matters",
-      date: "Jul 02, 2024",
-      image: "/placeholder.svg?height=200&width=300",
-      link: "/blog/bookkeeping-101",
-    },
-    {
-      id: 2,
-      title: "Common Tax Mistakes and How to Avoid Them",
-      date: "Jul 02, 2024",
-      image: "/placeholder.svg?height=200&width=300",
-      link: "/blog/tax-mistakes",
-    },
-    {
-      id: 3,
-      title: "How Digital Bookkeeping Makes Financial Management Easier",
-      date: "Jul 02, 2024",
-      image: "/placeholder.svg?height=200&width=300",
-      link: "/blog/digital-bookkeeping",
-    },
-  ]
+export default async function BlogSection() {
+  // Fetch blog posts from Contentful
+  const allPosts = await fetchBlogNewsItems();
+  
+  // Get only the first 3 posts
+  const blogPosts = allPosts.slice(0, 3);
 
   return (
-    <section className="w-full py-12 md:py-5 px-12 md:px-24">
-         <div className="mt-12 mb-12">
-         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-          <h2 className="text-7xl font-bold tracking-tighter sm:text-4xl">Our Latest Articles & Blogs</h2>
-          <p className="max-w-[700px] text-muted-foreground text-xl text-medium">
-          We specialize in providing comprehensive financial services tailored to meet the unique needs of our clients.
+    <section className="w-full py-12 md:py-16 bg-white text-[#1C1C5A]">
+      <div className="container px-4 md:px-6 mx-auto">
+        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">Our Latest Articles & Blogs</h2>
+          <p className="max-w-[700px] text-gray-600 text-lg">
+            We specialize in providing comprehensive financial services tailored to meet the unique needs of our clients.
           </p>
-        </div>             
+        </div>
+        
         <div className="flex justify-center">
-
-         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-[1120px] ">
-                {[
-                  {
-                    title: "The Future of Blockchain in Accounting: Opportunities and Challenges",
-                    image: "../image (3).png",
-                    link: "/brand-news/blockchain-accounting",
-                  },
-                  {
-                    title: "Navigating Tax Season: Essential Tips for Small Business Owners",
-                    image: "../image (4).png",
-                    link: "/brand-news/tax-season-tips",
-                  },
-                  {
-                    title: "How AI is Revolutionizing Financial Reporting and Analysis",
-                    image: "../image (5).png",
-                    link: "/brand-news/ai-financial-reporting",
-                  },
-                ].map((post, index) => (
-                  <div key={index} className="group bg-gray-200 rounded-2xl transition-all duration-200 hover:shadow-md hover:border hover:border-[#FFA500]">
-                    <div className="overflow-hidden rounded-lg mb-4">
-                      <img
-                        src={post.image || "/placeholder.svg"}
-                        alt={post.title}
-                        className="w-[500px] h-56 object-cover transition-transform duration-300 group-hover:scale-105"
-                        width={250}
-                        height={450}
-                        />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-[1120px]">
+            {blogPosts.map((post) => (
+              <div key={post.sys.id} className="group bg-gray-100 rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-lg hover:shadow-[#1C1C5A33] hover:translate-y-[-5px]">
+                <div className="overflow-hidden">
+                  {post.blogImage ? (
+                    <Image
+                      src={post.blogImage.url}
+                      alt={post.blogImage.title || post.blogHeader}
+                      className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
+                      width={500}
+                      height={300}
+                    />
+                  ) : (
+                    <div className="w-full h-56 bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-500">No image</span>
                     </div>
-                    <div className="p-4">
-
-                    <h3 className="text-sm font-bold mb-3 text-black">{post.title}</h3>
-                    <Link href={post.link} className="text-xs font-medium text-black hover:text-black transition-colors duration-200">
-                      Read More
-                    </Link>
-                    </div>
-                  </div>
-                ))}
+                  )}
+                </div>
+                <div className="p-6">
+                  <p className="text-xs text-gray-500 mb-2">
+                    {post.blogDate ? formatDate(post.blogDate) : "No date"}
+                  </p>
+                  <h3 className="text-md font-bold mb-3 text-[#1C1C5A]">{post.blogHeader}</h3>
+                  <Link 
+                    href={`/blog-news/${post.slug}`} 
+                    className="inline-flex items-center text-[#1C1C5A] hover:text-[#2A2A6A] transition-colors duration-200 text-sm font-medium"
+                  >
+                    Read More 
+                    <span className="ml-2 bg-[#1C1C5A] rounded-full p-1 group-hover:bg-[#2A2A6A] transition-colors duration-200">
+                      <ArrowRight className="h-3 w-3 text-white" />
+                    </span>
+                  </Link>
+                </div>
               </div>
-              </div>
-
-            </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   )
 }

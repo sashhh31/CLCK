@@ -1,15 +1,28 @@
+"use client"
 import React, { useState } from 'react';
 import { Paperclip } from 'lucide-react';
 
-export default function SendEmailDialog({ isOpen, onClose }:any) {
-  const [emailData, setEmailData] = useState({
+interface SendEmailDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+interface EmailData {
+  emailAddress: string;
+  subject: string;
+  message: string;
+  attachments: File[];
+}
+
+export default function SendEmailDialog({ isOpen, onClose }: SendEmailDialogProps) {
+  const [emailData, setEmailData] = useState<EmailData>({
     emailAddress: '',
     subject: '',
     message: '',
     attachments: []
   });
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setEmailData(prev => ({
       ...prev,
@@ -22,7 +35,7 @@ export default function SendEmailDialog({ isOpen, onClose }:any) {
     console.log('Attachment button clicked');
   };
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Email data submitted:', emailData);
     // Here you would typically send the email data to your backend
@@ -77,7 +90,7 @@ export default function SendEmailDialog({ isOpen, onClose }:any) {
               id="message"
               name="message"
               placeholder="Enter message"
-              rows="6"
+              rows={6}
               className="w-full px-4 py-3 rounded-3xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={emailData.message}
               onChange={handleChange}
@@ -104,7 +117,7 @@ export default function SendEmailDialog({ isOpen, onClose }:any) {
             </button>
             <button
               type="submit"
-              className="px-8 py-3 rounded-full bg-[#2E3B5B] text-white font-medium hover:bg-blue-900"
+              className="px-8 py-3 rounded-full bg-[#1C1C5A] text-white font-medium hover:bg-[#1C1C5A]/90"
             >
               Send
             </button>

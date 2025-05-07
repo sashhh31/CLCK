@@ -1,75 +1,14 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import Footer from "@/components/footer"
 import Header from "@/components/header"
+import { fetchBlogNewsItems } from "@/lib/contentful"
+import { formatDate } from "@/lib/utils"
 
-export default function BrandNewsPage() {
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Bookkeeping 101: Why Keeping Track of Your Finances Matters",
-      date: "Jul 02, 2024",
-      image: "../image (3).png",
-      link: "/blog-news/bookkeeping-101",
-    },
-    {
-      id: 2,
-      title: "Common Tax Mistakes and How to Avoid Them",
-      date: "Jul 02, 2024",
-      image: "../image (4).png",
-      link: "/blog-news/tax-mistakes",
-    },
-    {
-      id: 3,
-      title: "How Digital Bookkeeping Makes Financial Management Easier",
-      date: "Jul 02, 2024",
-      image: "../image (5).png",
-      link: "/blog-news/digital-bookkeeping",
-    },
-    {
-      id: 4,
-      title: "How AI is Revolutionizing Financial Reporting and Analysis",
-      date: "Jul 02, 2024",
-      image: "../image (6).png",
-      link: "/blog-news/ai-financial-reporting",
-    },
-    {
-      id: 5,
-      title: "Financial Planning for People with Disabilities: Key Considerations",
-      date: "Jul 02, 2024",
-      image: "../image (7).png",
-      link: "/blog-news/financial-planning-disabilities",
-    },
-    {
-      id: 6,
-      title: "Tax Planning Strategies for High-Net-Worth Individuals",
-      date: "Jul 02, 2024",
-      image: "../image (8).png",
-      link: "/blog-news/tax-planning-high-net-worth",
-    },
-    {
-      id: 7,
-      title: "The Benefits of a Secure Online Document Management System",
-      date: "Jul 02, 2024",
-      image: "../aboutUs.png",
-      link: "/blog-news/secure-document-management",
-    },
-    {
-      id: 8,
-      title: "How a One-on-One Power Hour Can Improve Your Finances",
-      date: "Jul 02, 2024",
-      image: "../image (4).png",
-      link: "/blog-news/power-hour-finances",
-    },
-    {
-      id: 9,
-      title: "Tax Deductions You Might Be Missing Out On",
-      date: "Jul 02, 2024",
-      image: "../image (3).png",
-      link: "/blog-news/tax-deductions",
-    },
-  ]
-
+export default async function BlogNewsPage() {
+  // Fetch blog posts from Contentful
+  const blogPosts = await fetchBlogNewsItems();
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -99,21 +38,29 @@ export default function BrandNewsPage() {
             {/* Blog Posts Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {blogPosts.map((post) => (
-                <div key={post.id} className="group bg-gray-100 rounded-xl sm:rounded-2xl overflow-hidden flex flex-col h-full">
+                <div key={post.sys.id} className="group bg-gray-100 rounded-xl sm:rounded-2xl overflow-hidden flex flex-col h-full">
                   <div className="overflow-hidden">
-                    <img
-                      src={post.image || "/placeholder.svg"}
-                      alt={post.title}
-                      className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
-                      width={300}
-                      height={200}
-                    />
+                    {post.blogImage ? (
+                      <Image
+                        src={post.blogImage.url}
+                        alt={post.blogImage.title || post.blogHeader}
+                        className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
+                        width={300}
+                        height={200}
+                      />
+                    ) : (
+                      <div className="w-full aspect-[4/3] bg-gray-200 flex items-center justify-center">
+                        <span className="text-gray-400">No image</span>
+                      </div>
+                    )}
                   </div>
                   <div className="p-3 sm:p-4 md:p-5 flex flex-col flex-grow">
-                    <p className="text-xs sm:text-sm text-muted-foreground mb-1 sm:mb-2">{post.date}</p>
-                    <h3 className="text-base sm:text-lg font-bold mb-2">{post.title}</h3>
+                    <p className="text-sm sm:text-sm text-muted-foreground mb-1 sm:mb-2">
+                      {post.blogDate ? formatDate(post.blogDate) : "No date"}
+                    </p>
+                    <h3 className="text-lg sm:text-lg font-bold mb-2">{post.blogHeader}</h3>
                     <Link 
-                      href={post.link} 
+                      href={`/blog-news/${post.slug}`} 
                       className="text-xs sm:text-sm font-medium text-[#2A3356] hover:underline mt-auto"
                     >
                       Read More

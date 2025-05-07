@@ -1,7 +1,12 @@
 import FaqSection from "@/components/faq-section"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-export default function FaqsPage() {
+import { fetchFAQs } from "@/lib/contentful"
+
+export default async function FaqsPage() {
+  // Fetch FAQs from Contentful
+  const faqs = await fetchFAQs();
+  
   return (
     <div>
       <Header/>
@@ -17,8 +22,8 @@ export default function FaqsPage() {
         </div>
       </section>
       <div className="flex justify-center items-center ml-20">
-  <FaqSection />
-</div>
+        <FaqSection faqs={faqs} />
+      </div>
     </div>
     <Footer/>
 

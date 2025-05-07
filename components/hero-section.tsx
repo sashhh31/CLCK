@@ -1,60 +1,95 @@
-
 "use client"
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { fetchHeroSectionData } from "@/lib/contentful";
+import { HeroSlide } from "@/lib/contentful-types";
 
-export default function HeroSection() {
+type Props = {
+  slides?: HeroSlide[];
+};
+
+export default function HeroSection({ slides: providedSlides }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [slides, setSlides] = useState<HeroSlide[]>(providedSlides || []);
+  const [isLoading, setIsLoading] = useState(!providedSlides);
   
-  // Define multiple hero content slides
-  const slides = [
-    {
-      title: "Simplify Your Finances with Secure Bookkeeping & Tax Services",
-      highlightWord: "Finances",
-      description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
-      buttonText: "Get Started Now",
-      image: "/s.png.jpg"
-    },
-    {
-      title: "Streamline Your Tax Preparation with Expert Tools",
-      highlightWord: "Tax",
-      description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
-      buttonText: "Get Started Now",
-      image: "/st.png.jpg"
-    },
-    {
-      title: "Secure Document Management for Financial Peace",
-      highlightWord: "Document",
-      description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
-      buttonText: "Get Started Now",
-      image: "/se.png.jpg"
-    }
-  ];
-
+  // Fetch slides from Contentful if not provided as props
   useEffect(() => {
+    if (!providedSlides) {
+      async function loadHeroData() {
+        try {
+          const heroData = await fetchHeroSectionData();
+          setSlides(heroData);
+        } catch (error) {
+          console.error("Error loading hero data:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+      
+      loadHeroData();
+    }
+  }, [providedSlides]);
+  
+  // Auto-rotate slides
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
     }, 3000);
     
     return () => clearInterval(interval);
-  }, []);
+  }, [slides.length]);
+
+  // Show a loading spinner if slides are being fetched
+  if (isLoading) {
+    return (
+      <section className="w-full md:min-h-[700px] min-h-[500px] bg-hero-bg bg-cover bg-center pt-12 md:pt-24 relative flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFA500]"></div>
+      </section>
+    );
+  }
+
+  // If no slides are available after loading, show a default message
+  if (slides.length === 0) {
+    return (
+      <section className="w-full md:min-h-[700px] min-h-[500px] bg-hero-bg bg-cover bg-center pt-12 md:pt-24 relative">
+        <div className="container px-4 md:px-6 mx-auto text-center text-white">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            Welcome to CLCK Bookkeeping
+          </h1>
+          <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto mb-8">
+            Professional bookkeeping and tax services for your business.
+          </p>
+          <Link href="/signup">
+            <button className="bg-[#F8D77E] text-[#272E48] hover:bg-[#F8D77E]/90 rounded-full text-lg px-8 py-3 font-medium">
+              Get Started Now
+            </button>
+          </Link>
+        </div>
+      </section>
+    );
+  }
 
   // Helper function to highlight specific word
-  const formatTitle = (title:any, highlightWord:any) => {
+  const formatTitle = (title: string, highlightWord: string) => {
     const parts = title.split(highlightWord);
     return (
       <div className="max-w-6xl">
-       <div className=" mb-4">
-         {parts[0]}<span className="text-[#F8D77E]">{highlightWord}</span></div>
-         <div>
-        {parts[1]}</div>
+        <div className="mb-4">
+          {parts[0]}<span className="text-[#F8D77E]">{highlightWord}</span>
+        </div>
+        <div>
+          {parts[1]}
+        </div>
       </div>
     );
   };
 
   return (
-<section className="w-full md:min-h-[700px] min-h-[500px] bg-hero-bg bg-cover bg-center pt-12 md:pt-24 relative">
-<div className="container px-4 md:px-6 mx-auto">
+    <section className="w-full md:min-h-[700px] min-h-[500px] bg-hero-bg bg-cover bg-center pt-12 md:pt-24 relative">
+      <div className="container px-4 md:px-6 mx-auto">
         {slides.map((slide, index) => (
           <div 
             key={index}
@@ -78,13 +113,12 @@ export default function HeroSection() {
               </Link>
 
               <div className="w-[1300px] h-[600px] mt-12">
-  <img
-    src={slide.image}
-    alt="Dashboard screenshot"
-    className="w-full h-full object-cover shadow-lg"
-  />
-</div>
-
+                <img
+                  src={slide.image}
+                  alt="Dashboard screenshot"
+                  className="w-full h-full object-cover shadow-lg"
+                />
+              </div>
             </div>
           </div>
         ))}

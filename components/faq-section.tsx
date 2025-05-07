@@ -4,53 +4,83 @@ import { useState } from "react"
 import { Minus, Plus } from "lucide-react"
 
 interface FaqItem {
-  question: string
-  answer: string
+  question: string[]
+  answer: string[]
+  title?: string
+  description?: string
 }
 
-export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+// Helper to flatten FAQ data into question/answer pairs
+function flattenFaqs(faqs: FaqItem[]): { question: string, answer: string }[] {
+  const flat: { question: string, answer: string }[] = [];
+  faqs.forEach(faq => {
+    const qArr = faq.question || [];
+    const aArr = faq.answer || [];
+    const max = Math.max(qArr.length, aArr.length);
+    for (let i = 0; i < max; i++) {
+      flat.push({
+        question: qArr[i] || "",
+        answer: aArr[i] || ""
+      });
+    }
+  });
+  return flat;
+}
 
-  const faqs: FaqItem[] = [
-    {
-      question: "What services do we clck booking offer?",
-      answer:
-        "Fusce mattis dui aliquam dui consectetur et eleifend eros elit. Donec at accumsa ligula. Cras vulputate nunc vitae quam lorem ipsm dolor sit amet.",
-    },
-    {
-      question: "How do I choose the right accounting firm for my business?",
-      answer:
-        "When choosing an accounting firm, consider their expertise in your industry, range of services, reputation, communication style, and fee structure.",
-    },
-    {
-      question: "What Service Do You Offer?",
-      answer:
-        "We offer comprehensive bookkeeping, tax preparation, financial reporting, payroll management, business advisory, and audit services.",
-    },
-    {
-      question: "What qualifications should I look for in an accounting firm?",
-      answer:
-        "Look for proper certifications (CPA, ACCA), industry experience, continuing education, and a good reputation. The firm should stay current with tax laws.",
-    },
-    {
-      question: "What can we do to add services?",
-      answer:
-        "To add services to your account, contact our support team or use the client portal. We'll provide a customized quote.",
-    },
-    {
-      question: "Should I look for in an accounting firm?",
-      answer:
-        "Prioritize expertise in your industry, range of services offered, communication style, and technology adoption.",
-    },
-    {
-      question: "What Is The Accounting Cycle?",
-      answer:
-        "The accounting cycle includes recording transactions, posting to the general ledger, adjusting entries, preparing financial statements, and closing the books.",
-    },
-  ]
+// Client component for FAQ accordion
+function FaqAccordion({ faqs }: { faqs: FaqItem[] }) {
+  const flatFaqs = flattenFaqs(faqs);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleFaq = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  return (
+    <div className="space-y-4">
+      {flatFaqs.map((faq, index) => (
+        <div key={index} className="border-b border-gray-700 pb-4">
+          <button
+            className="flex justify-between items-center w-full text-left text-base md:text-lg font-semibold hover:text-[#FFA500] transition-colors duration-200"
+            onClick={() => toggleFaq(index)}
+          >
+            <span className="pr-4">
+              {faq.question || "FAQ Question"}
+            </span>
+            {openIndex === index ? (
+              <Minus className="h-6 w-6 text-[#FFA500] border border-[#FFA500] rounded-full p-1" />
+            ) : (
+              <Plus className="h-6 w-6 text-[#FFA500] border border-[#FFA500] rounded-full p-1" />
+            )}
+          </button>
+          {openIndex === index && (
+            <div className="mt-2 text-sm text-gray-300">
+              {faq.answer ? (
+                <div className="whitespace-pre-line">{faq.answer}</div>
+              ) : (
+                <p>No answer available.</p>
+              )}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+type Props = {
+  faqs: FaqItem[];
+};
+
+// Main FAQ Section component (Client Component)
+export default function FaqSection({ faqs = [] }: Props) {
+  // If no FAQs are provided, show a placeholder message
+  if (!faqs.length) {
+    return (
+      <section className="w-full py-16 px-4 max-w-7xl mx-auto">
+        <p className="text-center text-gray-500">No FAQs available.</p>
+      </section>
+    );
   }
 
   return (
@@ -63,30 +93,11 @@ export default function FaqSection() {
           <p className="text-sm sm:text-base md:text-lg text-gray-300 mb-6">
             We specialize in providing comprehensive financial services tailored to meet the unique needs of our clients.
           </p>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-gray-700 pb-4">
-                <button
-                  className="flex justify-between items-center w-full text-left text-base md:text-lg font-semibold hover:text-[#FFA500] transition-colors duration-200"
-                  onClick={() => toggleFaq(index)}
-                >
-                  <span className="pr-4">{faq.question}</span>
-                  {openIndex === index ? (
-                    <Minus className="h-6 w-6 text-[#FFA500] border border-[#FFA500] rounded-full p-1" />
-                  ) : (
-                    <Plus className="h-6 w-6 text-[#FFA500] border border-[#FFA500] rounded-full p-1" />
-                  )}
-                </button>
-                {openIndex === index && (
-                  <div className="mt-2 text-sm text-gray-300">
-                    {faq.answer}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+          
+          {/* Client component for interactive accordion */}
+          <FaqAccordion faqs={faqs} />
         </div>
       </div>
     </section>
-  )
+  );
 }
