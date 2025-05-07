@@ -49,7 +49,7 @@ export default function ServicePageSection({ servicePages: providedServices }: P
           {services.map((service, index) => (
             <div 
               key={service.sys?.id || index} 
-              className="bg-[#1C1C5A] rounded-2xl p-6 flex flex-col gap-4 h-[240px] text-white hover:border hover:border-[#FFA500] transition-all duration-200"
+              className="bg-[#1C1C5A] rounded-2xl p-6 flex flex-col gap-4 h-[180px] text-white hover:border hover:border-[#FFA500] transition-all duration-200"
             >
               {service.icon && (
                 <div className="w-12 h-12 bg-[#f0d687] rounded-full flex items-center justify-center p-3">
@@ -61,9 +61,6 @@ export default function ServicePageSection({ servicePages: providedServices }: P
                 </div>
               )}
               <h3 className="text-xl font-semibold  text-[#FFA500]">{service.title}</h3>
-              <p className="text-gray-300 text-sm">
-                {service.description}
-              </p>
               {service.serviceDetailsPage && service.serviceDetailsPage.length > 0 ? (
                 <Link
                   href={`/services/${service.serviceDetailsPage[0].sys.id}`}
