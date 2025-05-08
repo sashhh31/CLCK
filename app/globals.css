@@ -6,6 +6,10 @@
   /* Define the font families as CSS variables */
   --raleway-font: var(--font-raleway), sans-serif;
   --montserrat-font: var(--font-montserrat), sans-serif;
+  
+  /* Define color variables in RGB format */
+  --primary-color: 46, 59, 91;  /* #2E3B5B in RGB */
+  --secondary-color: 239, 213, 136;  /* #EFD588 in RGB */
 }
 
 /* Set Raleway as the default font for the entire body */
@@ -41,9 +45,9 @@ small {
   --card-foreground: 222.2 84% 4.9%;
   --popover: 0 0% 100%;
   --popover-foreground: 222.2 84% 4.9%;
-  --primary: 221 39% 25%;
+  --primary: var(--primary-color);
   --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
+  --secondary: var(--secondary-color);
   --secondary-foreground: 222.2 47.4% 11.2%;
   --muted: 210 40% 96.1%;
   --muted-foreground: 215.4 16.3% 46.9%;
@@ -64,9 +68,9 @@ small {
   --card-foreground: 210 40% 98%;
   --popover: 222.2 84% 4.9%;
   --popover-foreground: 210 40% 98%;
-  --primary: 217.2 91.2% 59.8%;
+  --primary: var(--primary-color);
   --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
+  --secondary: var(--secondary-color);
   --secondary-foreground: 210 40% 98%;
   --muted: 217.2 32.6% 17.5%;
   --muted-foreground: 215 20.2% 65.1%;

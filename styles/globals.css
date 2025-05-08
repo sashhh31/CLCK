@@ -4,6 +4,8 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(var(--primary-color));
+  color: rgb(var(--secondary-color));
 }
 
 @layer utilities {
@@ -47,6 +49,12 @@ body {
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 39 100% 50%;
+    --primary-color: 46, 59, 91; /* Default primary color */
+    --secondary-color: 239, 213, 136; /* Default secondary color */
+    --primary-rgb: rgb(var(--primary-color));
+    --secondary-rgb: rgb(var(--secondary-color));
+    --primary-rgba-50: rgba(var(--primary-color), 0.5);
+    --secondary-rgba-50: rgba(var(--secondary-color), 0.5);
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -95,14 +103,47 @@ body {
 
 @layer components {
   .card-hover {
-    @apply transition-all duration-200 hover:border-[#FFA500] hover:shadow-md;
+    @apply transition-all duration-200 hover:border-secondary hover:shadow-md;
   }
   
   .interactive-element {
-    @apply transition-colors duration-200 hover:text-[#FFA500];
+    @apply transition-colors duration-200 hover:text-secondary;
   }
   
   .progress-indicator {
-    @apply bg-[#FFA500];
+    @apply bg-secondary;
   }
+  
+  .bg-primary {
+    background-color: rgb(var(--primary-color));
+  }
+  
+  .bg-secondary {
+    background-color: rgb(var(--secondary-color));
+  }
+  
+  .text-primary {
+    color: rgb(var(--primary-color));
+  }
+  
+  .text-secondary {
+    color: rgb(var(--secondary-color));
+  }
+  
+  .border-primary {
+    border-color: rgb(var(--primary-color));
+  }
+  
+  .border-secondary {
+    border-color: rgb(var(--secondary-color));
+  }
+}
+
+button {
+  background-color: rgb(var(--primary-color));
+  color: white;
+}
+
+a {
+  color: rgb(var(--secondary-color));
 }

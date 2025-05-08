@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Raleway, Montserrat } from "next/font/google"; 
 import "./globals.css";
 import { Inter } from 'next/font/google'
+import ColorProvider from '@/components/ColorProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -35,7 +36,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${raleway.variable} ${inter.variable} ${montserrat.variable}`}>
-        <main>{children}</main>
+        <ColorProvider>
+          <main>{children}</main>
+        </ColorProvider>
       </body>
     </html>
   );

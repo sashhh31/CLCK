@@ -31,7 +31,7 @@ export default function FinancialServicesCard({ aboutUsData: providedData }: Pro
   if (isLoading) {
     return (
       <div className="w-full min-h-[500px] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFA500]"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-secondary"></div>
       </div>
     );
   }
@@ -68,8 +68,8 @@ export default function FinancialServicesCard({ aboutUsData: providedData }: Pro
           </div>
 
           {/* Right content - full width on mobile, half width on desktop */}
-          <div className="w-full lg:w-2/3 bg-[#1C1C5A] p-6 sm:p-8 md:p-10 lg:p-12 xl:p-16 text-gray-200 lg:-ml-16 lg:mt-8 xl:mt-12">
-            <h3 className="mb-3 sm:mb-4 md:mb-6 lg:mb-8 text-base sm:text-lg md:text-xl font-medium uppercase text-[#FFA500]">About Us</h3>
+          <div className="w-full lg:w-2/3 bg-primary p-6 sm:p-8 md:p-10 lg:p-12 xl:p-16 text-gray-200 lg:-ml-16 lg:mt-8 xl:mt-12">
+            <h3 className="mb-3 sm:mb-4 md:mb-6 lg:mb-8 text-base sm:text-lg md:text-xl font-medium uppercase text-secondary">About Us</h3>
             
             <h2 className="mb-4 sm:mb-6 md:mb-8 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
               {aboutData.title}
@@ -83,7 +83,7 @@ export default function FinancialServicesCard({ aboutUsData: providedData }: Pro
             <div className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-10">
               {stats.map((stat, index) => (
                 <div key={index} className="mb-2">
-                  <h3 className="font-montserrat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-[#FFA500]">{stat.number}</h3>
+                  <h3 className="font-montserrat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-secondary">{stat.number}</h3>
                   <p className="text-sm sm:text-base md:text-lg lg:text-xl">{stat.text}</p>
                 </div>
               ))}

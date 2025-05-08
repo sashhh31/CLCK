@@ -56,7 +56,7 @@ export default async function AboutUsPage() {
               </div>
               <div className="w-full space-y-6 md:space-x-12 md:space-y-8 flex">
                 <div className="space-y-4 ">
-                  <h2 className="text-2xl md:text-3xl text-[#1C1C5A] font-medium">About Us</h2>
+                  <h2 className="text-2xl md:text-3xl text-primary font-medium">About Us</h2>
                   <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold">{title}</h3>
                 </div>
                 <div className="">
@@ -66,8 +66,8 @@ export default async function AboutUsPage() {
                 <ul className="space-y-4 md:space-y-6">
                   {features?.map((item: string, index: number) => (
                     <li key={index} className="flex items-start">
-                      <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2 mt-1 flex-shrink-0">
-                        <Check className="h-3 w-3 text-[#1C1C5A]" />
+                      <div className="w-5 h-5 bg-secondary rounded-full flex items-center justify-center mr-2 mt-1 flex-shrink-0">
+                        <Check className="h-3 w-3 text-primary" />
                       </div>
                       <span className="text-sm md:text-base">{item}</span>
                     </li>

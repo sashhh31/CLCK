@@ -32,7 +32,7 @@ const TaxSection = async () => {
           {/* Button */}
           <div className="text-center mb-16">
             <Link href="/services">
-              <button className="bg-[#1C1C5A] text-white text-lg font-medium px-8 py-3 rounded-full hover:bg-[#1C1C5A]/70 transition duration-200">
+              <button className="bg-primary text-white text-lg font-medium px-8 py-3 rounded-full hover:bg-primary/70 transition duration-200">
                 Explore All Services
               </button>
             </Link>
@@ -44,7 +44,7 @@ const TaxSection = async () => {
         {serviceSection.cardTitle?.map((title, index) => (
           <div 
             key={index}
-            className="bg-[#1C1C5A] scale-105 border-2 border-[#FFA500] rounded-2xl p-6 flex flex-col gap-4 text-white min-h-[300px]"
+            className="bg-primary scale-105 border-2 border-secondary rounded-2xl p-6 flex flex-col gap-4 text-white min-h-[300px]"
           >
             <div className="w-20 h-20 bg-[#f0d687] rounded-full flex items-center justify-center p-3">
               <img
@@ -53,13 +53,13 @@ const TaxSection = async () => {
                 className="w-20 h-20 object-contain"
               />
             </div>
-            <h3 className="text-3xl font-semibold mt-8 text-[#FFA500]">{title}</h3>
+            <h3 className="text-3xl font-semibold mt-8 text-secondary">{title}</h3>
             <p className="text-white text-lg flex-grow">
               {serviceSection.cardDescription?.[index]}
             </p>
             <Link
               href="/services"
-              className="text-sm font-medium text-[#FFA500] hover:text-white transition-colors duration-200 inline-flex items-center gap-1 mt-4"
+              className="text-sm font-medium text-secondary hover:text-white transition-colors duration-200 inline-flex items-center gap-1 mt-4"
             >
               View Detail <ArrowUpRight className="w-5 h-5" />
             </Link>

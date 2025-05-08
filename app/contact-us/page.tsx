@@ -42,9 +42,9 @@ const ContactForm = ({
   cardDescription: string;
 }) => {
   return (
-    <div className="bg-[#1C1C5A] text-white p-6 md:p-8 lg:p-16 rounded-lg">
+    <div className="bg-primary text-white p-6 md:p-8 lg:p-16 rounded-lg">
       <div className="mb-8 md:mb-16">
-        <h3 className="text-lg text-[#FFA500] font-medium mb-4 md:mb-6">Get In Touch</h3>
+        <h3 className="text-lg text-secondary font-medium mb-4 md:mb-6">Get In Touch</h3>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{cardTitle}</h2>
         <p className="text-base md:text-lg text-gray-300 mt-2">
           {cardDescription}
@@ -55,7 +55,7 @@ const ContactForm = ({
         <form action="/api/contact" method="POST">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <label htmlFor="firstName" className="block text-base md:text-lg font-semibold mb-1 text-[#FFA500]">
+              <label htmlFor="firstName" className="block text-base md:text-lg font-semibold mb-1 text-secondary">
                 First Name
               </label>
               <Input 
@@ -67,7 +67,7 @@ const ContactForm = ({
               />
             </div>
             <div>
-              <label htmlFor="lastName" className="block text-base md:text-lg font-semibold mb-1 text-[#FFA500]">
+              <label htmlFor="lastName" className="block text-base md:text-lg font-semibold mb-1 text-secondary">
                 Last Name
               </label>
               <Input 
@@ -80,7 +80,7 @@ const ContactForm = ({
             </div>
           </div>
           <div className="mt-4">
-            <label htmlFor="email" className="block text-base md:text-lg font-semibold mb-1 text-[#FFA500]">
+            <label htmlFor="email" className="block text-base md:text-lg font-semibold mb-1 text-secondary">
               Email Address
             </label>
             <Input 
@@ -93,7 +93,7 @@ const ContactForm = ({
             />
           </div>
           <div className="mt-6 md:mt-8">
-            <label htmlFor="message" className="block text-base md:text-lg font-semibold mb-1 text-[#FFA500]">
+            <label htmlFor="message" className="block text-base md:text-lg font-semibold mb-1 text-secondary">
               Message
             </label>
             <Textarea 
@@ -106,7 +106,7 @@ const ContactForm = ({
           </div>
           <Button 
             type="submit"
-            className="w-full bg-[#FFA500] hover:bg-[#FFB730] text-[#1C1C5A] font-bold rounded-full mt-6 md:mt-10"
+            className="w-full bg-secondary hover:bg-[#FFB730] text-primary font-bold rounded-full mt-6 md:mt-10"
           >
             Send Message
           </Button>
@@ -129,7 +129,7 @@ export default async function ContactUsPage() {
         <section className="w-full py-12 md:py-24 bg-hero-bg bg-cover bg-center">
           <div className="container px-4 md:px-6 text-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter text-white flex items-center justify-center">
-              <span className="text-[#FFA500] mr-4">Get</span> 
+              <span className="text-secondary mr-4">Get</span> 
               In Touch
             </h1>
             <p className="mt-4 text-gray-300 max-w-[700px] mx-auto text-base md:text-lg">
@@ -141,13 +141,13 @@ export default async function ContactUsPage() {
         <section className="w-full py-12 md:py-24 px-4 md:px-8 lg:px-12">
           <div className="container px-4 md:px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              <div className="bg-[#1C1C5A] text-white border border-gray-700 p-4 md:p-6 rounded-lg">
+              <div className="bg-primary text-white border border-gray-700 p-4 md:p-6 rounded-lg">
                 <div className="flex items-start space-x-4">
                   <div className="bg-[#2A2A6A] p-3 rounded-full">
-                    <MapPin className="h-6 w-6 text-[#FFA500]" />
+                    <MapPin className="h-6 w-6 text-secondary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold mb-2 text-[#FFA500]">Visit Us At</h3>
+                    <h3 className="text-lg font-bold mb-2 text-secondary">Visit Us At</h3>
                     <p className="text-sm text-gray-300 mb-2">Visit our head quarter at</p>
                     {location ? (
                       <RichTextRenderer richTextField={location} />
@@ -163,13 +163,13 @@ export default async function ContactUsPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-[#1C1C5A] text-white border border-gray-700 p-4 md:p-6 rounded-lg">
+              <div className="bg-primary text-white border border-gray-700 p-4 md:p-6 rounded-lg">
                 <div className="flex items-start space-x-4">
                   <div className="bg-[#2A2A6A] p-3 rounded-full">
-                    <Mail className="h-6 w-6 text-[#FFA500]" />
+                    <Mail className="h-6 w-6 text-secondary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold mb-2 text-[#FFA500]">Send Us Email</h3>
+                    <h3 className="text-lg font-bold mb-2 text-secondary">Send Us Email</h3>
                     <p className="text-sm text-gray-300 mb-2">Contact to our support team at</p>
                     {emailId ? (
                       <RichTextRenderer richTextField={emailId} />

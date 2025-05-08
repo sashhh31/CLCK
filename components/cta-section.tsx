@@ -65,7 +65,7 @@ export default function CtaSection({ ctaData: providedData }: Props) {
           backgroundImage: `linear-gradient(to right, rgba(9, 20, 45, 0.9) 20%, rgba(9, 20, 45, 0.4) 50%, rgba(9, 20, 45, 0) 100%), url('../aboutUs.png')`,
         }}
       >
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFA500]"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-secondary"></div>
       </section>
     );
   }
@@ -98,7 +98,7 @@ export default function CtaSection({ ctaData: providedData }: Props) {
                 return (
                   <span
                     key={index}
-                    className={shouldHighlight ? "text-[#FFA500]" : "text-white"}
+                    className={shouldHighlight ? "text-secondary" : "text-white"}
                   >
                     {word}{' '}
                   </span>
@@ -115,7 +115,7 @@ export default function CtaSection({ ctaData: providedData }: Props) {
           
           <div className="mt-16">
             <Link href="/contact-us">
-              <Button className="bg-[#FFA500] text-3xl p-8 rounded-full text-medium text-white hover:bg-[#FFA500]/90 transition-colors duration-200">
+              <Button className="bg-secondary text-3xl p-8 rounded-full text-medium text-white hover:bg-secondary/90 transition-colors duration-200">
                 {buttonText}
               </Button>
             </Link>

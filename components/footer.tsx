@@ -17,7 +17,7 @@ export default async function Footer() {
         />
       </div>
 
-      <footer className="bg-[#1C1C5A] text-white px-4 md:px-8 lg:px-20">
+      <footer className="bg-primary text-white px-4 md:px-8 lg:px-20">
         <div className="container px-4 py-8 md:py-12 lg:py-16">
           <Link href="/" className="flex justify-left mr-10 mb-10">
             <div className="relative h-8 w-32 md:w-40 md:mr-10">
@@ -30,59 +30,59 @@ export default async function Footer() {
                 {footerData.description || "At CLCK Bookkeeping-Taxation, we are more than just another accountancy firm—we are your trusted outsourced finance department with skilled communication approach for deafness and neurodiversity."}
               </p>
               <div className="flex space-x-4">
-                <Link href={footerData.youtubeLink || "#"} className="bg-[#FFA500] p-2 rounded-full hover:bg-[#FFB730] transition">
-                  <Youtube className="h-4 w-4 text-[#1C1C5A]" />
+                <Link href={footerData.youtubeLink || "#"} className="bg-secondary p-2 rounded-full hover:bg-[#FFB730] transition">
+                  <Youtube className="h-4 w-4 text-primary" />
                 </Link>
-                <Link href={footerData.instagramLink || "#"} className="bg-[#FFA500] p-2 rounded-full hover:bg-[#FFB730] transition">
-                  <Instagram className="h-4 w-4 text-[#1C1C5A]" />
+                <Link href={footerData.instagramLink || "#"} className="bg-secondary p-2 rounded-full hover:bg-[#FFB730] transition">
+                  <Instagram className="h-4 w-4 text-primary" />
                 </Link>
-                <Link href={footerData.facebookLink || "#"} className="bg-[#FFA500] p-2 rounded-full hover:bg-[#FFB730] transition">
-                  <Facebook className="h-4 w-4 text-[#1C1C5A]" />
+                <Link href={footerData.facebookLink || "#"} className="bg-secondary p-2 rounded-full hover:bg-[#FFB730] transition">
+                  <Facebook className="h-4 w-4 text-primary" />
                 </Link>
-                <Link href={footerData.twitterLink || "#"} className="bg-[#FFA500] p-2 rounded-full hover:bg-[#FFB730] transition">
-                  <Twitter className="h-4 w-4 text-[#1C1C5A]" />
+                <Link href={footerData.twitterLink || "#"} className="bg-secondary p-2 rounded-full hover:bg-[#FFB730] transition">
+                  <Twitter className="h-4 w-4 text-primary" />
                 </Link>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
               <div>
-                <h3 className="text-lg md:text-xl font-semibold mb-4 text-[#FFA500]">About</h3>
+                <h3 className="text-lg md:text-xl font-semibold mb-4 text-secondary">About</h3>
                 <ul className="space-y-2 md:space-y-3">
                   <li>
-                    <Link href="/" className="text-base md:text-lg text-gray-200 hover:text-[#FFA500] transition">
+                    <Link href="/" className="text-base md:text-lg text-gray-200 hover:text-secondary transition">
                       Home
                     </Link>
                   </li>
                   <li>
-                    <Link href="/about-us" className="text-base md:text-lg text-gray-200 hover:text-[#FFA500] transition">
+                    <Link href="/about-us" className="text-base md:text-lg text-gray-200 hover:text-secondary transition">
                       About Us
                     </Link>
                   </li>
                   <li>
-                    <Link href="/services" className="text-base md:text-lg text-gray-200 hover:text-[#FFA500] transition">
+                    <Link href="/services" className="text-base md:text-lg text-gray-200 hover:text-secondary transition">
                       Services
                     </Link>
                   </li>
                   <li>
-                    <Link href="/blog-news" className="text-base md:text-lg text-gray-200 hover:text-[#FFA500] transition">
+                    <Link href="/blog-news" className="text-base md:text-lg text-gray-200 hover:text-secondary transition">
                       Blog / News
                     </Link>
                   </li>
                   <li>
-                    <Link href="/faqs" className="text-base md:text-lg text-gray-200 hover:text-[#FFA500] transition">
+                    <Link href="/faqs" className="text-base md:text-lg text-gray-200 hover:text-secondary transition">
                       FAQs
                     </Link>
                   </li>
                   <li>
-                    <Link href="/contact-us" className="text-base md:text-lg text-gray-200 hover:text-[#FFA500] transition">
+                    <Link href="/contact-us" className="text-base md:text-lg text-gray-200 hover:text-secondary transition">
                       Contact Us
                     </Link>
                   </li>
                 </ul>
               </div>
               <div>
-                <h3 className="text-lg md:text-xl font-bold mb-4 text-[#FFA500]">Working Hours</h3>
+                <h3 className="text-lg md:text-xl font-bold mb-4 text-secondary">Working Hours</h3>
                 <ul className="space-y-4 md:space-y-6">
                   {footerData.workingDays && footerData.workingHours ? (
                     footerData.workingDays.map((day, index) => (
@@ -118,10 +118,10 @@ export default async function Footer() {
             </div>
 
             <div>
-              <h3 className="text-xl md:text-2xl font-medium mb-4 text-[#FFA500]">Contact Us</h3>
+              <h3 className="text-xl md:text-2xl font-medium mb-4 text-secondary">Contact Us</h3>
               <div className="space-y-4">
                 <div className="flex flex-col sm:flex-row items-start gap-4">
-                  <div className="bg-[#FFA500] p-2 rounded-full">
+                  <div className="bg-secondary p-2 rounded-full">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -138,14 +138,14 @@ export default async function Footer() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-base md:text-lg font-medium text-[#FFA500]">Location</p>
+                    <p className="text-base md:text-lg font-medium text-secondary">Location</p>
                     <p className="text-base md:text-lg text-gray-200 whitespace-pre-line">
                       {footerData.location || "CLCK Bookkeeping-Taxation, 29 South view, Austerfield Doncaster\nSouth Yorkshire, DN106QR"}
                     </p>
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row items-start gap-4">
-                  <div className="bg-[#FFA500] p-2 rounded-full">
+                  <div className="bg-secondary p-2 rounded-full">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -162,7 +162,7 @@ export default async function Footer() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-base md:text-lg font-medium text-[#FFA500]">Email Address</p>
+                    <p className="text-base md:text-lg font-medium text-secondary">Email Address</p>
                     <p className="text-base md:text-lg text-gray-200">{footerData.emailAddress || "hello@cooper-king.com"}</p>
                   </div>
                 </div>
@@ -171,9 +171,22 @@ export default async function Footer() {
           </div>
 
           <div className="border-t border-gray-700 mt-8 md:mt-12 pt-6">
-            <p className="text-base md:text-lg text-gray-400 text-center">
-              Copyright © {new Date().getFullYear()} Clckbooking. All Rights Reserved.
-            </p>
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-base md:text-lg text-gray-400 text-center">
+                Copyright © {new Date().getFullYear()} Clckbooking. All Rights Reserved.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+                <Link href={footerData.termsAndConditionsLink || "/terms-and-conditions"} className="text-base text-gray-400 hover:text-secondary transition">
+                  Terms & Conditions
+                </Link>
+                <Link href={footerData.privacyPolicyLink || "/privacy-policy"} className="text-base text-gray-400 hover:text-secondary transition">
+                  Privacy Policy
+                </Link>
+                <Link href={footerData.cookiesPolicyLink || "/cookies-policy"} className="text-base text-gray-400 hover:text-secondary transition">
+                  Cookies Policy
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </footer>

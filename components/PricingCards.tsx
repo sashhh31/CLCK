@@ -31,8 +31,8 @@ export default function PricingCards({ pricingPlans }: { pricingPlans: PricingPl
     
     return features.map((feature, i) => (
       <li key={i} className="flex items-center text-sm text-white">
-        <div className="w-5 h-5 bg-[#FFA500] rounded-full flex items-center justify-center mr-2">
-          <Check className="h-3 w-3 text-[#1C1C5A]" />
+        <div className="w-5 h-5 bg-secondary rounded-full flex items-center justify-center mr-2">
+          <Check className="h-3 w-3 text-primary" />
         </div>
         {feature}
       </li>
@@ -44,10 +44,10 @@ export default function PricingCards({ pricingPlans }: { pricingPlans: PricingPl
       {pricingPlans.map((plan, index) => (
         <div 
           key={plan.sys?.id || index} 
-          className={`bg-[#1C1C5A] p-4 md:p-6 rounded-3xl text-white transition-all duration-200 border-2 
+          className={`bg-primary p-4 md:p-6 rounded-3xl text-white transition-all duration-200 border-2 
             ${plan.highlightPlan 
-              ? 'border-[#FFA500] md:scale-105 md:-translate-y-2' 
-              : 'border-[#1C1C5A] hover:border-[#FFA500]'} 
+              ? 'border-secondary md:scale-105 md:-translate-y-2' 
+              : 'border-primary hover:border-secondary'} 
             hover:shadow-md`}
         >
           <h3 className="text-xl md:text-2xl font-semibold text-white">{plan.title}</h3>
@@ -55,11 +55,11 @@ export default function PricingCards({ pricingPlans }: { pricingPlans: PricingPl
             {plan.description}
           </p>
           <div className="mb-4">
-            <span className="text-2xl md:text-3xl font-bold text-[#FFA500]">£{plan.price.toFixed(2)}</span>
-            <span className={`text-sm ${plan.highlightPlan ? 'text-[#FFA500]' : 'text-gray-300'}`}>/Month</span>
+            <span className="text-2xl md:text-3xl font-bold text-secondary">£{plan.price.toFixed(2)}</span>
+            <span className={`text-sm ${plan.highlightPlan ? 'text-secondary' : 'text-gray-300'}`}>/Month</span>
           </div>
           <Button 
-            className="w-full bg-[#FFA500] hover:bg-[#FFA500]/90 text-white font-semibold mb-4 md:mb-6"
+            className="w-full bg-secondary hover:bg-secondary/90 text-white font-semibold mb-4 md:mb-6"
             onClick={() => window.location.href = plan.ctaLink || "/contact-us"}
           >
             {plan.ctaText || "Get Started"}

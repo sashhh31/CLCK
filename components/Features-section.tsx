@@ -6,7 +6,6 @@ const FeaturesSection = async() => {
 
   // Destructure the data for easier use
   const { title, cardTitle, cardDescription, cardIcon } = await fetchFeaturesSectionData()
-console.log(cardTitle, cardDescription, cardIcon);
   return (
     <div>
       <section className="py-4 px-4 md:px-4 lg:px-4 bg-white">
@@ -33,7 +32,7 @@ console.log(cardTitle, cardDescription, cardIcon);
               return (
                 <div 
                   key={index} 
-                  className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-[#1C1C5A] text-white hover:border-[#FFA500]"
+                  className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition duration-300 bg-primary text-white hover:border-secondary"
                 >
                   <div className="w-14 h-14 mb-10 bg-[#f0d687] rounded-full flex items-center justify-center p-2">
                     <img
@@ -42,7 +41,7 @@ console.log(cardTitle, cardDescription, cardIcon);
                       className="w-20 h-20 object-contain"  
                     />
                   </div>
-                  <h3 className="text-2xl font-semibold mb-2 text-[#FFA500]">
+                  <h3 className="text-2xl font-semibold mb-2 text-secondary">
                     {title}
                   </h3>
                   <p className="text-gray-300">

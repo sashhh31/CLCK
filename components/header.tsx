@@ -14,13 +14,13 @@ export default function Header() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   const linkClass = (path: string) =>
-    `text-base font-normal transition-colors hover:text-[#FFA500] ${
-      pathname === path ? "text-[#FFA500]" : "text-black"
+    `text-base font-normal transition-colors hover:text-secondary ${
+      pathname === path ? "text-secondary" : "text-black"
     }`
 
   const mobileLinkClass = (path: string) =>
-    `text-sm font-normal transition-colors hover:text-[#FFA500] ${
-      pathname === path ? "text-[#FFA500]" : "text-black"
+    `text-sm font-normal transition-colors hover:text-secondary ${
+      pathname === path ? "text-secondary" : "text-black"
     }`
 
   return (
@@ -46,17 +46,17 @@ export default function Header() {
         {/* Desktop Button */}
         <div className="hidden md:flex gap-4 justify-center items-center">
         <Link href="/login">
-            <Button className=" bg-[#FFA500]  hover:bg-[#FFA500]/70 text-white rounded-full w-full">
+            <Button className=" bg-secondary  hover:bg-secondary/70 text-white rounded-full w-full">
               Membership
             </Button>
           </Link>
           <Link href="/login">
-            <Button className="bg-[#1C1C5A] hover:bg-[#1C1C5A]/70 text-white rounded-full">Login/Signup</Button>
+            <Button className="bg-primary hover:bg-primary/70 text-white rounded-full">Login/Signup</Button>
           </Link>
         </div>
 
         {/* Hamburger Icon */}
-        <button className="md:hidden transition-colors hover:text-[#FFA500]" onClick={toggleMenu}>
+        <button className="md:hidden transition-colors hover:text-secondary" onClick={toggleMenu}>
           {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
@@ -74,12 +74,12 @@ export default function Header() {
             <Link href="/contact-us" className={mobileLinkClass("/contact-us")}>Contact Us</Link>
           </nav>
           <Link href="/login">
-            <Button className="mt-6 bg-[#FFA500] hover:bg-[#FFA500]/70 text-white rounded-full w-full">
+            <Button className="mt-6 bg-secondary hover:bg-secondary/70 text-white rounded-full w-full">
               Membership
             </Button>
           </Link>
           <Link href="/login">
-            <Button className="mt-6 bg-[#1C1C5A] hover:bg-[#1C1C5A]/70 text-white rounded-full w-full">
+            <Button className="mt-6 bg-primary hover:bg-primary/70 text-white rounded-full w-full">
               Login/Signup
             </Button>
           </Link>

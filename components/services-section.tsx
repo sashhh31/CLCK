@@ -180,14 +180,14 @@ function ServicesGrid({ services }: { services: ServiceItem[] }) {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-8">
         {services.map((service, index) => (
-          <div key={service.sys?.id || index} className="bg-[#1C1C5A] p-4 md:p-6 rounded-lg w-full transition-all duration-200 hover:shadow-md hover:border hover:border-[#FFA500] cursor-pointer" onClick={() => openModal(service)}>
-            <div className="w-10 h-10 bg-[#f0d687] rounded-full flex items-center justify-center mb-4 text-[#1C1C5A]">
+          <div key={service.sys?.id || index} className="bg-primary p-4 md:p-6 rounded-lg w-full transition-all duration-200 hover:shadow-md hover:border hover:border-secondary cursor-pointer" onClick={() => openModal(service)}>
+            <div className="w-10 h-10 bg-[#f0d687] rounded-full flex items-center justify-center mb-4 text-primary">
               {service.icon ? getIconComponent(service.icon) : <Clock className="h-6 w-6" />}
             </div>
             <h3 className="text-lg font-bold mb-2 text-white">{service.title}</h3>
             <Link 
               href={service.slug ? `/services/${service.slug}` : `/services/${service.sys.id}`}
-              className="text-xs font-medium text-[#FFA500] hover:text-white transition-colors duration-200 inline-flex items-center"
+              className="text-xs font-medium text-secondary hover:text-white transition-colors duration-200 inline-flex items-center"
             >
               View Detail
               <svg
@@ -217,7 +217,7 @@ function ServicesGrid({ services }: { services: ServiceItem[] }) {
             <div className="container px-4 py-6 md:py-8">
               <div className="flex justify-between items-center mb-6">
                 <h1 className="text-xl md:text-2xl font-semibold text-center">Services Detail</h1>
-                <button onClick={closeModal} className="hover:text-[#FFA500] transition-colors duration-200">
+                <button onClick={closeModal} className="hover:text-secondary transition-colors duration-200">
                   <X className="h-6 w-6" />
                 </button>
               </div>
@@ -239,7 +239,7 @@ function ServicesGrid({ services }: { services: ServiceItem[] }) {
                 <h2 className="text-xl md:text-2xl font-bold mb-2">{selectedService.title}</h2>
                 <p className="text-gray-600 mb-4">{selectedService.description}</p>
                 <div className="flex items-center gap-4">
-                  <span className="text-lg font-semibold text-[#1C1C5A]">{selectedService.price}</span>
+                  <span className="text-lg font-semibold text-primary">{selectedService.price}</span>
                   <span className="text-gray-500">{selectedService.duration}</span>
                 </div>
                 {selectedService.content && (
@@ -262,7 +262,7 @@ function ServicesGrid({ services }: { services: ServiceItem[] }) {
                   <label className="block text-sm font-medium mb-2">Message</label>
                   <Textarea placeholder="Your message" />
                 </div>
-                <Button className="w-full bg-[#FFA500] hover:bg-[#FFA500]/90 text-white">Submit</Button>
+                <Button className="w-full bg-secondary hover:bg-secondary/90 text-white">Submit</Button>
               </div>
             </div>
           </div>

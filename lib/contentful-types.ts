@@ -86,6 +86,9 @@ export interface Footer {
   description?: string
   workingHours?: string[]
   workingDays?: string[]
+  termsAndConditionsLink?: string
+  privacyPolicyLink?: string
+  cookiesPolicyLink?: string
 }
 
 // Interface for Rich Text Content

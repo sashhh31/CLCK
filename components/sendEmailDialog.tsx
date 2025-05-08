@@ -32,12 +32,10 @@ export default function SendEmailDialog({ isOpen, onClose }: SendEmailDialogProp
 
   const handleAttachment = () => {
     // In a real application, this would trigger a file picker
-    console.log('Attachment button clicked');
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Email data submitted:', emailData);
     // Here you would typically send the email data to your backend
     onClose();
   };
@@ -117,7 +115,7 @@ export default function SendEmailDialog({ isOpen, onClose }: SendEmailDialogProp
             </button>
             <button
               type="submit"
-              className="px-8 py-3 rounded-full bg-[#1C1C5A] text-white font-medium hover:bg-[#1C1C5A]/90"
+              className="px-8 py-3 rounded-full bg-primary text-white font-medium hover:bg-primary/90"
             >
               Send
             </button>

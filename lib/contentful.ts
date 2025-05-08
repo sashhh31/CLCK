@@ -18,6 +18,15 @@ import {
   RichTextContent
 } from './contentful-types';
 
+// Add ColorSchema type
+type ColorSchema = {
+  sys: {
+    id: string;
+  };
+  primaryColor: string;
+  secondaryColor: string;
+};
+
 // Update the ImageSection type
 type ImageSection = {
   sys: { id: string };
@@ -1044,7 +1053,10 @@ export async function fetchFooterData(): Promise<Footer> {
       twitterLink: "#",
       description: "At CLCK Bookkeeping-Taxation, we are more than just another accountancy firm—we are your trusted outsourced finance department with a skilled approach to accessible communication skills in deafness and neurodiversity and use accessible language that you can understand.",
       workingHours: ["12:00 PM - 14:45 PM", "17:30 PM - 00:00 AM", "17:30 PM - 00:00 AM"],
-      workingDays: ["Mon-Sat", "Sat-Thu", "Fri-Sat"]
+      workingDays: ["Mon-Sat", "Sat-Thu", "Fri-Sat"],
+      termsAndConditionsLink: "/terms-and-conditions",
+      privacyPolicyLink: "/privacy-policy",
+      cookiesPolicyLink: "/cookies-policy"
     };
   }
 }
@@ -1084,6 +1096,7 @@ export async function fetchImagesSectionData(): Promise<ImageSection[]> {
     const response = await fetchGraphQL(query);
     
     if (response.data?.imagesSectionCollection?.items) {
+      console.log(response.data.imagesSectionCollection.items)
       return response.data.imagesSectionCollection.items;
     }
     
@@ -1105,5 +1118,40 @@ export async function fetchImagesSectionData(): Promise<ImageSection[]> {
         ]
       }
     ];
+  }
+}
+
+// Function to fetch color schema from Contentful
+export async function fetchColorSchema(): Promise<ColorSchema> {
+  try {
+    const query = `
+      query {
+        colorSchemaCollection(limit: 1) {
+          items {
+            sys {
+              id
+            }
+            primaryColor
+            secondaryColor
+          }
+        }
+      }
+    `;
+    
+    const response = await fetchGraphQL(query);
+    
+    if (response.data?.colorSchemaCollection?.items?.length > 0) {
+      return response.data.colorSchemaCollection.items[0];
+    }
+    
+    throw new Error('No color schema found');
+  } catch (error) {
+    console.error('Error fetching color schema:', error);
+    // Return default colors if API fails
+    return {
+      sys: { id: 'default-colors' },
+      primaryColor: '#2E3B5B',
+      secondaryColor: '#EFD588'
+    };
   }
 }

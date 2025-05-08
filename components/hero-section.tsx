@@ -46,7 +46,7 @@ export default function HeroSection({ slides: providedSlides }: Props) {
   if (isLoading) {
     return (
       <section className="w-full md:min-h-[700px] min-h-[500px] bg-hero-bg bg-cover bg-center pt-12 md:pt-24 relative flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFA500]"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-secondary"></div>
       </section>
     );
   }

@@ -13,17 +13,17 @@ export default async function StatsSection() {
   const displayCount = Math.min(numericalData.length, descriptions.length);
 
   return (
-    <section className="w-full py-12 bg-[#1C1C5A] text-white">
+    <section className="w-full py-12 bg-primary text-white">
       <div className="container px-4 md:px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {Array.from({ length: displayCount }).map((_, index) => (
             <div key={index}>
               <div className="relative">
                 {index < displayCount - 1 && (
-                  <div className="absolute top-0 right-0 h-full w-[1px] bg-gradient-to-b from-[#FFA50000] via-[#FFA500] to-[#FFA50000]"></div>
+                  <div className="absolute top-0 right-0 h-full w-[1px] bg-gradient-to-b from-[#FFA50000] via-secondary to-[#FFA50000]"></div>
                 )}
                 <div className="p-4">
-                  <h3 className="text-2xl md:text-7xl font-semibold mb-5 text-[#FFA500]">
+                  <h3 className="text-2xl md:text-7xl font-semibold mb-5 text-secondary">
                     {numericalData[index]}
                   </h3>
                   <p className="text-lg text-gray-300">{descriptions[index]}</p>
