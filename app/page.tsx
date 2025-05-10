@@ -1,6 +1,5 @@
 import Link from "next/link";
 import HeroSection from "@/components/hero-section";
-
 import PricingSection from "@/components/pricing-section";
 import TestimonialSection from "@/components/testimonial-section";
 import images from "@/components/ImagesSection";
@@ -23,6 +22,8 @@ import FinancialServicesCard from "@/components/financialServiceCard";
 import TaxSection from "@/components/Tax-section";
 import FeaturesSection from "@/components/Features-section";
 import ImagesSection from "@/components/ImagesSection";
+import ColorTestWrapper from "@/components/ColorTestWrapper";
+
 export default async function Home() {
   // Fetch data from Contentful
   const testimonials = await fetchTestimonials();
@@ -43,6 +44,7 @@ export default async function Home() {
         <ImagesSection/>
         </div>
       </div>
+      
       <FeaturesSection/>
       <div className="flex justify-center">
         <FinancialServicesCard aboutUsData={aboutUsData} />

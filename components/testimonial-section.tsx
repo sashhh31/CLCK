@@ -109,20 +109,19 @@ export default function TestimonialsSection({ testimonials }: Props) {
                 >
                   <img
                     src="/comma.png"
-                    className={`mb-3 sm:mb-4 md:mb-6 h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 mt-3 sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 ${
-                      index % 2 !== 0 ? 'filter grayscale brightness-50 invert' : 'filter grayscale brightness-0 invert-0 opacity-50'
+                    className={`mb-3 sm:mb-4 md:mb-6 h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 mt-3 sm:mt-4 md:mt-6 lg:mt-8 xl:mt-10 filter grayscale brightness-50 invert'
                     }`}
                   />
-                  <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-4 sm:mb-5 md:mb-6 lg:mb-8 xl:mb-10 line-clamp-6 md:line-clamp-none">
+                  <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-10 sm:mb-10 md:mb-10 lg:mb-10 xl:mb-12 line-clamp-6 md:line-clamp-none">
                     {testimonial.feedback}
                   </p>
-                  <div className="flex items-center mt-3 sm:mt-4 md:mt-6 absolute bottom-4 sm:bottom-5 md:bottom-6 lg:bottom-8">
-                    <div className="h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 rounded-full overflow-hidden mr-2 sm:mr-3 md:mr-4">
+                  <div className="flex items-center mt-10 sm:mt-10 md:mt-20 absolute bottom-4 sm:bottom-5 md:bottom-6 lg:bottom-8">
+                    <div className="h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16 lg:h-15 lg:w-15 rounded-full overflow-hidden mr-2 sm:mr-3 md:mr-4">
                       <Image
                         src={testimonial.feedbackerImage?.url || "/placeholder.svg"}
                         alt={testimonial.feedbackerImage?.title || testimonial.name}
-                        width={84}
-                        height={84}
+                        width={70}
+                        height={70}
                         className="object-cover h-full w-full"
                       />
                     </div>

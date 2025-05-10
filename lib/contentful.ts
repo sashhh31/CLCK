@@ -56,13 +56,15 @@ type ContactPageFields = {
 
 // Function to fetch data using GraphQL
 async function fetchGraphQL(query: string) {
+  const SPACE_ID=process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID
+  const ACCESS_TOKEN=process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN
   return fetch(
-    `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
+    `https://graphql.contentful.com/content/v1/spaces/${SPACE_ID}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
       body: JSON.stringify({ query }),
       cache: "no-store"
@@ -145,7 +147,7 @@ export async function fetchFAQs(): Promise<FaqItem[]> {
       // Transform data to our format
       return response.data.faqCategoryCollection.items.map((faq: FaqCategory) => ({
         question: Array.isArray(faq.question) ? faq.question : [faq.question],
-        answer: Array.isArray(faq.answer) ? faq.answer : [faq.answer],
+        answer: faq.answer, // Now a single text field, not an array
         title: faq.title,
         description: faq.description
       }));
@@ -157,31 +159,31 @@ export async function fetchFAQs(): Promise<FaqItem[]> {
     return [
       {
         question: ["What services do we clck booking offer?"],
-        answer: ["Fusce mattis dui aliquam dui consectetur et eleifend eros elit. Donec at accumsa ligula. Cras vulputate nunc vitae quam lorem ipsm dolor sit amet."],
+        answer: "Fusce mattis dui aliquam dui consectetur et eleifend eros elit. Donec at accumsa ligula. Cras vulputate nunc vitae quam lorem ipsm dolor sit amet.",
       },
       {
         question: ["How do I choose the right accounting firm for my business?"],
-        answer: ["When choosing an accounting firm, consider their expertise in your industry, range of services, reputation, communication style, and fee structure."],
+        answer: "When choosing an accounting firm, consider their expertise in your industry, range of services, reputation, communication style, and fee structure.",
       },
       {
         question: ["What Service Do You Offer?"],
-        answer: ["We offer comprehensive bookkeeping, tax preparation, financial reporting, payroll management, business advisory, and audit services."],
+        answer: "We offer comprehensive bookkeeping, tax preparation, financial reporting, payroll management, business advisory, and audit services.",
       },
       {
         question: ["What qualifications should I look for in an accounting firm?"],
-        answer: ["Look for proper certifications (CPA, ACCA), industry experience, continuing education, and a good reputation. The firm should stay current with tax laws."],
+        answer: "Look for proper certifications (CPA, ACCA), industry experience, continuing education, and a good reputation. The firm should stay current with tax laws.",
       },
       {
         question: ["What can we do to add services?"],
-        answer: ["To add services to your account, contact our support team or use the client portal. We'll provide a customized quote."],
+        answer: "To add services to your account, contact our support team or use the client portal. We'll provide a customized quote.",
       },
       {
         question: ["Should I look for in an accounting firm?"],
-        answer: ["Prioritize expertise in your industry, range of services offered, communication style, and technology adoption."],
+        answer: "Prioritize expertise in your industry, range of services offered, communication style, and technology adoption.",
       },
       {
         question: ["What Is The Accounting Cycle?"],
-        answer: ["The accounting cycle includes recording transactions, posting to the general ledger, adjusting entries, preparing financial statements, and closing the books."],
+        answer: "The accounting cycle includes recording transactions, posting to the general ledger, adjusting entries, preparing financial statements, and closing the books.",
       }
     ];
   }
@@ -1023,7 +1025,7 @@ export async function fetchFooterData(): Promise<Footer> {
             location
             emailAddress
             instagramLink
-            youtubeLink
+            linkedinLink
             facebookLink
             twitterLink
             description
@@ -1048,7 +1050,7 @@ export async function fetchFooterData(): Promise<Footer> {
       location: "CLCK Bookkeeping-Taxation, 29 South view, Austerfield Doncaster\nSouth Yorkshire, DN106QR",
       emailAddress: "hello@cooper-king.com",
       instagramLink: "#",
-      youtubeLink: "#",
+      linkedinLink: "#",
       facebookLink: "#",
       twitterLink: "#",
       description: "At CLCK Bookkeeping-Taxation, we are more than just another accountancy firm—we are your trusted outsourced finance department with a skilled approach to accessible communication skills in deafness and neurodiversity and use accessible language that you can understand.",
@@ -1083,10 +1085,12 @@ export async function fetchImagesSectionData(): Promise<ImageSection[]> {
             sys {
               id
             }
-            images {
-              url
-              title
-              description
+            imagesCollection {
+              items {
+                url
+                title
+                description
+                }
             }
           }
         }
@@ -1094,10 +1098,8 @@ export async function fetchImagesSectionData(): Promise<ImageSection[]> {
     `;
     
     const response = await fetchGraphQL(query);
-    
-    if (response.data?.imagesSectionCollection?.items) {
-      console.log(response.data.imagesSectionCollection.items)
-      return response.data.imagesSectionCollection.items;
+    if (response.data.imagesSectionCollection.items[0].imagesCollection.items) {
+      return response.data.imagesSectionCollection.items[0].imagesCollection.items;
     }
     
     throw new Error('No images section data found');
@@ -1122,7 +1124,7 @@ export async function fetchImagesSectionData(): Promise<ImageSection[]> {
 }
 
 // Function to fetch color schema from Contentful
-export async function fetchColorSchema(): Promise<ColorSchema> {
+export async function fetchColorSchema() {
   try {
     const query = `
       query {

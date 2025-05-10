@@ -5,7 +5,7 @@ import { Minus, Plus } from "lucide-react"
 
 interface FaqItem {
   question: string[]
-  answer: string[]
+  answer: string
   title?: string
   description?: string
 }
@@ -13,19 +13,25 @@ interface FaqItem {
 // Helper to flatten FAQ data into question/answer pairs
 function flattenFaqs(faqs: FaqItem[]): { question: string, answer: string }[] {
   const flat: { question: string, answer: string }[] = [];
+
   faqs.forEach(faq => {
-    const qArr = faq.question || [];
-    const aArr = faq.answer || [];
-    const max = Math.max(qArr.length, aArr.length);
-    for (let i = 0; i < max; i++) {
-      flat.push({
-        question: qArr[i] || "",
-        answer: aArr[i] || ""
-      });
-    }
+    const questions = faq.question || [];
+    const answerParts = (faq.answer || "").split(/\n{2,}/); // split by double newlines
+
+    // Match each question with the corresponding part of the answer
+    questions.forEach((question, idx) => {
+      if (question) {
+        flat.push({
+          question,
+          answer: answerParts[idx] || "" // fallback to empty string if index out of bounds
+        });
+      }
+    });
   });
+
   return flat;
 }
+
 
 // Client component for FAQ accordion
 function FaqAccordion({ faqs }: { faqs: FaqItem[] }) {

@@ -31,8 +31,15 @@ export default function ColorProvider({ children }: { children: React.ReactNode 
         root.style.setProperty('--primary-color', primaryRgb);
         root.style.setProperty('--secondary-color', secondaryRgb);
         
-        // Log the computed styles to verify
-     
+      
+        
+        // Verify after a brief delay that the colors were applied
+        setTimeout(() => {
+          const computedStyle = getComputedStyle(document.documentElement);
+          const computedPrimary = computedStyle.getPropertyValue('--primary-color').trim();
+          const computedSecondary = computedStyle.getPropertyValue('--secondary-color').trim();
+          
+        }, 100);
       } catch (error) {
         console.error('Error updating colors:', error);
       }

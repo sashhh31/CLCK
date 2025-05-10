@@ -17,7 +17,7 @@ export interface FaqCategory {
   title: string
   description: string
   question: string[]
-  answer: string[]
+  answer: string
   sys: {
     id: string
   }
@@ -25,7 +25,7 @@ export interface FaqCategory {
 
 export interface FaqItem {
   question: string[]
-  answer: string[]
+  answer: string
   title?: string
   description?: string
 }
@@ -80,7 +80,7 @@ export interface Footer {
   location?: string
   emailAddress?: string
   instagramLink?: string
-  youtubeLink?: string
+  linkedinLink?: string
   facebookLink?: string
   twitterLink?: string
   description?: string

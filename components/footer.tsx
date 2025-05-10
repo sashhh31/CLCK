@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react"
+import { Facebook, Instagram, Linkedin, Mail, Map, MapPin, Twitter, Youtube } from "lucide-react"
 import Image from "next/image"
 import { fetchFooterData } from "@/lib/contentful"
 
@@ -21,7 +21,7 @@ export default async function Footer() {
         <div className="container px-4 py-8 md:py-12 lg:py-16">
           <Link href="/" className="flex justify-left mr-10 mb-10">
             <div className="relative h-8 w-32 md:w-40 md:mr-10">
-              <Image src={"/logo.png"} alt="Logo" fill className="object-contain" />
+              <Image src={"/logo1.png"} alt="Logo" fill className="object-contain" />
             </div>
           </Link>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
@@ -30,8 +30,8 @@ export default async function Footer() {
                 {footerData.description || "At CLCK Bookkeeping-Taxation, we are more than just another accountancy firm—we are your trusted outsourced finance department with skilled communication approach for deafness and neurodiversity."}
               </p>
               <div className="flex space-x-4">
-                <Link href={footerData.youtubeLink || "#"} className="bg-secondary p-2 rounded-full hover:bg-[#FFB730] transition">
-                  <Youtube className="h-4 w-4 text-primary" />
+                <Link href={footerData.linkedinLink || "#"} className="bg-secondary p-2 rounded-full hover:bg-[#FFB730] transition">
+                  <Linkedin className="h-4 w-4 text-primary" />
                 </Link>
                 <Link href={footerData.instagramLink || "#"} className="bg-secondary p-2 rounded-full hover:bg-[#FFB730] transition">
                   <Instagram className="h-4 w-4 text-primary" />
@@ -122,20 +122,7 @@ export default async function Footer() {
               <div className="space-y-4">
                 <div className="flex flex-col sm:flex-row items-start gap-4">
                   <div className="bg-secondary p-2 rounded-full">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="#1C1C5A"
-                      stroke="#1C1C5A"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
+                    <MapPin className="text-primary"/>
                   </div>
                   <div>
                     <p className="text-base md:text-lg font-medium text-secondary">Location</p>
@@ -146,20 +133,8 @@ export default async function Footer() {
                 </div>
                 <div className="flex flex-col sm:flex-row items-start gap-4">
                   <div className="bg-secondary p-2 rounded-full">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="#1C1C5A"
-                      stroke="#1C1C5A"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect width="20" height="16" x="2" y="4" rx="2" />
-                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                    </svg>
+                      <Mail className="text-primary
+                      "/>
                   </div>
                   <div>
                     <p className="text-base md:text-lg font-medium text-secondary">Email Address</p>
