@@ -20,15 +20,32 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
-  },
-  images: {
-    domains: ['images.ctfassets.net'], // Add Contentful's image domain
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.ctfassets.net',
+      },
+    ],
+    unoptimized: true, // This will help with local images
   },
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
+  },
+  // Add static file handling
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ]
   },
 }
 

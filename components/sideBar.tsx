@@ -1,6 +1,6 @@
 'use client'
 
-import { FileText, CreditCard, Video, Download, ChevronRight, Menu, X } from 'lucide-react'
+import { FileText, CreditCard, Video, Download, ChevronRight, Menu, X, Calendar, Bell } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
@@ -40,6 +40,8 @@ const Sidebar = () => {
     { href: '/user/subscription', label: 'Subscription Plan', icon: CreditCard },
     { href: '/user/education', label: 'Education', icon: Video },
     { href: '/user/downloads', label: 'Downloads', icon: Download },
+    { href: '/user/calendly', label: 'My Calendar', icon: Calendar },
+    { href: '/user/notifications', label: 'Notifications', icon: Bell },
   ]
 
   return (
@@ -64,7 +66,7 @@ const Sidebar = () => {
        <div className="p-4 md:p-6">
           <Link href="/" className="flex items-center">
             <Image 
-              src="/logo1.png" 
+              src="/Images/logo1.png" 
               alt="Logo" 
               height={150} 
               width={150}

@@ -11,7 +11,7 @@ export default async function Footer() {
     <div className="w-full">
       <div className="w-full bg-[#2A3356] h-[80px] md:h-[100px] flex items-center justify-center">
         <img 
-          src="../logo1.png" 
+          src="/Images/logo1.png" 
           alt="Logo" 
           className="h-[40px] md:h-[60px] w-auto"
         />
@@ -21,7 +21,7 @@ export default async function Footer() {
         <div className="container px-4 py-8 md:py-12 lg:py-16">
           <Link href="/" className="flex justify-left mr-10 mb-10">
             <div className="relative h-8 w-32 md:w-40 md:mr-10">
-              <Image src={"/logo1.png"} alt="Logo" fill className="object-contain" />
+              <Image src="/Images/logo1.png" alt="Logo" fill className="object-contain" />
             </div>
           </Link>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">

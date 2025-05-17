@@ -64,6 +64,11 @@ const ImagesSection = () => {
                   width={150}
                   height={150}
                   className="w-full h-full object-contain shadow-lg"
+                  onError={(e) => {
+                    console.error(`Failed to load image: ${image.url}`);
+                    e.currentTarget.src = '/placeholder-image.png'; // Add a placeholder image
+                  }}
+                  priority={index < 2} // Load first two images with priority
                 />
               </div>
             ))}

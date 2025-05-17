@@ -28,7 +28,7 @@ export default function Header() {
       <div className="container mx-auto flex h-16 md:h-20 items-center justify-between px-4 md:px-8">
         <Link href="/" className="flex items-center">
           <div className="relative h-8 w-32 md:w-40">
-            <Image src={"/logo.png"} alt="Logo" fill className="object-contain" />
+            <Image src="/Images/logo.png" alt="Logo" fill className="object-contain w-full h-full" />
           </div>
         </Link>
 

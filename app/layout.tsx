@@ -4,6 +4,7 @@ import { Raleway, Montserrat } from "next/font/google";
 import "./globals.css";
 import { Inter } from 'next/font/google'
 import ColorProvider from '@/components/ColorProvider';
+import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({
         <ColorProvider>
           <main>{children}</main>
         </ColorProvider>
+        <Toaster position="top-right" />
       </body>
     </html>
   );

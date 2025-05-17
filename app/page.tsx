@@ -2,7 +2,7 @@ import Link from "next/link";
 import HeroSection from "@/components/hero-section";
 import PricingSection from "@/components/pricing-section";
 import TestimonialSection from "@/components/testimonial-section";
-import images from "@/components/ImagesSection";
+import Image from "next/image"
 import { 
   fetchTestimonials, 
   fetchFAQs, 
@@ -21,7 +21,6 @@ import FaqSection from "@/components/faq-section";
 import FinancialServicesCard from "@/components/financialServiceCard";
 import TaxSection from "@/components/Tax-section";
 import FeaturesSection from "@/components/Features-section";
-import ImagesSection from "@/components/ImagesSection";
 import ColorTestWrapper from "@/components/ColorTestWrapper";
 
 export default async function Home() {
@@ -34,18 +33,28 @@ export default async function Home() {
   const ctaData = await fetchCtaSectionData();
   const taxServices = await fetchServiceSectionData();
 
-
   return (
     <div className="overflow-hidden">
       <Header />
       <div className="relative">
         <HeroSection slides={heroSlides} />
-        <div className="md:py-4 border-b md:mt-[400px] mt-40">
-        <ImagesSection/>
-        </div>
+  
       </div>
-      
-      <FeaturesSection/>
+      <div className="md:mt-[500px] mt-40">
+
+      <FeaturesSection />
+      </div>
+      <div className="md:py-4 border-b md:mt-[200px] mt-40">
+          <div className="w-full">
+            <iframe
+              className="w-full h-[100vh]"
+              src="https://www.youtube.com/embed/PJxF-wG5jUQ"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
       <div className="flex justify-center">
         <FinancialServicesCard aboutUsData={aboutUsData} />
       </div>

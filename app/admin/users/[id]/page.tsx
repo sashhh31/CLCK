@@ -1,139 +1,201 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, ChevronLeft, ChevronRight, Trash2, Upload, Mail, Plus, X, Paperclip, Info } from "lucide-react";
-import Link from "next/link";
-
+import { useParams } from "next/navigation";
+import { adminService, AdminUser, AdminDocument, AdminEmail } from "@/app/services/api";
 
 export default function UserDetailPage() {
+  const params = useParams();
+  const userId = params.id as string;
+  
   const [activeTab, setActiveTab] = useState("downloads");
   const [showUploadDialog, setShowUploadDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showEmailDialog, setShowEmailDialog] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedDocument, setSelectedDocument] = useState<AdminDocument | null>(null);
+  const [user, setUser] = useState<AdminUser | null>(null);
+  const [documents, setDocuments] = useState<AdminDocument[]>([]);
+  const [downloadedFiles, setDownloadedFiles] = useState<AdminDocument[]>([]);
+  const [emails, setEmails] = useState<AdminEmail[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
   
-  const files = [
-    {
-      id: "01",
-      name: "testing file.pdf",
-      type: "PDF",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-    },
-    {
-      id: "02",
-      name: "Tax_Report_2024.pdf",
-      type: "XLSX",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-    },
-    {
-      id: "03",
-      name: "Invoice_March_2025.xlsx",
-      type: "DOCX",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-    },
-    {
-      id: "04",
-      name: "Bookkeeping_Template.docx",
-      type: "CSV",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-    },
-    {
-      id: "05",
-      name: "Payroll_Record_Feb_2025.csv",
-      type: "PDF",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-    },
-  ];
+  // Form states
+  const [emailSubject, setEmailSubject] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [emailAttachments, setEmailAttachments] = useState<File[]>([]);
+  const [uploadFileName, setUploadFileName] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const subscriptions = [
-    {
-      id: "01",
-      plan: "Basic",
-      duration: "Monthly",
-      charges: "£ 49",
-      billingDate: "Apr 10, 2024 09:20 AM",
-      expiryDate: "Apr 10, 2024 09:20 AM",
-      status: "Current"
-    },
-    {
-      id: "02",
-      plan: "Professional",
-      duration: "Yearly",
-      charges: "£ 100",
-      billingDate: "Apr 10, 2024 09:20 AM",
-      expiryDate: "Apr 10, 2024 09:20 AM",
-      status: "Current"
-    },
-    {
-      id: "03",
-      plan: "Basic",
-      duration: "Monthly",
-      charges: "£ 49",
-      billingDate: "Apr 10, 2024 09:20 AM",
-      expiryDate: "Apr 10, 2024 09:20 AM",
-      status: "Past"
-    },
-    {
-      id: "04",
-      plan: "Basic",
-      duration: "Monthly",
-      charges: "£ 49",
-      billingDate: "Apr 10, 2024 09:20 AM",
-      expiryDate: "Apr 10, 2024 09:20 AM",
-      status: "Current"
-    },
-    {
-      id: "05",
-      plan: "Enterpreneur",
-      duration: "Monthly",
-      charges: "£ 90",
-      billingDate: "Apr 10, 2024 09:20 AM",
-      expiryDate: "Apr 10, 2024 09:20 AM",
-      status: "Past"
+  const fetchUserDetails = async () => {
+    try {
+      const response = await adminService.getUserDetails(userId);
+      setUser(response.data.user as AdminUser);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
     }
-  ];
-
-  const emails = [
-    {
-      id: "01",
-      subject: "Request To Upload Document",
-      email: "Hi, Tristirue nulla aliquet enim tortor at auctor urnanmassa enim nec dui nunc mattis enim ut tellsunaute irure repraeen. enim tortor at auctor urnanmassa. irure repraeen. enim tortor at auctor urnanmassa.",
-      attachedDoc: "testing file.pdf, Mytesting file.Docx",
-      sentOn: "Apr 10, 2024 09:20 AM"
-    },
-    {
-      id: "02",
-      subject: "Request To Upload Document",
-      email: "Hi, enim tortor at auctor urnanmassa. irure repraeen. enim tortor at auctor urnanmassa.",
-      attachedDoc: "Mytesting file.Docx",
-      sentOn: "Apr 10, 2024 09:20 AM"
-    },
-    {
-      id: "03",
-      subject: "Request To Upload Document",
-      email: "Hi, enim tortor at auctor urnanmassa. irure repraeen. enim tortor at auctor urnanmassa.",
-      attachedDoc: "Mytesting file.Docx",
-      sentOn: "Apr 10, 2024 09:20 AM"
-    }
-  ];
-
-  const handleDeleteClick = (file:any) => {
-    setSelectedFile(file);
-    setShowDeleteDialog(true);
   };
 
-  const confirmDelete = () => {
-    // Handle delete functionality here
-    setShowDeleteDialog(false);
-    setSelectedFile(null);
+  const fetchDocuments = async (page = 1) => {
+    try {
+      const response = await adminService.getUserDocuments(userId, page);
+      setDocuments(response.data.documents as AdminDocument[]);
+      setTotalPages(response.data.pagination.pages);
+      setCurrentPage(page);
+    } catch (error) {
+      console.error("Error fetching documents:", error);
+    }
+  };
+
+  const fetchDownloadedFiles = async (page = 1) => {
+    try {
+      const response = await adminService.getUserDownloadedFiles(userId, page);
+      setDownloadedFiles(response.data.documents as AdminDocument[]);
+      setTotalPages(response.data.pagination.pages);
+      setCurrentPage(page);
+    } catch (error) {
+      console.error("Error fetching downloaded files:", error);
+    }
+  };
+
+  const fetchEmails = async (page = 1) => {
+    try {
+      const response = await adminService.getUserEmails(userId, page);
+      setEmails(response.data.emails as AdminEmail[]);
+      setTotalPages(response.data.pagination.pages);
+      setCurrentPage(page);
+    } catch (error) {
+      console.error("Error fetching emails:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserDetails();
+    switch (activeTab) {
+      case "downloads":
+        fetchDownloadedFiles();
+        break;
+      case "documents":
+        fetchDocuments();
+        break;
+      case "emails":
+        fetchEmails();
+        break;
+    }
+    setLoading(false);
+  }, [activeTab, userId]);
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
+
+  const handleEmailAttachment = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setEmailAttachments(Array.from(e.target.files));
+    }
+  };
+
+  const handleUploadDocument = async () => {
+    if (!selectedFile) return;
+    setIsUploading(true);
+
+    const formData = new FormData();
+    formData.append("document", selectedFile);
+    formData.append("fileName", uploadFileName || selectedFile.name);
+
+    try {
+      await adminService.uploadDocument(userId, formData);
+      setShowUploadDialog(false);
+      setSelectedFile(null);
+      setUploadFileName("");
+      fetchDocuments();
+    } catch (error) {
+      console.error("Error uploading document:", error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleSendEmail = async () => {
+    if (!emailSubject || !emailMessage) return;
+    setIsSendingEmail(true);
+
+    const formData = new FormData();
+    formData.append("subject", emailSubject);
+    formData.append("message", emailMessage);
+    formData.append("userId", userId);
+    emailAttachments.forEach((file) => {
+      formData.append("attachments", file);
+    });
+
+    try {
+      await adminService.sendEmail(formData);
+      setShowEmailDialog(false);
+      setEmailSubject("");
+      setEmailMessage("");
+      setEmailAttachments([]);
+      fetchEmails();
+    } catch (error) {
+      console.error("Error sending email:", error);
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
+  const handleDeleteDocument = async (documentId: string) => {
+    try {
+      await adminService.deleteDocument(documentId);
+      setShowDeleteDialog(false);
+      fetchDocuments();
+    } catch (error) {
+      console.error("Error deleting document:", error);
+    }
+  };
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      switch (activeTab) {
+        case "downloads":
+          fetchDownloadedFiles(newPage);
+          break;
+        case "documents":
+          fetchDocuments(newPage);
+          break;
+        case "emails":
+          fetchEmails(newPage);
+          break;
+      }
+    }
   };
 
   const renderContent = () => {
-    switch(activeTab) {
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-800"></div>
+        </div>
+      );
+    }
+
+    switch (activeTab) {
       case "downloads":
         return (
           <>
             <div className="relative w-full max-w-md mb-6">
-              <input type="text" placeholder="Search" className="w-full pl-10 pr-4 py-2 border rounded-full" />
+              <input
+                type="text"
+                placeholder="Search"
+                className="w-full pl-10 pr-4 py-2 border rounded-full"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
               <Search className="absolute left-3 top-2.5 h-5 w-5 text-black" />
             </div>
 
@@ -141,7 +203,6 @@ export default function UserDetailPage() {
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-50">
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Sr No</th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-black">File Name</th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-black">File type</th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-black">Downloaded On</th>
@@ -149,9 +210,8 @@ export default function UserDetailPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {files.map((file) => (
+                  {downloadedFiles.map((file) => (
                     <tr key={file.id}>
-                      <td className="px-4 py-4 text-sm">{file.id}</td>
                       <td className="px-4 py-4 text-sm">
                         <div className="flex items-center">
                           <svg
@@ -170,15 +230,18 @@ export default function UserDetailPage() {
                             <line x1="16" y1="17" x2="8" y2="17" />
                             <polyline points="10 9 9 9 8 9" />
                           </svg>
-                          {file.name}
+                          {file.fileName}
                         </div>
                       </td>
-                      <td className="px-4 py-4 text-sm">{file.type}</td>
-                      <td className="px-4 py-4 text-sm">{file.downloadedOn}</td>
+                      <td className="px-4 py-4 text-sm">{file.fileType}</td>
+                      <td className="px-4 py-4 text-sm">{new Date(file.createdAt).toLocaleString()}</td>
                       <td className="px-4 py-4 text-sm">
-                        <button 
+                        <button
                           className="text-red-500"
-                          onClick={() => handleDeleteClick(file)}
+                          onClick={() => {
+                            setSelectedDocument(file);
+                            setShowDeleteDialog(true);
+                          }}
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -190,38 +253,76 @@ export default function UserDetailPage() {
             </div>
           </>
         );
-      case "subscriptions":
+
+      case "documents":
         return (
           <>
-            <div className="relative w-full max-w-md mb-6">
-              <input type="text" placeholder="Search" className="w-full pl-10 pr-4 py-2 border rounded-full" />
-              <Search className="absolute left-3 top-2.5 h-5 w-5 text-black" />
+            <div className="flex justify-between items-center mb-6">
+              <div className="relative w-full max-w-md">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full pl-10 pr-4 py-2 border rounded-full"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <Search className="absolute left-3 top-2.5 h-5 w-5 text-black" />
+              </div>
+              <button
+                className="flex items-center justify-center px-4 py-2 bg-blue-800 text-white rounded-lg"
+                onClick={() => setShowUploadDialog(true)}
+              >
+                <Upload className="h-4 w-4 mr-2" />
+                Upload
+              </button>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="bg-gray-50">
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Plan</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Duration</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Charges</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Billing Date</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Expiry Date</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Status</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-black">File Name</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-black">File type</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Uploaded On</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y">
-                  {subscriptions.map((subscription) => (
-                    <tr key={subscription.id}>
-                      <td className="px-4 py-4 text-sm">{subscription.plan}</td>
-                      <td className="px-4 py-4 text-sm">{subscription.duration}</td>
-                      <td className="px-4 py-4 text-sm">{subscription.charges}</td>
-                      <td className="px-4 py-4 text-sm">{subscription.billingDate}</td>
-                      <td className="px-4 py-4 text-sm">{subscription.expiryDate}</td>
+                  {documents.map((file) => (
+                    <tr key={file.id}>
                       <td className="px-4 py-4 text-sm">
-                        <span className={`px-2 py-1 rounded-full text-xs ${subscription.status === "Current" ? "bg-blue-100 text-blue-800" : "bg-yellow-100 text-yellow-800"}`}>
-                          {subscription.status}
-                        </span>
+                        <div className="flex items-center">
+                          <svg
+                            className="h-5 w-5 mr-2 text-black"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" y1="13" x2="8" y2="13" />
+                            <line x1="16" y1="17" x2="8" y2="17" />
+                            <polyline points="10 9 9 9 8 9" />
+                          </svg>
+                          {file.fileName}
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-sm">{file.fileType}</td>
+                      <td className="px-4 py-4 text-sm">{new Date(file.createdAt).toLocaleString()}</td>
+                      <td className="px-4 py-4 text-sm">
+                        <button
+                          className="text-red-500"
+                          onClick={() => {
+                            setSelectedDocument(file);
+                            setShowDeleteDialog(true);
+                          }}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -230,15 +331,22 @@ export default function UserDetailPage() {
             </div>
           </>
         );
+
       case "emails":
         return (
           <>
             <div className="flex justify-between items-center mb-6">
               <div className="relative w-full max-w-md">
-                <input type="text" placeholder="Search" className="w-full pl-10 pr-4 py-2 border rounded-full" />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full pl-10 pr-4 py-2 border rounded-full"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
                 <Search className="absolute left-3 top-2.5 h-5 w-5 text-black" />
               </div>
-              <button 
+              <button
                 className="flex items-center justify-center px-4 py-2 bg-blue-800 text-white rounded-lg"
                 onClick={() => setShowEmailDialog(true)}
               >
@@ -261,7 +369,7 @@ export default function UserDetailPage() {
                   {emails.map((email) => (
                     <tr key={email.id}>
                       <td className="px-4 py-4 text-sm">{email.subject}</td>
-                      <td className="px-4 py-4 text-sm max-w-xs truncate">{email.email}</td>
+                      <td className="px-4 py-4 text-sm max-w-xs truncate">{email.message}</td>
                       <td className="px-4 py-4 text-sm">
                         <div className="flex items-center">
                           <svg
@@ -280,10 +388,10 @@ export default function UserDetailPage() {
                             <line x1="16" y1="17" x2="8" y2="17" />
                             <polyline points="10 9 9 9 8 9" />
                           </svg>
-                          {email.attachedDoc}
+                          {email.attachments.map((att) => att.filename).join(", ")}
                         </div>
                       </td>
-                      <td className="px-4 py-4 text-sm">{email.sentOn}</td>
+                      <td className="px-4 py-4 text-sm">{new Date(email.sentAt).toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -291,76 +399,7 @@ export default function UserDetailPage() {
             </div>
           </>
         );
-      case "documents":
-        return (
-          <>
-            <div className="flex justify-between items-center mb-6">
-              <div className="relative w-full max-w-md">
-                <input type="text" placeholder="Search" className="w-full pl-10 pr-4 py-2 border rounded-full" />
-                <Search className="absolute left-3 top-2.5 h-5 w-5 text-black" />
-              </div>
-              <button 
-                className="flex items-center justify-center px-4 py-2 bg-blue-800 text-white rounded-lg"
-                onClick={() => setShowUploadDialog(true)}
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                Upload
-              </button>
-            </div>
 
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-gray-50">
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Sr No</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">File Name</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">File type</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Uploaded On</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-black">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {files.map((file) => (
-                    <tr key={file.id}>
-                      <td className="px-4 py-4 text-sm">{file.id}</td>
-                      <td className="px-4 py-4 text-sm">
-                        <div className="flex items-center">
-                          <svg
-                            className="h-5 w-5 mr-2 text-black"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                            <polyline points="14 2 14 8 20 8" />
-                            <line x1="16" y1="13" x2="8" y2="13" />
-                            <line x1="16" y1="17" x2="8" y2="17" />
-                            <polyline points="10 9 9 9 8 9" />
-                          </svg>
-                          {file.name}
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm">{file.type}</td>
-                      <td className="px-4 py-4 text-sm">{file.downloadedOn}</td>
-                      <td className="px-4 py-4 text-sm">
-                        <button 
-                          className="text-red-500"
-                          onClick={() => handleDeleteClick(file)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
-        );
       default:
         return null;
     }
@@ -374,40 +413,44 @@ export default function UserDetailPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="bg-white rounded-lg shadow-sm p-6">
             <div className="flex flex-col items-center mb-6">
-              <img src="/placeholder.svg?height=40&width=40" alt="User" className="h-24 w-24 rounded-full mb-4" />
-              <h2 className="text-xl font-bold">Alexender Alex</h2>
-              <p className="text-sm text-black">admin@AK.Trading.com</p>
+              <div className="h-24 w-24 rounded-full bg-gray-200 flex items-center justify-center mb-4">
+                <span className="text-2xl text-black">
+                  {user?.email.charAt(0).toUpperCase()}
+                </span>
+              </div>
+              <h2 className="text-xl font-bold">{user?.email.split('@')[0]}</h2>
+              <p className="text-sm text-black">{user?.email}</p>
             </div>
 
-            <div className="text-sm text-black mb-4">Added On : Apr 10, 2024</div>
+            <div className="text-sm text-black mb-4">
+              Added On : {user ? new Date(user.createdAt).toLocaleDateString() : ''}
+            </div>
 
             <div className="space-y-2">
-              <button 
-                className={`flex items-center justify-between w-full p-3 rounded-md ${activeTab === "downloads" ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"}`}
+              <button
+                className={`flex items-center justify-between w-full p-3 rounded-md ${
+                  activeTab === "downloads" ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"
+                }`}
                 onClick={() => setActiveTab("downloads")}
               >
                 <span>Downloads</span>
                 <ChevronRight className="h-5 w-5" />
               </button>
-              
-              <button 
-                className={`flex items-center justify-between w-full p-3 rounded-md ${activeTab === "documents" ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"}`}
+
+              <button
+                className={`flex items-center justify-between w-full p-3 rounded-md ${
+                  activeTab === "documents" ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"
+                }`}
                 onClick={() => setActiveTab("documents")}
               >
                 <span>Documents</span>
                 <ChevronRight className="h-5 w-5" />
               </button>
-              
-              <button 
-                className={`flex items-center justify-between w-full p-3 rounded-md ${activeTab === "subscriptions" ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"}`}
-                onClick={() => setActiveTab("subscriptions")}
-              >
-                <span>Subscriptions</span>
-                <ChevronRight className="h-5 w-5" />
-              </button>
-              
-              <button 
-                className={`flex items-center justify-between w-full p-3 rounded-md ${activeTab === "emails" ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"}`}
+
+              <button
+                className={`flex items-center justify-between w-full p-3 rounded-md ${
+                  activeTab === "emails" ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"
+                }`}
                 onClick={() => setActiveTab("emails")}
               >
                 <span>Emails</span>
@@ -415,7 +458,12 @@ export default function UserDetailPage() {
               </button>
             </div>
 
-            <button className="flex items-center justify-center w-full mt-6 p-2 text-red-500 border border-red-500 rounded-md hover:bg-red-50">
+            <button
+              className="flex items-center justify-center w-full mt-6 p-2 text-red-500 border border-red-500 rounded-md hover:bg-red-50"
+              onClick={() => {
+                // Implement user deletion
+              }}
+            >
               <Trash2 className="h-4 w-4 mr-2" />
               Delete User
             </button>
@@ -425,25 +473,29 @@ export default function UserDetailPage() {
             {renderContent()}
 
             <div className="px-6 py-4 flex items-center justify-center border-t border-gray-200">
-            <div className="flex items-center">
-              <button className="p-1 rounded-md hover:bg-gray-100">
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <div className="inline-flex items-center justify-center w-8 h-8 mx-1 text-sm font-medium text-white bg-blue-800 rounded-full">
-                1
+              <div className="flex items-center">
+                <button
+                  className="p-1 rounded-md hover:bg-gray-100"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <div className="inline-flex items-center justify-center w-8 h-8 mx-1 text-sm font-medium text-white bg-blue-800 rounded-full">
+                  {currentPage}
+                </div>
+                <button
+                  className="p-1 rounded-md hover:bg-gray-100"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
               </div>
-              <button className="p-1 rounded-md hover:bg-gray-100">
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+              <div className="text-sm text-black ml-4">
+                Total : {totalPages} Pages
+              </div>
             </div>
-            <div className="text-sm text-black">
-              Total : 01 Pages
-            </div>
-          </div>
           </div>
         </div>
       </div>
@@ -454,33 +506,63 @@ export default function UserDetailPage() {
           <div className="bg-white rounded-lg w-full max-w-md mx-4">
             <div className="p-6">
               <h2 className="text-2xl font-bold mb-8">Add Document</h2>
-              
+
               <div className="border border-dashed border-gray-300 rounded-lg p-10 flex flex-col items-center justify-center mb-6">
                 <Upload className="h-12 w-12 text-blue-900 mb-4" />
                 <h3 className="text-xl font-semibold text-blue-900 mb-2">Upload Document</h3>
                 <p className="text-sm text-black text-center">
                   Document type should be PDF, XLSX, DOCX etc and upto file size 20MB
                 </p>
+                <input
+                  type="file"
+                  className="hidden"
+                  id="file-upload"
+                  onChange={handleFileSelect}
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png"
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="mt-4 px-4 py-2 bg-blue-900 text-white rounded-lg cursor-pointer"
+                >
+                  Select File
+                </label>
+                {selectedFile && (
+                  <p className="mt-2 text-sm text-black">{selectedFile.name}</p>
+                )}
               </div>
-              
+
               <div className="mb-6">
                 <label className="block text-sm font-medium mb-2">File Name</label>
-                <input 
-                  type="text" 
-                  placeholder="Enter enter" 
+                <input
+                  type="text"
+                  placeholder="Enter file name"
                   className="w-full p-3 border border-gray-300 rounded-full"
+                  value={uploadFileName}
+                  onChange={(e) => setUploadFileName(e.target.value)}
                 />
               </div>
-              
+
               <div className="flex space-x-4">
-                <button 
+                <button
                   className="flex-1 py-3 bg-gray-200 rounded-full font-medium"
                   onClick={() => setShowUploadDialog(false)}
+                  disabled={isUploading}
                 >
                   Cancel
                 </button>
-                <button className="flex-1 py-3 bg-blue-900 text-yellow-300 rounded-full font-medium">
-                  Add
+                <button
+                  className="flex-1 py-3 bg-blue-900 text-yellow-300 rounded-full font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={handleUploadDocument}
+                  disabled={isUploading || !selectedFile}
+                >
+                  {isUploading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-yellow-300 mr-2"></div>
+                      Uploading...
+                    </div>
+                  ) : (
+                    'Add'
+                  )}
                 </button>
               </div>
             </div>
@@ -496,22 +578,22 @@ export default function UserDetailPage() {
               <div className="bg-blue-900 rounded-full p-4 mb-4">
                 <Info className="h-8 w-8 text-white" />
               </div>
-              
+
               <h2 className="text-2xl font-bold text-blue-900 mb-2">Delete Document?</h2>
               <p className="text-black text-center mb-8">
                 Are you sure you want to Delete This document??
               </p>
-              
+
               <div className="flex w-full space-x-4">
-                <button 
+                <button
                   className="flex-1 py-3 border border-gray-300 rounded-full font-medium"
                   onClick={() => setShowDeleteDialog(false)}
                 >
                   Cancel
                 </button>
-                <button 
+                <button
                   className="flex-1 py-3 bg-blue-900 text-yellow-300 rounded-full font-medium"
-                  onClick={confirmDelete}
+                  onClick={() => selectedDocument && handleDeleteDocument(selectedDocument.id)}
                 >
                   Yes I am Sure
                 </button>
@@ -527,38 +609,76 @@ export default function UserDetailPage() {
           <div className="bg-white rounded-lg w-full max-w-md mx-4">
             <div className="p-6">
               <h2 className="text-2xl font-bold mb-6">Send Email</h2>
-              
+
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">Subject</label>
-                <input 
-                  type="text" 
-                  placeholder="Enter Subject" 
+                <input
+                  type="text"
+                  placeholder="Enter Subject"
                   className="w-full p-3 border border-gray-300 rounded-full"
+                  value={emailSubject}
+                  onChange={(e) => setEmailSubject(e.target.value)}
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">Email</label>
-                <textarea 
-                  placeholder="Enter message" 
+                <textarea
+                  placeholder="Enter message"
                   className="w-full p-3 border border-gray-300 rounded-xl h-32"
+                  value={emailMessage}
+                  onChange={(e) => setEmailMessage(e.target.value)}
                 ></textarea>
               </div>
-              
-              <button className="flex items-center w-full p-3 border border-gray-300 rounded-full mb-6">
+
+              <input
+                type="file"
+                className="hidden"
+                id="email-attachments"
+                multiple
+                onChange={handleEmailAttachment}
+              />
+              <label
+                htmlFor="email-attachments"
+                className="flex items-center w-full p-3 border border-gray-300 rounded-full mb-6 cursor-pointer"
+              >
                 <Paperclip className="h-5 w-5 mr-2 text-black" />
                 <span className="text-black">Attach document</span>
-              </button>
-              
+              </label>
+              {emailAttachments.length > 0 && (
+                <div className="mb-6">
+                  <p className="text-sm text-black">Selected files:</p>
+                  <ul className="mt-2">
+                    {emailAttachments.map((file, index) => (
+                      <li key={index} className="text-sm text-black">
+                        {file.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               <div className="flex space-x-4">
-                <button 
+                <button
                   className="flex-1 py-3 bg-gray-200 rounded-full font-medium"
                   onClick={() => setShowEmailDialog(false)}
+                  disabled={isSendingEmail}
                 >
                   Cancel
                 </button>
-                <button className="flex-1 py-3 bg-blue-900 text-yellow-300 rounded-full font-medium">
-                  Send
+                <button
+                  className="flex-1 py-3 bg-blue-900 text-yellow-300 rounded-full font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={handleSendEmail}
+                  disabled={isSendingEmail || !emailSubject || !emailMessage}
+                >
+                  {isSendingEmail ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-yellow-300 mr-2"></div>
+                      Sending...
+                    </div>
+                  ) : (
+                    'Send'
+                  )}
                 </button>
               </div>
             </div>

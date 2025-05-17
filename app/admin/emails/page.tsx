@@ -1,55 +1,74 @@
 "use client"
-import React, { useState } from 'react';
-import { Search, Plus, File } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, Plus, File, Loader2 } from 'lucide-react';
 import SendEmailDialog from '@/components/sendEmailDialog';
+import { emailService } from '@/app/services/api';
+
+interface Email {
+  _id: string;
+  to: string;
+  subject: string;
+  message: string;
+  attachments: Array<{
+    filename: string;
+    path: string;
+  }>;
+  sentBy: {
+    name: string;
+    email: string;
+  };
+  status: 'sent' | 'failed';
+  sentAt: string;
+}
 
 export default function EmailDashboard() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [emails, setEmails] = useState<Email[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [userId, setUserId] = useState<string>('');
 
-  // Sample email data
-  const emails = [
-    {
-      id: 1,
-      emailAddress: 'alexsaprun123@gmail.com',
-      subject: 'Request To Upload Document',
-      email: 'Hi, Tristrue nulla aliquet enim tortor at auctor urnanmassa enim nec dui nunc mattis enim ut tellusnaute irure repreaen. enim tortor at auctor urnanmassa. irure repreaen. enim tortor at auctor urnanmassa.',
-      attachedDocuments: ['testing file.pdf', 'Mytesting file.Docx'],
-      sentOn: 'Apr 10, 2024 09:20 AM'
-    },
-    {
-      id: 2,
-      emailAddress: 'alexsaprun123@gmail.com',
-      subject: 'Request To Upload Document',
-      email: 'Hi, enim tortor at auctor urnanmassa. irure repreaen. enim tortor at auctor urnanmassa.',
-      attachedDocuments: ['Mytesting file.Docx'],
-      sentOn: 'Apr 10, 2024 09:20 AM'
-    },
-    {
-      id: 3,
-      emailAddress: 'alexsaprun123@gmail.com',
-      subject: 'Request To Upload Document',
-      email: 'Hi, enim tortor at auctor urnanmassa. irure repreaen. enim tortor at auctor urnanmassa.',
-      attachedDocuments: ['Mytesting file.Docx'],
-      sentOn: 'Apr 10, 2024 09:20 AM'
-    },
-    {
-      id: 4,
-      emailAddress: 'alexsaprun123@gmail.com',
-      subject: 'Request To Upload Document',
-      email: 'Hi, Tristrue nulla aliquet enim tortor at auctor urnanmassa enim nec dui nunc mattis enim ut tellusnaute irure repreaen. enim tortor at auctor urnanmassa. irure repreaen. enim tortor at auctor urnanmassa.',
-      attachedDocuments: ['testing file.pdf', 'Mytesting file.Docx'],
-      sentOn: 'Apr 10, 2024 09:20 AM'
+  useEffect(() => {
+    // Get user ID from localStorage or your auth context
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
     }
-  ];
+  }, []);
+
+  const fetchEmails = async () => {
+    try {
+      setLoading(true);
+      const response = await emailService.getEmailHistory(currentPage, searchQuery);
+      setEmails(response.data.emails);
+      setTotalPages(response.data.totalPages);
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Error fetching emails');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchEmails();
+  }, [currentPage, searchQuery]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to first page on new search
+  };
 
   return (
     <div className="w-full min-h-screen bg-white p-8">
-                           <div className="border-t-2 mt-6 mb-2"></div>
+      <div className="border-t-2 mt-6 mb-2"></div>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-black">Emails</h1>
-          <p className="text-black">Total Emails sent : 120</p>
+          <p className="text-black">Total Emails sent : {emails.length}</p>
         </div>
 
         {/* Main content */}
@@ -61,6 +80,8 @@ export default function EmailDashboard() {
                 type="text"
                 placeholder="Search"
                 className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={searchQuery}
+                onChange={handleSearch}
               />
               <div className="absolute right-3 top-2.5 text-black">
                 <Search size={20} />
@@ -85,42 +106,60 @@ export default function EmailDashboard() {
           </div>
 
           {/* Table content */}
-          {emails.map((email) => (
-            <div key={email.id} className="grid grid-cols-5 border-b border-gray-200 hover:bg-gray-50">
-              <div className="px-6 py-4 text-black text-sm">{email.emailAddress}</div>
-              <div className="px-6 py-4 text-gray-900 font-medium">{email.subject}</div>
-              <div className="px-6 py-4 text-black text-sm truncate">{email.email}</div>
-              <div className="px-6 py-4">
-                {email.attachedDocuments.map((doc, index) => (
-                  <div key={index} className="flex items-center text-black text-sm mb-1">
-                    <File size={16} className="mr-2 text-black" />
-                    {doc}
-                  </div>
-                ))}
-              </div>
-              <div className="px-6 py-4 text-black text-sm">{email.sentOn}</div>
+          {loading ? (
+            <div className="flex justify-center items-center py-8">
+              <Loader2 className="w-6 h-6 animate-spin text-blue-500" />
             </div>
-          ))}
+          ) : error ? (
+            <div className="text-red-500 text-center py-4">{error}</div>
+          ) : (
+            emails.map((email) => (
+              <div key={email._id} className="grid grid-cols-5 border-b border-gray-200 hover:bg-gray-50">
+                <div className="px-6 py-4 text-black text-sm">{email.to}</div>
+                <div className="px-6 py-4 text-gray-900 font-medium">{email.subject}</div>
+                <div className="px-6 py-4 text-black text-sm truncate">{email.message}</div>
+                <div className="px-6 py-4">
+                  {email.attachments.map((doc, index) => (
+                    <div key={index} className="flex items-center text-black text-sm mb-1">
+                      <File size={16} className="mr-2 text-black" />
+                      {doc.filename}
+                    </div>
+                  ))}
+                </div>
+                <div className="px-6 py-4 text-black text-sm">
+                  {new Date(email.sentAt).toLocaleString()}
+                </div>
+              </div>
+            ))
+          )}
 
           {/* Pagination */}
-          <div className="px-6 py-4 flex items-center justify-center border-t border-gray-200">
+          <div className="px-6 py-4 flex items-center justify-between border-t border-gray-200">
+            <div className="text-sm text-black">
+              Page {currentPage} of {totalPages}
+            </div>
             <div className="flex items-center">
-              <button className="p-1 rounded-md hover:bg-gray-100">
+              <button 
+                className="p-1 rounded-md hover:bg-gray-100 disabled:opacity-50"
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
                 <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
               <div className="inline-flex items-center justify-center w-8 h-8 mx-1 text-sm font-medium text-white bg-blue-800 rounded-full">
-                1
+                {currentPage}
               </div>
-              <button className="p-1 rounded-md hover:bg-gray-100">
+              <button 
+                className="p-1 rounded-md hover:bg-gray-100 disabled:opacity-50"
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+              >
                 <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
-            </div>
-            <div className="text-sm text-black">
-              Total : 01 Pages
             </div>
           </div>
         </div>
@@ -129,7 +168,11 @@ export default function EmailDashboard() {
       {/* Send Email Dialog */}
       <SendEmailDialog 
         isOpen={isDialogOpen} 
-        onClose={() => setIsDialogOpen(false)} 
+        onClose={() => {
+          setIsDialogOpen(false);
+          fetchEmails(); // Refresh the email list after sending
+        }}
+        userId={userId}
       />
     </div>
   );

@@ -55,7 +55,7 @@ export default function ProfilePage() {
           <CardContent className="p-6">
             <div className="flex flex-col items-center mb-6">
               <div className="h-20 w-20 rounded-full mb-4 overflow-hidden">
-                <img
+                    <img
                   src="/sarah.png"
                   alt="User"
                   className="h-full w-full object-cover"
@@ -107,7 +107,7 @@ export default function ProfilePage() {
             <CardContent className="p-4">
               <div className="flex items-center gap-4 mb-4">
                 <div className="h-12 w-12 rounded-full overflow-hidden">
-                  <img
+                          <img
                     src="/sarah.png"
                     alt="User"
                     className="h-full w-full object-cover"

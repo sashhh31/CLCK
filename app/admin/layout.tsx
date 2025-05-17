@@ -15,6 +15,8 @@ import {
   ChevronRight,
   Menu,
   X,
+  Calendar,
+  CalendarCheck,
 } from 'lucide-react';
 import { ReactNode, useState, useEffect } from 'react';
 
@@ -51,7 +53,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { href: '/admin/emails', icon: Mail, label: 'Emails' },
     { href: '/admin/notifications', icon: Bell, label: 'Notifications' },
     { href: '/admin/downloads', icon: Download, label: 'Downloads' },
-    { href: '/admin/roles', icon: UserCog, label: 'Roles' },
+    // { href: '/admin/roles', icon: UserCog, label: 'Roles' },
+    { href: '/admin/bookings', icon: CalendarCheck, label: 'Manage Bookings' },
   ];
 
   return (
@@ -73,7 +76,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         <div className="p-4 md:p-6">
           <Link href="/" className="flex items-center">
             <Image 
-              src="/logo1.png" 
+              src="/Images/logo1.png" 
               alt="Logo" 
               height={150} 
               width={150}
@@ -96,7 +99,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               >
                 <Icon
                   className={`mr-3 h-5 w-5 transition-colors ${
-                    active ? 'text-yellow-400' : 'text-black group-hover:text-white'
+                    active ? 'text-yellow-400' : 'text-white group-hover:text-white'
                   }`}
                 />
                 {label}

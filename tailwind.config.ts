@@ -25,7 +25,7 @@ const config = {
 
     },
     backgroundImage: {
-      'hero-bg': "url('/bg-image.png')",
+      'hero-bg': "url('/Images/bg-image.png')",
     },
       colors: {
         'navy': {

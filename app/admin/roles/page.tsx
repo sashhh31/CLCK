@@ -2,7 +2,6 @@
 
 import { Search, ChevronLeft, ChevronRight, Trash2, Edit, Plus, Eye, EyeOff, X, Info } from "lucide-react"
 import { useState } from "react"
-import Image from "next/image"
 
 export default function RolesPage() {
   const [users, setUsers] = useState([

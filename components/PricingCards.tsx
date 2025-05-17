@@ -16,6 +16,7 @@ export interface PricingPlan {
   sys?: {
     id: string
   }
+  onClick?: () => void
 }
 
 // Client component for interactive pricing cards
@@ -60,9 +61,10 @@ export default function PricingCards({ pricingPlans }: { pricingPlans: PricingPl
           </div>
           <Button 
             className="w-full bg-secondary hover:bg-secondary/90 text-white font-semibold mb-4 md:mb-6"
-            onClick={() => window.location.href = plan.ctaLink || "/contact-us"}
+            onClick={plan.onClick}
+            disabled={plan.ctaText === "Processing..."}
           >
-            {plan.ctaText || "Get Started"}
+            {plan.ctaText}
           </Button>
           <div className="mb-4">
             <span className={`text-sm mb-2 block ${plan.highlightPlan ? 'text-white' : 'text-gray-300'}`}>

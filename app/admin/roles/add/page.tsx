@@ -96,7 +96,7 @@ export default function AddRolePage() {
 
         <div className="flex justify-end space-x-4">
           <Link
-            href="/dashboard/roles"
+            href="/user/roles"
             className="px-6 py-2 bg-gray-200 text-black rounded-md hover:bg-gray-300 transition-colors"
           >
             Cancel

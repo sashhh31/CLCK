@@ -1,89 +1,130 @@
 "use client"
-import { useState } from "react"
-import { Search, Trash2, Download, ChevronLeft, ChevronRight } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Search, Trash2, Download, ChevronLeft, ChevronRight, X, Loader2 } from "lucide-react"
 import Image from "next/image"
+import { documentService } from "@/app/services/api"
+
+interface DownloadedBy {
+  name: string;
+  email: string;
+}
+
+interface Download {
+  id: string;
+  fileName: string;
+  fileType: string;
+  fileSize: number;
+  url: string;
+  downloaded: boolean;
+  createdAt: string;
+  downloadedBy?: DownloadedBy;
+  downloadUrl?: string;
+}
 
 export default function DownloadsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
+  const [downloads, setDownloads] = useState<Download[]>([])
+  const [totalPages, setTotalPages] = useState(1)
+  const [loading, setLoading] = useState(true)
+  const [userEmail, setUserEmail] = useState("")
+  const [showViewerDialog, setShowViewerDialog] = useState(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [documentToView, setDocumentToView] = useState<Download | null>(null)
+  const [documentToDelete, setDocumentToDelete] = useState<Download | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
-  const downloads = [
-    {
-      id: "01",
-      fileName: "testing file.pdf",
-      fileType: "PDF",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-      downloadedBy: {
-        name: "Alex Saprun",
-        email: "alexsaprun123@gmail.com",
-        avatar: "/placeholder.svg?height=40&width=40",
-      },
-    },
-    {
-      id: "02",
-      fileName: "Tax_Report_2024.pdf",
-      fileType: "XLSX",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-      downloadedBy: {
-        name: "Sapstar",
-        email: "alexsaprun123@gmail.com",
-        avatar: null,
-      },
-    },
-    {
-      id: "03",
-      fileName: "Invoice_March_2025.xlsx",
-      fileType: "DOCX",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-      downloadedBy: {
-        name: "Naina Nohn",
-        email: "alexsaprun123@gmail.com",
-        avatar: "/placeholder.svg?height=40&width=40",
-      },
-    },
-    {
-      id: "04",
-      fileName: "Bookkeeping_Template.docx",
-      fileType: "CSV",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-      downloadedBy: {
-        name: "Alex Saprun",
-        email: "alexsaprun123@gmail.com",
-        avatar: "/placeholder.svg?height=40&width=40",
-      },
-    },
-    {
-      id: "05",
-      fileName: "Payroll_Record_Feb_2025.csv",
-      fileType: "PDF",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-      downloadedBy: {
-        name: "Alex Saprun",
-        email: "alexsaprun123@gmail.com",
-        avatar: "/placeholder.svg?height=40&width=40",
-      },
-    },
-    {
-      id: "06",
-      fileName: "Subscription_Invoice_#12345.pdf",
-      fileType: "PDF",
-      downloadedOn: "Apr 10, 2024 09:20 AM",
-      downloadedBy: {
-        name: "Naina Nohn",
-        email: "alexsaprun123@gmail.com",
-        avatar: null,
-      },
-    },
-  ]
+  const getReadableFileType = (mimeType: string) => {
+    const typeMap: { [key: string]: string } = {
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'XLSX',
+      'application/vnd.ms-excel': 'XLS',
+      'application/pdf': 'PDF',
+      'application/msword': 'DOC',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'DOCX',
+      'application/vnd.ms-powerpoint': 'PPT',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'PPTX',
+      'text/plain': 'TXT',
+      'image/jpeg': 'JPG',
+      'image/png': 'PNG',
+      'image/gif': 'GIF',
+      'application/zip': 'ZIP',
+      'application/x-rar-compressed': 'RAR'
+    }
+    return typeMap[mimeType] || mimeType.split('/').pop()?.toUpperCase() || 'Unknown'
+  }
 
-  const itemsPerPage = 5;
+  useEffect(() => {
+    const email = localStorage.getItem('verificationEmail') || 'N/A'
+    setUserEmail(email)
+    fetchDownloads()
+  }, [currentPage])
+
+  const fetchDownloads = async () => {
+    try {
+      setLoading(true)
+      const response = await documentService.getDownloadedDocuments(currentPage, 5)
+      // Add downloadedBy information to each document
+      const documentsWithUser = response.data.documents.map((doc: Download) => ({
+        ...doc,
+        downloadedBy: {
+          name: 'You',
+          email: userEmail
+        }
+      }))
+      setDownloads(documentsWithUser)
+      setTotalPages(response.data.pagination.pages)
+    } catch (error) {
+      console.error('Error fetching downloads:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const openViewerDialog = async (document: Download) => {
+    try {
+      const response = await documentService.downloadDocument(document.id)
+      setDocumentToView({
+        ...document,
+        downloadUrl: response.data.downloadUrl
+      })
+      setShowViewerDialog(true)
+    } catch (error) {
+      console.error('Error opening document:', error)
+    }
+  }
+
+  const closeViewerDialog = () => {
+    setShowViewerDialog(false)
+    setDocumentToView(null)
+  }
+
+  const openDeleteDialog = (document: Download) => {
+    setDocumentToDelete(document)
+    setShowDeleteDialog(true)
+  }
+
+  const closeDeleteDialog = () => {
+    setShowDeleteDialog(false)
+    setDocumentToDelete(null)
+  }
+
+  const handleDelete = async () => {
+    if (!documentToDelete) return
+    
+    try {
+      setIsDeleting(true)
+      await documentService.softDeleteDocument(documentToDelete.id)
+      fetchDownloads() // Refresh the list after deletion
+      closeDeleteDialog()
+    } catch (error) {
+      console.error('Error removing document from downloads:', error)
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
   const filteredDownloads = downloads.filter(download => 
     download.fileName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-  const totalPages = Math.ceil(filteredDownloads.length / itemsPerPage);
-  const paginatedDownloads = filteredDownloads.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
   );
 
   return (
@@ -102,7 +143,7 @@ export default function DownloadsPage() {
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
-                setCurrentPage(1); // Reset to first page when searching
+                setCurrentPage(1);
               }}
             />
             <Search className="absolute right-3 top-2.5 h-5 w-5 text-black" />
@@ -115,88 +156,189 @@ export default function DownloadsPage() {
               <tr className="bg-gray-50">
                 <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black">Sr No</th>
                 <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black">File Name</th>
-                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black hidden md:table-cell">Downloaded By</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black hidden md:table-cell">Uploaded By</th>
                 <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black hidden md:table-cell">File Type</th>
-                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black hidden md:table-cell">Downloaded On</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black hidden md:table-cell">Uploaded On</th>
                 <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-black">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y">
-              {paginatedDownloads.map((download) => (
-                <tr key={download.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-4 text-xs sm:text-sm">{download.id}</td>
-                  <td className="px-4 py-4 text-xs sm:text-sm">
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 flex-shrink-0">
-                        <Image 
-                          src="/File.png" 
-                          alt="" 
-                          height={15} 
-                          width={15} 
-                          className="object-contain"
-                        />
-                      </div>
-                      <span className="truncate max-w-[120px] sm:max-w-[180px] md:max-w-none">{download.fileName}</span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4 hidden md:table-cell">
-                    <div className="flex items-center">
-                      {download.downloadedBy.avatar ? (
-                        <img
-                          src={download.downloadedBy.avatar}
-                          alt={download.downloadedBy.name}
-                          className="h-8 w-8 rounded-full mr-3"
-                        />
-                      ) : (
-                        <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                          <span className="text-black">{download.downloadedBy.name.charAt(0)}</span>
-                        </div>
-                      )}
-                      <div>
-                        <p className="text-xs sm:text-sm font-medium">{download.downloadedBy.name}</p>
-                        <p className="text-xs text-black">{download.downloadedBy.email}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4 text-xs sm:text-sm hidden md:table-cell">{download.fileType}</td>
-                  <td className="px-4 py-4 text-xs sm:text-sm hidden md:table-cell">{download.downloadedOn}</td>
-                  <td className="px-4 py-4 text-xs sm:text-sm">
-                    <div className="flex space-x-2">
-                      <button className="text-red-500 hover:text-red-700 transition">
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                      <button className="text-[#2A3356] hover:text-[#1f2645] transition">
-                        <Download className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </td>
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="px-4 py-4 text-center">Loading...</td>
                 </tr>
-              ))}
+              ) : filteredDownloads.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-4 py-4 text-center">No downloads found</td>
+                </tr>
+              ) : (
+                filteredDownloads.map((download, index) => (
+                  <tr key={download.id} className="hover:bg-gray-50">
+                    <td className="px-4 py-4 text-xs sm:text-sm">{index + 1}</td>
+                    <td className="px-4 py-4 text-xs sm:text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 flex-shrink-0">
+                          <Image 
+                            src="/File.png" 
+                            alt="" 
+                            height={15} 
+                            width={15} 
+                            className="object-contain"
+                          />
+                        </div>
+                        <span className="truncate max-w-[120px] sm:max-w-[180px] md:max-w-none">{download.fileName}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 hidden md:table-cell">
+                      <div className="flex items-center">
+                        <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+                          <span className="text-black">Y</span>
+                        </div>
+                        <div>
+                          <p className="text-xs sm:text-sm font-medium">You</p>
+                          <p className="text-xs text-black">{userEmail}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 text-xs sm:text-sm hidden md:table-cell">{getReadableFileType(download.fileType)}</td>
+                    <td className="px-4 py-4 text-xs sm:text-sm hidden md:table-cell">
+                      {new Date(download.createdAt).toLocaleString()}
+                    </td>
+                    <td className="px-4 py-4 text-xs sm:text-sm">
+                      <div className="flex space-x-2">
+                        <button 
+                          onClick={() => openViewerDialog(download)}
+                          className="text-[#2A3356] hover:text-[#1f2645] transition"
+                        >
+                          <Download className="h-4 w-4" />
+                        </button>
+                        <button 
+                          onClick={() => openDeleteDialog(download)}
+                          className="text-red-500 hover:text-red-700 transition"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
-            
           </table>
-          <div className="px-6 py-4 flex items-center justify-center border-t border-gray-200">
+          <div className="px-6 py-4 flex items-center justify-between border-t border-gray-200">
             <div className="flex items-center">
-              <button className="p-1 rounded-md hover:bg-gray-100">
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                </svg>
+              <button 
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="p-1 rounded-md hover:bg-gray-100 disabled:opacity-50"
+              >
+                <ChevronLeft className="h-5 w-5" />
               </button>
               <div className="inline-flex items-center justify-center w-8 h-8 mx-1 text-sm font-medium text-white bg-blue-800 rounded-full">
-                1
+                {currentPage}
               </div>
-              <button className="p-1 rounded-md hover:bg-gray-100">
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                </svg>
+              <button 
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="p-1 rounded-md hover:bg-gray-100 disabled:opacity-50"
+              >
+                <ChevronRight className="h-5 w-5" />
               </button>
             </div>
             <div className="text-sm text-black">
-              Total : 01 Pages
+              Total: {totalPages} Pages
             </div>
           </div>
         </div>
       </div>
+
+      {/* Document Viewer Dialog */}
+      {showViewerDialog && documentToView && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+          <div className="bg-white rounded-lg shadow-lg w-full h-[90vh] max-w-6xl flex flex-col">
+            <div className="flex justify-between items-center p-4 border-b">
+              <h2 className="text-xl font-bold">{documentToView.fileName}</h2>
+              <button onClick={closeViewerDialog} className="text-black hover:text-black">
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            <div className="flex-1 p-4 overflow-hidden">
+              {documentToView.fileType.includes('pdf') ? (
+                <iframe
+                  src={documentToView.downloadUrl}
+                  className="w-full h-full"
+                  title="PDF Viewer"
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full">
+                  <p className="text-gray-500">
+                    Excel files can only be downloaded. Please use the download button.
+                  </p>
+                </div>
+              )}
+            </div>
+            <div className="p-4 border-t">
+              <button
+                onClick={() => {
+                  if (!documentToView.downloadUrl) return;
+                  const link = document.createElement('a')
+                  link.href = documentToView.downloadUrl
+                  link.download = documentToView.fileName
+                  link.target = '_blank'
+                  link.rel = 'noopener noreferrer'
+                  document.body.appendChild(link)
+                  link.click()
+                  document.body.removeChild(link)
+                }}
+                className="w-full py-2 bg-[#2A3356] hover:bg-[#1f2645] text-white font-medium rounded-full"
+              >
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Dialog */}
+      {showDeleteDialog && documentToDelete && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+          <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+            <div className="flex flex-col items-center text-center mb-6">
+              <div className="h-16 w-16 rounded-full bg-red-100 flex items-center justify-center mb-4">
+                <Trash2 className="h-8 w-8 text-red-500" />
+              </div>
+              <h2 className="text-xl font-bold mb-2">Remove from Downloads</h2>
+              <p className="text-gray-600">
+                Are you sure you want to remove "{documentToDelete.fileName}" from your downloads? You can still access it from your documents.
+              </p>
+            </div>
+
+            <div className="flex space-x-4">
+              <button 
+                onClick={closeDeleteDialog}
+                disabled={isDeleting}
+                className="flex-1 py-2 bg-gray-200 hover:bg-gray-300 text-black font-medium rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="flex-1 py-2 bg-red-500 hover:bg-red-600 text-white font-medium rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isDeleting ? (
+                  <div className="flex items-center justify-center">
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    Removing...
+                  </div>
+                ) : (
+                  "Remove"
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
