@@ -67,7 +67,7 @@ async function fetchGraphQL(query: string) {
         Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
       body: JSON.stringify({ query }),
-      cache: "no-store"
+      next: { revalidate: 3600 } // Revalidate every hour
     }
   ).then((response) => response.json());
 }
@@ -351,7 +351,10 @@ export async function fetchServices(): Promise<ServiceItem[]> {
             description
             price
             duration
-            icon
+            icon {
+              url
+              title
+            }
             image {
               url
               title
@@ -367,42 +370,62 @@ export async function fetchServices(): Promise<ServiceItem[]> {
     const response = await fetchGraphQL(query);
     
     if (response.data?.serviceCollection?.items) {
-      return response.data.serviceCollection.items;
+      return response.data.serviceCollection.items.map((item: any) => ({
+        sys: item.sys,
+        title: item.title || "Unnamed Service",
+        slug: item.slug || slugify(item.title || "unnamed-service"),
+        description: item.description || "",
+        price: item.price || "Contact for pricing",
+        duration: item.duration || "Varies",
+        icon: item.icon || { url: "", title: "default" },
+        image: item.image || null,
+        features: Array.isArray(item.features) ? item.features : [],
+        content: item.content || ""
+      }));
     }
     
-    throw new Error('No services found');
+    // If no items found, return default services
+    return getDefaultServices();
   } catch (error) {
     console.error('Error fetching services:', error);
-    return [
-      {
-        sys: { id: 'fallback-1' },
-        title: "Power Hour",
-        slug: "power-hour",
-        description: "Tell us your needs, and we will do all the research for you and have a 1-hour chat so you can be on your way to doing your accounts.",
-        price: "£300",
-        duration: "1 Hour",
-        icon: { url: "", title: "clock" }
-      },
-      {
-        sys: { id: 'fallback-2' },
-        title: "Support",
-        slug: "support",
-        description: "This is a block of support per hour to help you with the bookkeeping and running of your company, for regular clients only.",
-        price: "£99",
-        duration: "1 Hour",
-        icon: { url: "", title: "users" }
-      },
-      {
-        sys: { id: 'fallback-3' },
-        title: "Training",
-        slug: "training",
-        description: "Professional training services to help you and your team understand and manage your financial accounts effectively.",
-        price: "£450",
-        duration: "Day",
-        icon: { url: "", title: "graduation-cap" }
-      }
-    ];
+    return getDefaultServices();
   }
+}
+
+// Helper function to provide default services
+function getDefaultServices(): ServiceItem[] {
+  return [
+    {
+      sys: { id: 'default-1' },
+      title: "Power Hour",
+      slug: "power-hour",
+      description: "Tell us your needs, and we will do all the research for you and have a 1-hour chat so you can be on your way to doing your accounts.",
+      price: "£300",
+      duration: "1 Hour",
+      icon: { url: "/icons/clock.svg", title: "clock" },
+      features: ["Personalized consultation", "Expert guidance", "Action plan"]
+    },
+    {
+      sys: { id: 'default-2' },
+      title: "Support",
+      slug: "support",
+      description: "This is a block of support per hour to help you with the bookkeeping and running of your company, for regular clients only.",
+      price: "£99",
+      duration: "1 Hour",
+      icon: { url: "/icons/users.svg", title: "users" },
+      features: ["Regular support", "Bookkeeping assistance", "Company management"]
+    },
+    {
+      sys: { id: 'default-3' },
+      title: "Training",
+      slug: "training",
+      description: "Professional training services to help you and your team understand and manage your financial accounts effectively.",
+      price: "£450",
+      duration: "Day",
+      icon: { url: "/icons/graduation-cap.svg", title: "graduation-cap" },
+      features: ["Team training", "Financial management", "Best practices"]
+    }
+  ];
 }
 
 // Function to fetch contact page data from Contentful
