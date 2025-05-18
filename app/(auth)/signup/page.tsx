@@ -8,6 +8,8 @@ import { ChevronLeft, X } from "lucide-react"
 
 export default function SignupPage() {
   const router = useRouter();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,7 +28,12 @@ export default function SignupPage() {
     }
 
     try {
-      const response = await authService.register({ email, password });
+      const response = await authService.register({ 
+        firstName,
+        lastName,
+        email, 
+        password 
+      });
       
       // Store email for verification page
       localStorage.setItem('verificationEmail', email);
@@ -68,6 +75,37 @@ export default function SignupPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="firstName" className="block text-sm font-medium mb-1">
+                First Name
+              </label>
+              <Input
+                id="firstName"
+                type="text"
+                placeholder="Enter your first name"
+                className="rounded-full"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="lastName" className="block text-sm font-medium mb-1">
+                Last Name
+              </label>
+              <Input
+                id="lastName"
+                type="text"
+                placeholder="Enter your last name"
+                className="rounded-full"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
           <div>
             <label htmlFor="email" className="block text-sm font-medium mb-1">
               Email

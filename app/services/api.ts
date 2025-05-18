@@ -67,7 +67,12 @@ export const statsService={
 
 
 export const authService = {
-  register: async (data: { email: string; password: string }) => {
+  register: async (data: { 
+    email: string; 
+    password: string;
+    firstName: string;
+    lastName: string;
+  }) => {
     return await api.post('/auth/register', data);
   },
 
