@@ -41,7 +41,7 @@ export async function middleware(request: NextRequest) {
   // Check if the path starts with /admin
   // if (path.startsWith('/admin')) {
   //   try {
-  //     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000/  '
+  //     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || '${proccess.env.NEXT_PUBLIC_APP_URL}/  '
   //     const response = await axios.get(`${baseUrl}api/users/me`, {
   //       headers: {
   //         'Authorization': `Bearer ${token}`,
