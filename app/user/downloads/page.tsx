@@ -63,6 +63,7 @@ export default function DownloadsPage() {
     try {
       setLoading(true)
       const response = await documentService.getDownloadedDocuments(currentPage, 5)
+      console.log(response)
       // Add downloadedBy information to each document
       const documentsWithUser = response.data.documents.map((doc: Download) => ({
         ...doc,
@@ -196,7 +197,6 @@ export default function DownloadsPage() {
                         </div>
                         <div>
                           <p className="text-xs sm:text-sm font-medium">You</p>
-                          <p className="text-xs text-black">{userEmail}</p>
                         </div>
                       </div>
                     </td>

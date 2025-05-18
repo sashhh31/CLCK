@@ -67,19 +67,32 @@ export const statsService={
 
 
 export const authService = {
-  register: async (userData: { firstName: string; lastName: string; email: string; password: string; phoneNumber: string }) => {
-    const response = await api.post('/auth/register', userData);
-    return response.data;
+  register: async (data: { email: string; password: string }) => {
+    return await api.post('/auth/register', data);
   },
 
   login: async (credentials: { email: string; password: string }) => {
-    const response = await api.post('/auth/login', credentials);
-    return response.data;
+    try {
+      const response = await api.post('/auth/login', credentials);
+      console.log('API login response:', response.data); // Debug log
+      return response.data;
+    } catch (error) {
+      console.error('API login error:', error); // Debug log
+      throw error;
+    }
   },
 
-  verify2FA: async (data: { email: string; code: string }) => {
-    const response = await api.post('/auth/verify-2fa', data);
-    return response.data;
+  verify2FA: async (data: { email: string; code: string; isLogin: boolean }) => {
+    try {
+      const response = await api.post('/auth/verify-2fa', data);
+      if (response.data?.data?.token) {
+        Cookies.set('token', response.data.data.token, { expires: 7, path: '/' });
+      }
+      return response.data;
+    } catch (error) {
+      console.error('API verify error:', error); // Debug log
+      throw error;
+    }
   },
 
   changePassword: async (data: { currentPassword: string; newPassword: string }) => {
@@ -93,12 +106,28 @@ export const authService = {
   },
 
   getUserProfile: async () => {
-    const response = await api.get('/users/me');
-    return response.data;
+    try {
+      const response = await api.get('/users/me');
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      throw error;
+    } 
   },
 
   updateProfile: async (data: { firstName: string; lastName: string }) => {
     const response = await api.put('/auth/profile', data);
+    return response.data;
+  },
+
+  initiateEmailChange: async () => {
+    const response = await api.post('/profile/initiate-email-change');
+    return response.data;
+  },
+
+  verifyAndChangeEmail: async (data: { newEmail: string; verificationCode: string }) => {
+    const response = await api.post('/profile/verify-and-change-email', data);
     return response.data;
   },
 

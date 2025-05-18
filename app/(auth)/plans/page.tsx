@@ -36,7 +36,6 @@ export default function SubscriptionPlans() {
 
       const data =  response.data.data.data;
 
-console.log(data)
       // Update user data in your app
       if (data.token) {
         Cookies.set('token', data.token, { 

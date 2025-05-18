@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     }
 
     // Get user's Stripe customer ID from backend
-    const userResponse = await axios.post(`http://localhost:3000/api/users/me`, {email},{
+    const userResponse = await axios.post(`http://localhost:3000/api/me`, {email},{
       headers: {
         'Cookie': req.headers.get('cookie') || ''
       }

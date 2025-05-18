@@ -6,7 +6,8 @@ import { emailService } from '@/app/services/api';
 
 interface Email {
   _id: string;
-  to: string;
+  to: string[];
+  cc: string[];
   subject: string;
   message: string;
   attachments: Array<{
@@ -78,7 +79,7 @@ export default function EmailDashboard() {
             <div className="relative w-80">
               <input
                 type="text"
-                placeholder="Search"
+                placeholder="Search emails, recipients, or subjects"
                 className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={searchQuery}
                 onChange={handleSearch}
@@ -97,11 +98,12 @@ export default function EmailDashboard() {
           </div>
 
           {/* Table header */}
-          <div className="grid grid-cols-5 bg-gray-100 text-sm font-medium text-black border-t border-b border-gray-200">
-            <div className="px-6 py-3">Email Address</div>
+          <div className="grid grid-cols-6 bg-gray-100 text-sm font-medium text-black border-t border-b border-gray-200">
+            <div className="px-6 py-3">To</div>
+            <div className="px-6 py-3">CC</div>
             <div className="px-6 py-3">Subject</div>
-            <div className="px-6 py-3">Email</div>
-            <div className="px-6 py-3">Attached Document</div>
+            <div className="px-6 py-3">Message</div>
+            <div className="px-6 py-3">Attachments</div>
             <div className="px-6 py-3">Sent On</div>
           </div>
 
@@ -114,17 +116,38 @@ export default function EmailDashboard() {
             <div className="text-red-500 text-center py-4">{error}</div>
           ) : (
             emails.map((email) => (
-              <div key={email._id} className="grid grid-cols-5 border-b border-gray-200 hover:bg-gray-50">
-                <div className="px-6 py-4 text-black text-sm">{email.to}</div>
+              <div key={email._id} className="grid grid-cols-6 border-b border-gray-200 hover:bg-gray-50">
+                <div className="px-6 py-4 text-black text-sm">
+                  {email.to.map((recipient, index) => (
+                    <div key={index} className="mb-1">
+                      {recipient}
+                    </div>
+                  ))}
+                </div>
+                <div className="px-6 py-4 text-black text-sm">
+                  {email.cc && email.cc.length > 0 ? (
+                    email.cc.map((recipient, index) => (
+                      <div key={index} className="mb-1">
+                        {recipient}
+                      </div>
+                    ))
+                  ) : (
+                    <span className="text-gray-400">-</span>
+                  )}
+                </div>
                 <div className="px-6 py-4 text-gray-900 font-medium">{email.subject}</div>
                 <div className="px-6 py-4 text-black text-sm truncate">{email.message}</div>
                 <div className="px-6 py-4">
-                  {email.attachments.map((doc, index) => (
-                    <div key={index} className="flex items-center text-black text-sm mb-1">
-                      <File size={16} className="mr-2 text-black" />
-                      {doc.filename}
-                    </div>
-                  ))}
+                  {email.attachments && email.attachments.length > 0 ? (
+                    email.attachments.map((doc, index) => (
+                      <div key={index} className="flex items-center text-black text-sm mb-1">
+                        <File size={16} className="mr-2 text-black" />
+                        {doc.filename}
+                      </div>
+                    ))
+                  ) : (
+                    <span className="text-gray-400">-</span>
+                  )}
                 </div>
                 <div className="px-6 py-4 text-black text-sm">
                   {new Date(email.sentAt).toLocaleString()}

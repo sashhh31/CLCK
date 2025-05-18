@@ -1,164 +1,173 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { authService } from "@/app/services/api"
 import { ChevronLeft, X } from "lucide-react"
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { authService } from '@/app/services/api';
-import { toast } from 'react-hot-toast';
 
-interface Verify2FAParams {
-  email: string;
-  code: string;
-  phoneNumber: string;
-}
-
-const Verification = () => {
+export default function VerificationPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const email = searchParams.get('email') || '';
-  const phoneNumber = searchParams.get('phoneNumber') || '';
+  const [verificationCode, setVerificationCode] = useState("");
+  const [email, setEmail] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [countdown, setCountdown] = useState(60);
+  const [canResend, setCanResend] = useState(false);
 
-  const [code, setCode] = useState(['', '', '', '', '', '']);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-
-
-
-  const handleCodeChange = (index: number, value: string) => {
-    if (!/^\d?$/.test(value)) return; // Only allow digits
+  useEffect(() => {
+    // Get email and isLogin from localStorage
+    const storedEmail = localStorage.getItem('verificationEmail');
+    const storedIsLogin = localStorage.getItem('isLogin') === 'true';
     
-    const newCode = [...code];
-    newCode[index] = value;
-    setCode(newCode);
-
-    // Auto-focus next input
-    if (value && index < 5) {
-      const nextInput = document.querySelector(`input[name=code-${index + 1}]`) as HTMLInputElement;
-      if (nextInput) nextInput.focus();
-    }
-  };
-
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' && !code[index] && index > 0) {
-      // Move to previous input on backspace if current input is empty
-      const prevInput = document.querySelector(`input[name=code-${index - 1}]`) as HTMLInputElement;
-      if (prevInput) prevInput.focus();
-    }
-    
-    // Submit when pressing Enter if code is complete
-    if (e.key === 'Enter' && code.every(digit => digit)) {
-      handleVerify();
-    }
-  };
-
-  const isCodeComplete = () => {
-    return code.every(digit => digit !== '');
-  };
-
-  const handleVerify = async () => {
-    // Reset error state
-    setError('');
-    
-    const verificationCode = code.join('');
-    if (verificationCode.length !== 6) {
-      toast.error('Please enter a valid 6-digit code');
-      setError('Please enter a valid 6-digit code');
+    if (!storedEmail) {
+      router.push('/login');
       return;
     }
+    
+    setEmail(storedEmail);
+    setIsLogin(storedIsLogin);
 
-    setIsLoading(true);
+    // Start countdown
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          setCanResend(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
     try {
-      const email = localStorage.getItem('verificationEmail');
-      const phoneNumber = localStorage.getItem('phoneNumber');
-      console.log('Submitting verification with:', { email, code: verificationCode, phoneNumber });
       const response = await authService.verify2FA({
         email,
         code: verificationCode,
-        phoneNumber,
-      } as Verify2FAParams);
+        isLogin
+      });
 
-      console.log('Verification response:', response);
-
-      // Store token temporarily in localStorage instead of setting cookie
-      toast.success('Verification successful!');
-      
-      // Redirect to plans page
-      router.push("/plans");
+      if (response.status === 'success') {
+        // Clear verification data
+        localStorage.removeItem('verificationEmail');
+        localStorage.removeItem('isLogin');
+        // Redirect based on the response
+        router.push(response.redirectTo || (isLogin ? '/user' : '/plans'));
+      }
     } catch (err: any) {
-      console.error('Verification error:', err);
-      const errorMessage = err.response?.data?.message || "Invalid verification code";
-      toast.error(errorMessage);
-      setError(errorMessage);
+      setError(err.response?.data?.message || "Invalid verification code");
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   const handleResendCode = async () => {
-    setIsLoading(true);
+    if (!canResend) return;
+    
+    setLoading(true);
     try {
-      await authService.login({ email, password: "" }); // This will trigger a new 2FA code
-      toast.success("New verification code sent!");
+      if (isLogin) {
+        await authService.login({ email, password: "" }); // This will trigger a new verification code
+      } else {
+        // For registration, you might want to implement a resend registration code endpoint
+        setError("Please try registering again");
+        router.push('/signup');
+        return;
+      }
+      setCountdown(60);
+      setCanResend(false);
     } catch (err: any) {
-      toast.error(err.response?.data?.message || "Error sending new code");
+      setError(err.response?.data?.message || "Failed to resend code");
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#2E3B5B] grid place-items-center">
-      <div className="bg-white rounded-lg p-8 shadow-xl w-full max-w-md text-center relative">
-        <div className='inline-block mb-5'>
-          {/* Close & Back Icons */}
-          <div className="absolute left-4 text-xl cursor-pointer" onClick={() => router.back()}><ChevronLeft/></div>
-          <div className="absolute right-4 text-xl cursor-pointer" onClick={() => router.push("/login")}><X/></div>
-          <h1 className="text-2xl font-semibold mb-2">Verification</h1>
+    <div className="min-h-screen flex items-center justify-center bg-[#2A3356] px-4 py-12">
+      <div className="w-full max-w-md bg-white shadow-xl p-8 relative">
+        {/* Top Bar */}
+        <div className="flex justify-between items-center mb-6">
+          <button 
+            onClick={() => router.back()}
+            className="text-2xl text-[#2A3356] font-light"
+          >
+            <ChevronLeft/>
+          </button>
+          <h1 className="text-xl font-bold text-[#1A1A1A]">Verify Email</h1>
+          <button 
+            onClick={() => router.push('/login')}
+            className="text-2xl text-[#2A3356] font-light"
+          >
+            <X/>
+          </button>
         </div>
-        <p className="text-black text-sm mb-1">We have sent you an OTP on your given email address</p>
-        <p className="text-sm font-medium mb-4">{email}</p>
 
-        {/* OTP Fields */}
-        <div className="flex justify-center gap-3 mb-4">
-          {code.map((digit, i) => (
-            <input
-              key={i}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <span className="block sm:inline">{error}</span>
+          </div>
+        )}
+
+        <div className="text-center mb-6">
+          <p className="text-gray-600">
+            We've sent a verification code to your email address. Please enter it below.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="verificationCode" className="block text-sm font-medium mb-1">
+              Verification Code
+            </label>
+            <Input
+              id="verificationCode"
               type="text"
-              name={`code-${i}`}
-              maxLength={1}
-              value={digit}
-              onChange={(e) => handleCodeChange(i, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(i, e)}
-              className="w-12 h-12 rounded-full border border-gray-300 text-center text-lg outline-none focus:border-[#2E3B5B] transition"
-              pattern="[0-9]"
-              inputMode="numeric"
+              placeholder="Enter verification code"
+              className="rounded-full"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
               required
             />
-          ))}
+          </div>
+
+          <Button 
+            type="submit"
+            className="w-full bg-[#2A3356] hover:bg-[#2A3356]/90 rounded-full"
+            disabled={loading}
+          >
+            {loading ? "Verifying..." : "Verify"}
+          </Button>
+        </form>
+
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-600">
+            Didn't receive the code?{" "}
+            {canResend ? (
+              <button
+                onClick={handleResendCode}
+                className="text-[#2A3356] font-medium hover:underline"
+                disabled={loading}
+              >
+                Resend Code
+              </button>
+            ) : (
+              <span className="text-gray-400">
+                Resend code in {countdown}s
+              </span>
+            )}
+          </p>
         </div>
-
-        {/* Error Message */}
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-
-        {/* Resend Link */}
-        <p 
-          className="text-sm text-[#2E3B5B] underline cursor-pointer mb-4 hover:opacity-80"
-          onClick={handleResendCode}
-        >
-          Resend Code
-        </p>
-
-        {/* Verify Button */}
-        <button
-          onClick={handleVerify}
-          disabled={isLoading || !isCodeComplete()}
-          className="w-full bg-[#2E3B5B] text-white py-3 rounded-full font-medium transition hover:bg-[#24304d] active:bg-[#1a2438] disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isLoading ? "Verifying..." : "Verify"}
-        </button>
       </div>
     </div>
   );
-};
-
-export default Verification;
+}
