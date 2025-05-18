@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
 
     // ✅ Use fetch properly here
-    const response = await axios.post('${proccess.env.NEXT_PUBLIC_APP_URL}/api/subscriptions/verify', {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_APP_URL}api/subscriptions/verify`, {
         sessionId
       });
       
