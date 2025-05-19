@@ -212,7 +212,6 @@ export async function fetchPricingPlans(): Promise<PricingPlan[]> {
     `;
     
     const response = await fetchGraphQL(query);
-    
     if (response.data?.pricingPlanCollection?.items) {
       return response.data.pricingPlanCollection.items.map((item: any) => ({
         title: item.title || "Unnamed Plan",

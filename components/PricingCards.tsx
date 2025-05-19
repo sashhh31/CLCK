@@ -61,7 +61,12 @@ export default function PricingCards({ pricingPlans }: { pricingPlans: PricingPl
           </div>
           <Button 
             className="w-full bg-secondary hover:bg-secondary/90 text-white font-semibold mb-4 md:mb-6"
-            onClick={plan.onClick}
+            onClick={(e) => {
+              e.preventDefault();
+              if (plan.onClick) {
+                plan.onClick();
+              }
+            }}
             disabled={plan.ctaText === "Processing..."}
           >
             {plan.ctaText}

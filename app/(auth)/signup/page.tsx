@@ -40,7 +40,7 @@ export default function SignupPage() {
       localStorage.setItem('isLogin', 'false');
       
       // Redirect to verification page
-      router.push('/verification');
+      router.push('/plans');
     } catch (err: any) {
       setError(err.response?.data?.message || "Registration failed");
     } finally {
