@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { fetchHeroSectionData } from "@/lib/contentful";
@@ -12,7 +12,7 @@ export default function HeroSection({ slides: providedSlides }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slides, setSlides] = useState<HeroSlide[]>(providedSlides || []);
   const [isLoading, setIsLoading] = useState(!providedSlides);
-  
+
   // Fetch slides from Contentful if not provided as props
   useEffect(() => {
     if (!providedSlides) {
@@ -26,19 +26,19 @@ export default function HeroSection({ slides: providedSlides }: Props) {
           setIsLoading(false);
         }
       }
-      
+
       loadHeroData();
     }
   }, [providedSlides]);
-  
+
   // Auto-rotate slides
   useEffect(() => {
     if (slides.length <= 1) return;
-    
+
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
     }, 3000);
-    
+
     return () => clearInterval(interval);
   }, [slides.length]);
 
@@ -78,11 +78,10 @@ export default function HeroSection({ slides: providedSlides }: Props) {
     return (
       <div className="max-w-6xl">
         <div className="mb-4">
-          {parts[0]}<span className="text-[#F8D77E]">{highlightWord}</span>
+          {parts[0]}
+          <span className="text-[#F8D77E]">{highlightWord}</span>
         </div>
-        <div>
-          {parts[1]}
-        </div>
+        <div>{parts[1]}</div>
       </div>
     );
   };
@@ -91,7 +90,7 @@ export default function HeroSection({ slides: providedSlides }: Props) {
     <section className="w-full md:min-h-[700px] min-h-[500px] bg-hero-bg bg-cover bg-center pt-12 md:pt-24 relative">
       <div className="container px-4 md:px-6 mx-auto">
         {slides.map((slide, index) => (
-          <div 
+          <div
             key={index}
             className={`transition-opacity duration-1000 absolute w-full left-0 right-0 ${
               currentSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
@@ -105,7 +104,7 @@ export default function HeroSection({ slides: providedSlides }: Props) {
               <p className="text-gray-300 text-base md:text-lg max-w-3xl mx-auto mb-8">
                 {slide.description}
               </p>
-              
+
               <Link href="/signup">
                 <button className="bg-[#F8D77E] text-[#272E48] hover:bg-[#F8D77E]/90 rounded-full text-lg px-8 py-3 font-medium">
                   {slide.buttonText}
@@ -115,10 +114,10 @@ export default function HeroSection({ slides: providedSlides }: Props) {
               <div className="w-[1300px] h-[600px] mt-12">
               <video
   src={slide.image}
-  controls
   autoPlay
   loop
   muted
+  playsInline
   className="w-full h-full object-cover shadow-lg"
 />
 

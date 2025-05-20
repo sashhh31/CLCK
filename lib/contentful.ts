@@ -551,25 +551,11 @@ export async function fetchHeroSectionData(): Promise<HeroSlide[]> {
     // Return default hero slides if API fails
     return [
       {
-        title: "Simplify Your Finances with Secure Bookkeeping & Tax Services",
-        highlightWord: "Finances",
-        description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
-        buttonText: "Get Started Now",
-        image: "/s.png.jpg"
-      },
-      {
-        title: "Streamline Your Tax Preparation with Expert Tools",
-        highlightWord: "Tax",
-        description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
-        buttonText: "Get Started Now",
-        image: "/st.png.jpg"
-      },
-      {
         title: "Secure Document Management for Financial Peace",
         highlightWord: "Document",
         description: "Manage your bookkeeping and taxes effortlessly with our modern, secure, and user-friendly platform. Access financial tools, secure document storage, and exclusive resources designed for individuals and businesses.",
         buttonText: "Get Started Now",
-        image: "/se.png.jpg"
+        image: "/small.mp4"
       }
     ];
   }
