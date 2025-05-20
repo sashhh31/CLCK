@@ -40,21 +40,10 @@ export default async function Home() {
         <HeroSection slides={heroSlides} />
   
       </div>
-      <div className="md:mt-[500px] mt-40">
+      <div className="md:mt-[500px] mt-96">
 
       <FeaturesSection />
       </div>
-      <div className="md:py-4 border-b md:mt-[200px] mt-40">
-          <div className="w-full">
-            <iframe
-              className="w-full h-[100vh]"
-              src="https://www.youtube.com/embed/PJxF-wG5jUQ"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
       <div className="flex justify-center">
         <FinancialServicesCard aboutUsData={aboutUsData} />
       </div>

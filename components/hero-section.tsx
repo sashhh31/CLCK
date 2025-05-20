@@ -113,11 +113,15 @@ export default function HeroSection({ slides: providedSlides }: Props) {
               </Link>
 
               <div className="w-[1300px] h-[600px] mt-12">
-                <img
-                  src={slide.image}
-                  alt="Dashboard screenshot"
-                  className="w-full h-full object-cover shadow-lg"
-                />
+              <video
+  src={slide.image}
+  controls
+  autoPlay
+  loop
+  muted
+  className="w-full h-full object-cover shadow-lg"
+/>
+
               </div>
             </div>
           </div>
