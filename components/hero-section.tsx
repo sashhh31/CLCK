@@ -116,7 +116,6 @@ export default function HeroSection({ slides: providedSlides }: Props) {
   src={slide.image}
   autoPlay
   loop
-  muted
   playsInline
   className="w-full h-full object-cover shadow-lg"
 />
