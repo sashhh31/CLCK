@@ -60,7 +60,7 @@ export default function PricingCards({ pricingPlans }: { pricingPlans: PricingPl
             <span className={`text-sm ${plan.highlightPlan ? 'text-secondary' : 'text-gray-300'}`}>/Month</span>
           </div>
           <Button 
-            className="w-full bg-secondary hover:bg-secondary/90 text-white font-semibold mb-4 md:mb-6"
+            className="w-full bg-secondary hover:bg-yellow/90 text-white font-semibold mb-4 md:mb-6"
             onClick={(e) => {
               e.preventDefault();
               if (plan.onClick) {

@@ -46,12 +46,12 @@ export default function Header() {
         {/* Desktop Button */}
         <div className="hidden md:flex gap-4 justify-center items-center">
         <Link href="/login">
-            <Button className=" bg-secondary  hover:bg-secondary/70 text-white rounded-full w-full">
+            <Button className=" bg-secondary  hover:bg-secondary text-white rounded-full w-full">
               Membership
             </Button>
           </Link>
           <Link href="/login">
-            <Button className="bg-primary hover:bg-primary/70 text-white rounded-full">Login/Signup</Button>
+            <Button className="bg-primary hover:bg-primary text-white rounded-full">Login/Signup</Button>
           </Link>
         </div>
 
@@ -74,12 +74,12 @@ export default function Header() {
             <Link href="/contact-us" className={mobileLinkClass("/contact-us")}>Contact Us</Link>
           </nav>
           <Link href="/login">
-            <Button className="mt-6 bg-secondary hover:bg-secondary/70 text-white rounded-full w-full">
+            <Button className="mt-6 bg-secondary  text-white rounded-full w-full">
               Membership
             </Button>
           </Link>
           <Link href="/login">
-            <Button className="mt-6 bg-primary hover:bg-primary/70 text-white rounded-full w-full">
+            <Button className="mt-6 bg-primary  text-white rounded-full w-full">
               Login/Signup
             </Button>
           </Link>

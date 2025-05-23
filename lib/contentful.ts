@@ -296,7 +296,7 @@ export async function fetchAboutUsData(): Promise<AboutUsPageData> {
     `;
     
     const response = await fetchGraphQL(query);
-    
+    console.log(response);
     if (response.data?.aboutUsPageCollection?.items?.length > 0) {
       const pageData = response.data.aboutUsPageCollection.items[0];
       
@@ -591,7 +591,6 @@ export async function fetchServicePageData(): Promise<ServicePage[]> {
     `;
     
     const response = await fetchGraphQL(query);
-    
     if (response.data?.servicePageCollection?.items) {
       return response.data.servicePageCollection.items.map((item: any) => ({
         sys: item.sys,
