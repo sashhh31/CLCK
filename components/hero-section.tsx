@@ -114,9 +114,12 @@ export default function HeroSection({ slides: providedSlides }: Props) {
               <div className="w-[1300px] h-[600px] mt-12">
                 <video
                   src={slide.image}
+                  poster={slide.image.replace('.mp4', '.jpg')}
                   controls
                   autoPlay
                   muted={false}
+                  playsInline
+                  preload="metadata"
                   className="w-full h-full object-cover shadow-lg"
                 />
               </div>

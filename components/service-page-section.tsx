@@ -43,7 +43,6 @@ export default function ServicePageSection({ servicePages: providedServices }: P
             We offer a range of specialized services to help you manage your finances and grow your business.
           </p>
         </div>
-
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
