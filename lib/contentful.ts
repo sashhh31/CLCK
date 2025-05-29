@@ -67,7 +67,7 @@ async function fetchGraphQL(query: string) {
         Authorization: `Bearer ${ACCESS_TOKEN}`,
       },
       body: JSON.stringify({ query }),
-      next: { revalidate: 3600 } // Revalidate every hour
+     // Revalidate every hour
     }
   ).then((response) => response.json());
 }
