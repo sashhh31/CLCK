@@ -209,41 +209,6 @@ export default function EducationContentPage() {
                     )}
                   </div>
                 </div>
-
-                {/* Caption Upload Section */}
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
-                  <div className="flex flex-col items-center justify-center">
-                    <p className="text-base font-medium text-black mb-1">Upload Captions (Optional)</p>
-                    <p className="text-sm text-black mb-3">Upload VTT format captions for your video</p>
-                    <input 
-                      type="file" 
-                      className="hidden" 
-                      id="caption-upload" 
-                      accept=".vtt"
-                      onChange={handleCaptionSelect}
-                    />
-                    <label
-                      htmlFor="caption-upload"
-                      className="px-4 py-2 bg-[#2A3356] text-white rounded-md cursor-pointer hover:bg-[#2A3356]/90"
-                    >
-                      Upload Captions
-                    </label>
-                    {selectedCaptionFile && (
-                      <div className="mt-2 max-w-full">
-                        <p className="text-sm text-gray-600 flex items-center gap-2">
-                          <span className="font-medium">Caption File:</span>
-                          <span className="truncate max-w-[300px]" title={selectedCaptionFile.name}>
-                            {selectedCaptionFile.name}
-                          </span>
-                          <span className="text-xs text-gray-500">
-                            ({(selectedCaptionFile.size / 1024).toFixed(2)} KB)
-                          </span>
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
                 {/* Title and Description Section */}
                 <div className="space-y-4">
                   <div>
