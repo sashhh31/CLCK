@@ -158,7 +158,15 @@ export const authService = {
   verifySubscription: async (sessionId: string) => {
     const response = await api.post('/subscriptions/verify', { sessionId });
     return response.data;
-  }
+  },
+
+  forgotPassword: async (email: string) => {
+    return await api.post('/auth/forgot-password', { email });
+  },
+
+  resetPassword: async (data: { email: string; code: string; newPassword: string }) => {
+    return await api.post('/auth/reset-password', data);
+  },
 };
 
 export const documentService = {

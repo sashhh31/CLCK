@@ -38,6 +38,8 @@ export default function SignupPage() {
       // Store email for verification page
       localStorage.setItem('verificationEmail', email);
       localStorage.setItem('isLogin', 'false');
+      // Set flag to show toast after registration
+      localStorage.setItem('showPowerhourToast', 'true');
       
       // Redirect to verification page
       router.push('/plans');

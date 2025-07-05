@@ -22,6 +22,7 @@ export default function LoginPage() {
     try {
       // Regular login for both admin and users
       const response = await authService.login({ email, password });
+      
       if (response.requiresVerification) {
         // Store email for verification page
         localStorage.setItem('verificationEmail', email);
@@ -103,6 +104,15 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <div className="text-right mt-1">
+              <button
+                type="button"
+                className="text-xs text-[#2A3356] hover:underline focus:outline-none"
+                onClick={() => router.push('/forgot-password')}
+              >
+                Forgot Password?
+              </button>
+            </div>
           </div>
 
           <Button 

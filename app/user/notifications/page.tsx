@@ -23,6 +23,7 @@ interface Notification {
     id: string;
     title: string;
     meetLink: string;
+    platform?: string;
   };
 }
 
@@ -106,6 +107,7 @@ export default function NotificationsPage() {
                 <TableHead>Type</TableHead>
                 <TableHead>Date</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Platform</TableHead>
                 <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
@@ -134,6 +136,11 @@ export default function NotificationsPage() {
                     </span>
                   </TableCell>
                   <TableCell>
+                    {notification.type === 'meeting' && notification.relatedMeeting ? (
+                      <span className="capitalize">{notification.relatedMeeting.platform || 'calendly'}</span>
+                    ) : null}
+                  </TableCell>
+                  <TableCell>
                     {!notification.read && (
                       <button
                         onClick={() => markAsRead(notification.id)}
@@ -147,7 +154,7 @@ export default function NotificationsPage() {
                         onClick={() => handleJoinMeeting(notification.relatedMeeting!.meetLink)}
                         className="ml-4 text-sm text-[#2A3356] hover:text-[#2A3356]/80"
                       >
-                        Join Meeting
+                        {notification.relatedMeeting.platform === 'zoom' ? 'Join Zoom' : 'Join Calendly'}
                       </button>
                     )}
                   </TableCell>

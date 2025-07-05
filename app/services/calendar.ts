@@ -36,6 +36,7 @@ export interface MeetingData {
   createdBy: string;
   createdAt: string;
   status: 'scheduled' | 'completed' | 'cancelled';
+  platform?: 'calendly' | 'zoom';
 }
 
 export interface ScheduleMeetingData {
@@ -44,6 +45,7 @@ export interface ScheduleMeetingData {
   datetime: Date;
   duration: number; // Duration in minutes
   attendees: string[]; // Array of attendee emails
+  platform?: 'calendly' | 'zoom'; // Add platform
 }
 
 export const CalendarService = {
@@ -69,17 +71,6 @@ export const CalendarService = {
 
   updateMeeting: async (meetingId: string, data: Partial<ScheduleMeetingData>) => {
     const response = await api.put(`/meetings/${meetingId}`, data);
-    return response.data;
-  },
-
-  // Cal.com specific methods
-  getAvailableSlots: async (date: string) => {
-    const response = await api.get(`/meetings/available-slots?date=${date}`);
-    return response.data;
-  },
-
-  getEventTypes: async () => {
-    const response = await api.get('/meetings/event-types');
     return response.data;
   },
 

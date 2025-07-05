@@ -70,6 +70,7 @@ export default function UserCalendarPage() {
                 <TableHead>Date & Time</TableHead>
                 <TableHead>Description</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Platform</TableHead>
                 <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
@@ -93,12 +94,15 @@ export default function UserCalendarPage() {
                     </span>
                   </TableCell>
                   <TableCell>
+                    <span className="capitalize">{meeting.platform || 'calendly'}</span>
+                  </TableCell>
+                  <TableCell>
                     {meeting.status === 'scheduled' && (
                       <Button
                         onClick={() => handleJoinMeeting(meeting.meetLink)}
                         className="bg-[#2A3356] text-[#F0D687] hover:bg-[#2A3356]/90"
                       >
-                        Join Meeting
+                        {meeting.platform === 'zoom' ? 'Join Zoom' : 'Join Calendly'}
                       </Button>
                     )}
                   </TableCell>

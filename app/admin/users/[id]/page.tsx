@@ -31,6 +31,12 @@ export default function UserDetailPage() {
   const [uploadFileName, setUploadFileName] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  // Add state for delete and ban/unban dialogs
+  const [showDeleteUserDialog, setShowDeleteUserDialog] = useState(false);
+  const [showBanDialog, setShowBanDialog] = useState(false);
+  const [isDeletingUser, setIsDeletingUser] = useState(false);
+  const [isBanningUser, setIsBanningUser] = useState(false);
+
   const fetchUserDetails = async () => {
     try {
       const response = await adminService.getUserDetails(userId);
@@ -172,6 +178,35 @@ export default function UserDetailPage() {
           fetchEmails(newPage);
           break;
       }
+    }
+  };
+
+  // Handle delete user
+  const handleDeleteUser = async () => {
+    setIsDeletingUser(true);
+    try {
+      await adminService.deleteUser(userId);
+      setShowDeleteUserDialog(false);
+      // Redirect to users list after deletion
+      window.location.href = '/admin/users';
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    } finally {
+      setIsDeletingUser(false);
+    }
+  };
+
+  // Handle ban/unban user
+  const handleBanUnbanUser = async () => {
+    setIsBanningUser(true);
+    try {
+      await adminService.banUser(userId);
+      setShowBanDialog(false);
+      fetchUserDetails(); // Refresh user info
+    } catch (error) {
+      console.error('Error banning/unbanning user:', error);
+    } finally {
+      setIsBanningUser(false);
     }
   };
 
@@ -458,11 +493,20 @@ export default function UserDetailPage() {
               </button>
             </div>
 
+            {/* Ban/Unban User Button */}
+            {user && (
+              <button
+                className={`flex items-center justify-center w-full mt-4 p-2 ${user.status === 'banned' ? 'text-green-600 border border-green-600 hover:bg-green-50' : 'text-yellow-600 border border-yellow-600 hover:bg-yellow-50'} rounded-md`}
+                onClick={() => setShowBanDialog(true)}
+              >
+                {user.status === 'banned' ? 'Unban User' : 'Ban User'}
+              </button>
+            )}
+
+            {/* Delete User Button */}
             <button
               className="flex items-center justify-center w-full mt-6 p-2 text-red-500 border border-red-500 rounded-md hover:bg-red-50"
-              onClick={() => {
-                // Implement user deletion
-              }}
+              onClick={() => setShowDeleteUserDialog(true)}
             >
               <Trash2 className="h-4 w-4 mr-2" />
               Delete User
@@ -679,6 +723,70 @@ export default function UserDetailPage() {
                   ) : (
                     'Send'
                   )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete User Dialog */}
+      {showDeleteUserDialog && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg w-full max-w-md mx-4">
+            <div className="p-6 flex flex-col items-center">
+              <div className="bg-red-500 rounded-full p-4 mb-4">
+                <Trash2 className="h-8 w-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-red-500 mb-2">Delete User?</h2>
+              <p className="text-black text-center mb-8">Are you sure you want to delete this user? This action cannot be undone.</p>
+              <div className="flex w-full space-x-4">
+                <button
+                  className="flex-1 py-3 border border-gray-300 rounded-full font-medium"
+                  onClick={() => setShowDeleteUserDialog(false)}
+                  disabled={isDeletingUser}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="flex-1 py-3 bg-red-500 text-white rounded-full font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={handleDeleteUser}
+                  disabled={isDeletingUser}
+                >
+                  {isDeletingUser ? 'Deleting...' : 'Yes, Delete'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Ban/Unban User Dialog */}
+      {showBanDialog && user && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg w-full max-w-md mx-4">
+            <div className="p-6 flex flex-col items-center">
+              <div className={`rounded-full p-4 mb-4 ${user.status === 'banned' ? 'bg-green-600' : 'bg-yellow-600'}`}> 
+                <Info className="h-8 w-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold mb-2">{user.status === 'banned' ? 'Unban User?' : 'Ban User?'}</h2>
+              <p className="text-black text-center mb-8">
+                {user.status === 'banned' ? 'Are you sure you want to unban this user?' : 'Are you sure you want to ban this user?'}
+              </p>
+              <div className="flex w-full space-x-4">
+                <button
+                  className="flex-1 py-3 border border-gray-300 rounded-full font-medium"
+                  onClick={() => setShowBanDialog(false)}
+                  disabled={isBanningUser}
+                >
+                  Cancel
+                </button>
+                <button
+                  className={`flex-1 py-3 ${user.status === 'banned' ? 'bg-green-600 text-white' : 'bg-yellow-600 text-white'} rounded-full font-medium disabled:opacity-50 disabled:cursor-not-allowed`}
+                  onClick={handleBanUnbanUser}
+                  disabled={isBanningUser}
+                >
+                  {isBanningUser ? (user.status === 'banned' ? 'Yes, Unban' : 'Yes, Ban') : (user.status === 'banned' ? 'Yes, Unban' : 'Yes, Ban')}
                 </button>
               </div>
             </div>

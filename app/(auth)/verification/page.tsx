@@ -76,7 +76,10 @@ export default function VerificationPage() {
     setLoading(true);
     try {
       if (isLogin) {
+        // For login resend, we need to call the login endpoint again
+        // The backend will generate a new verification code
         await authService.login({ email, password: "" }); // This will trigger a new verification code
+        setError(""); // Clear any previous errors
       } else {
         // For registration, you might want to implement a resend registration code endpoint
         setError("Please try registering again");

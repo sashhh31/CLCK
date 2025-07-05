@@ -56,6 +56,11 @@ export default function PlansContent({ initialPlans }: PlansContentProps) {
   const sessionId = searchParams.get('session_id');
 
   useEffect(() => {
+    // Show toast after registration if flag is set
+    if (typeof window !== 'undefined' && localStorage.getItem('showPowerhourToast') === 'true') {
+      toast.success('Please check your Gmail as the email is sent to you already.');
+      localStorage.removeItem('showPowerhourToast');
+    }
     if (sessionId) {
       verifySubscription(sessionId);
     }
@@ -79,6 +84,8 @@ export default function PlansContent({ initialPlans }: PlansContentProps) {
       }
 
       toast.success('Subscription activated successfully!');
+      // Show powerhour toast after subscription
+      toast.success('Please check your Gmail as the email is sent to you already.');
       setTimeout(() => {
         router.push('/user');
       }, 1000);

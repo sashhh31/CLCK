@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -16,32 +16,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-interface EventType {
-  id: string;
-  title: string;
-  duration: number;
-}
-
-interface CalEventType {
-  id: number;
-  title: string;
-  length: number;
-  slug: string;
-  hidden: boolean;
-}
-
-interface TimeSlot {
-  time: string;
-  available: boolean;
-}
-
 interface ScheduleMeetingData {
   title: string;
   description: string;
   datetime: Date;
   duration: number;
-  attendeeEmails: string[];
-  attendeeIds: string[];
+  attendees: string[];
+  platform?: 'calendly' | 'zoom';
 }
 
 export default function AdminCalendarPage() {
@@ -52,11 +33,18 @@ export default function AdminCalendarPage() {
   const [duration, setDuration] = useState(30)
   const [attendees, setAttendees] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const [eventTypes, setEventTypes] = useState<EventType[]>([])
-  const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([])
+  const [platform, setPlatform] = useState("calendly")
   const { toast } = useToast()
 
-  // Default duration options
+  // Static time slots (every half hour from 06:00 to 22:00)
+  const staticTimeSlots = [
+    "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30",
+    "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
+    "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30",
+    "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"
+  ]
+
+  // Static duration options
   const defaultDurations = [
     { id: '15', title: '15 minutes', duration: 15 },
     { id: '30', title: '30 minutes', duration: 30 },
@@ -65,57 +53,6 @@ export default function AdminCalendarPage() {
     { id: '90', title: '1.5 hours', duration: 90 },
     { id: '120', title: '2 hours', duration: 120 }
   ]
-
-  useEffect(() => {
-    fetchEventTypes()
-  }, [])
-
-  useEffect(() => {
-    if (date) {
-      fetchAvailableSlots()
-    }
-  }, [date])
-
-  const fetchEventTypes = async () => {
-    try {
-      const response = await CalendarService.getEventTypes()
-      if (response.data.event_types) {
-        setEventTypes(response.data.event_types.map((type: CalEventType) => ({
-          id: type.id.toString(),
-          title: type.title,
-          duration: type.length
-        })))
-      }
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: "Failed to fetch event types",
-        variant: "destructive"
-      })
-      // Fallback to default durations
-      setEventTypes(defaultDurations)
-    }
-  }
-
-  const fetchAvailableSlots = async () => {
-    if (!date) return
-
-    try {
-      const response = await CalendarService.getAvailableSlots(format(date, 'yyyy-MM-dd'))
-      
-      if (response.data.slots) {
-        setAvailableSlots(response.data.slots)
-      } else {
-        setAvailableSlots([])
-      }
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: "Failed to fetch available slots",
-        variant: "destructive"
-      })
-    }
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -145,7 +82,8 @@ export default function AdminCalendarPage() {
         description,
         datetime,
         duration,
-        attendees: attendeeEmails
+        attendees: attendeeEmails,
+        platform: platform as 'calendly' | 'zoom'
       })
 
       toast({
@@ -180,6 +118,22 @@ export default function AdminCalendarPage() {
 
       <div className="max-w-2xl">
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Platform Selection */}
+          <div>
+            <label htmlFor="platform" className="block text-sm font-medium mb-2">
+              Platform
+            </label>
+            <Select value={platform} onValueChange={setPlatform}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select platform" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="calendly">Calendly</SelectItem>
+                <SelectItem value="zoom">Zoom</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
           <div>
             <label className="block text-sm font-medium mb-2">Date</label>
             <Calendar
@@ -196,16 +150,15 @@ export default function AdminCalendarPage() {
             </label>
             <Select value={time} onValueChange={setTime}>
               <SelectTrigger>
-                <SelectValue placeholder={availableSlots.length === 0 ? "No available slots" : "Select a time slot"} />
+                <SelectValue placeholder="Select a time slot" />
               </SelectTrigger>
               <SelectContent>
-                {availableSlots.map((slot) => (
+                {staticTimeSlots.map((slot) => (
                   <SelectItem 
-                    key={slot.time} 
-                    value={slot.time}
-                    disabled={!slot.available}
+                    key={slot} 
+                    value={slot}
                   >
-                    {slot.time}
+                    {slot}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -218,10 +171,7 @@ export default function AdminCalendarPage() {
             </label>
             <Select 
               value={duration.toString()} 
-              onValueChange={(value) => {
-                console.log('Selected duration value:', value);
-                setDuration(Number(value));
-              }}
+              onValueChange={(value) => setDuration(Number(value))}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select duration">
@@ -229,7 +179,7 @@ export default function AdminCalendarPage() {
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                {eventTypes.map((type) => (
+                {defaultDurations.map((type) => (
                   <SelectItem 
                     key={type.id} 
                     value={type.duration.toString()}

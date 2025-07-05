@@ -61,6 +61,7 @@ export default function SubscriptionPage() {
     try {
       setHistoryLoading(true);
       const response = await authService.getSubscriptionHistory(currentPage, searchQuery);
+      console.log(response)
       setSubscriptionHistory(response.data.history);
       setTotalPages(response.data.totalPages);
     } catch (error: any) {
