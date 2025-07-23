@@ -22,6 +22,7 @@ import FinancialServicesCard from "@/components/financialServiceCard";
 import TaxSection from "@/components/Tax-section";
 import FeaturesSection from "@/components/Features-section";
 import ColorTestWrapper from "@/components/ColorTestWrapper";
+import PricingSectionLoginRedirect from "@/components/pricing-section-login-redirect";
 
 export default async function Home() {
   // Fetch data from Contentful
@@ -51,7 +52,7 @@ export default async function Home() {
         <TaxSection/>
       </div>
       <CtaSection ctaData={ctaData} />
-      <PricingSection pricingPlans={pricingPlans} />
+      <PricingSectionLoginRedirect pricingPlans={pricingPlans} />
       <FaqSection faqs={faqs} />
       <TestimonialSection testimonials={testimonials} />
       <BlogSection />

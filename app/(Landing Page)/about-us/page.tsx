@@ -10,6 +10,7 @@ import Image from "next/image"
 import TaxSection from "@/components/Tax-section"
 import { fetchAboutUsData, fetchTestimonials, fetchPricingPlans, fetchCtaSectionData } from "@/lib/contentful"
 import ImagesSection from "@/components/ImagesSection"
+import PricingSectionLoginRedirect from "@/components/pricing-section-login-redirect"
 
 
 export default async function AboutUsPage() {
@@ -87,8 +88,8 @@ export default async function AboutUsPage() {
 
         <CtaSection ctaData={ctaData} />
         <TestimonialSection testimonials={testimonials} />
-        <PricingSection pricingPlans={pricingPlans} />
-      </div>
+        <PricingSectionLoginRedirect pricingPlans={pricingPlans} />
+        </div>
       <Footer/>
     </div>
   )

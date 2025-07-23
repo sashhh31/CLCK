@@ -3,6 +3,7 @@ import CtaSection from "@/components/cta-section"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { fetchPricingPlans, fetchCtaSectionData } from "@/lib/contentful"
+import PricingSectionLoginRedirect from "@/components/pricing-section-login-redirect"
 export default async function PricingPage() {
   const pricingPlans = await fetchPricingPlans();
   const ctaData = await fetchCtaSectionData();
@@ -17,7 +18,7 @@ export default async function PricingPage() {
           </h1>
         </div>
       </section>
-      <PricingSection pricingPlans={pricingPlans} />
+      <PricingSectionLoginRedirect pricingPlans={pricingPlans} />
       <CtaSection ctaData={ctaData} />
     </div>
     <Footer/>

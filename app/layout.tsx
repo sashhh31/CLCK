@@ -5,6 +5,7 @@ import "./globals.css";
 import { Inter } from 'next/font/google'
 import ColorProvider from '@/components/ColorProvider';
 import { Toaster } from 'react-hot-toast'
+import Image from 'next/image';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -36,6 +37,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" type="image/png" href="/Images/logo.png" />
+      </head>
       <body className={`${raleway.variable} ${inter.variable} ${montserrat.variable}`}>
         <ColorProvider>
           <main>{children}</main>

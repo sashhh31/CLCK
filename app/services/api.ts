@@ -387,4 +387,11 @@ export const adminService = {
   },
 };
 
+export const notificationsService = {
+  getNotifications: async () => {
+    const response = await api.get('/notifications');
+    return response.data;
+  },
+};
+
 export default api; 

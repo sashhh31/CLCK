@@ -7,6 +7,7 @@ import Footer from "@/components/footer"
 import StatsSection from "@/components/stats-section"
 import TaxSection from "@/components/Tax-section"
 import { fetchServices, fetchPricingPlans, fetchServicePageData, fetchCtaSectionData, fetchServiceSectionData } from "@/lib/contentful"
+import PricingSectionLoginRedirect from "@/components/pricing-section-login-redirect"
 
 export default async function ServicesPage() {
   // Fetch data from Contentful
@@ -35,7 +36,7 @@ export default async function ServicesPage() {
         {/* <ServicesSection services={services} /> */}
         
         <StatsSection/>
-        <PricingSection pricingPlans={pricingPlans} />
+        <PricingSectionLoginRedirect pricingPlans={pricingPlans} />
         <CtaSection ctaData={ctaData} />
       </div>
       <Footer/>

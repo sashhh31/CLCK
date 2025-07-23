@@ -115,8 +115,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 K
               </div>
               <div className="ml-3">
-                <p className="text-sm font-medium">SuperAdmin</p>
-                <p className="text-xs text-black">admin123@gmail.com</p>
+                <p className="text-sm font-medium">Admin</p>
+                <p className="text-xs text-black">admin@gmail.com</p>
               </div>
               <ChevronRight className="ml-auto h-5 w-5 text-black" />
             </div>
