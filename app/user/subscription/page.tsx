@@ -11,6 +11,10 @@ interface Subscription {
   plan: string;
   status: string;
   currentPeriodEnd: string;
+  amount?: number;
+  currency?: string;
+  interval?: string;
+  stripeSubscriptionId?: string;
 }
 
 interface SubscriptionHistory {
@@ -120,13 +124,22 @@ export default function SubscriptionPage() {
                       {new Date(subscription.currentPeriodEnd).toLocaleDateString()}
                     </span>
                   </p>
+                  {/* Show Stripe details if available */}
+                  {subscription.amount && (
+                    <p className="text-black text-sm sm:text-base">
+                      Amount: <span className="font-medium">{subscription.amount} {subscription.currency?.toUpperCase()}</span> / {subscription.interval}
+                    </p>
+                  )}
+                  {subscription.stripeSubscriptionId && (
+                    <p className="text-black text-xs sm:text-sm text-gray-500 break-all">
+                      Stripe Subscription ID: <span className="font-mono">{subscription.stripeSubscriptionId}</span>
+                    </p>
+                  )}
                 </div>
                 <div className="text-right">
                   <div className="text-2xl sm:text-4xl font-bold">
-                    {subscription.plan === 'basic' && '£49'}
-                    {subscription.plan === 'professional' && '£90'}
-                    {subscription.plan === 'enterprise' && '£129'}
-                    <span className="text-sm sm:text-lg font-normal text-black">/Month</span>
+                    {subscription.amount ? `${subscription.amount} ${subscription.currency?.toUpperCase()}` : ''}
+                    <span className="text-sm sm:text-lg font-normal text-black">/{subscription.interval || 'Month'}</span>
                   </div>
                 </div>
               </div>

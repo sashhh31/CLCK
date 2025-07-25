@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { ArrowLeft, X, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { authService } from '@/app/services/api';
+import { useRouter } from 'next/navigation';
 
 export default function ForgotPassword() {
+  const router = useRouter();
   const [step, setStep] = useState<'email' | 'verify'>('email');
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(new Array(6).fill(''));
@@ -42,6 +44,9 @@ export default function ForgotPassword() {
       setEmail('');
       setOtp(new Array(6).fill(''));
       setNewPassword('');
+      setTimeout(() => {
+        router.push('/login');
+      }, 1500); // 1.5s delay to show success message
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to reset password.');
     } finally {
@@ -105,13 +110,23 @@ export default function ForgotPassword() {
                   value={digit}
                   onChange={e => {
                     const val = e.target.value.replace(/[^0-9]/g, '');
-                    if (!val) return;
                     const newOtp = [...otp];
-                    newOtp[idx] = val;
-                    setOtp(newOtp);
-                    // Move to next input
-                    if (e.target.nextSibling && val) {
-                      (e.target.nextSibling as HTMLInputElement).focus();
+                    if (val) {
+                      newOtp[idx] = val;
+                      setOtp(newOtp);
+                      // Move to next input
+                      if (e.target.nextSibling && val) {
+                        (e.target.nextSibling as HTMLInputElement).focus();
+                      }
+                    } else {
+                      newOtp[idx] = '';
+                      setOtp(newOtp);
+                    }
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Backspace' && !otp[idx] && idx > 0) {
+                      const prev = e.currentTarget.previousSibling as HTMLInputElement;
+                      if (prev) prev.focus();
                     }
                   }}
                   className="w-12 h-12 text-center border rounded-full text-lg focus:outline-none focus:border-[#2E3B5B]"

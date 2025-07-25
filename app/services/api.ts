@@ -64,6 +64,18 @@ interface SubscriptionResponse {
   };
 }
 
+interface DashboardStats {
+  totalUsers: number;
+  totalDownloads: number;
+  totalDocuments: number;
+  totalEmails: number;
+  userGrowth?: number;
+  downloadGrowth?: number;
+  documentGrowth?: number;
+  emailGrowth?: number;
+  newUsersMonthly?: number[];
+}
+
 export const statsService={
   stats: async () => {
     const response=await api.get('/admin/stats')

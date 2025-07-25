@@ -53,8 +53,6 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { href: '/admin/emails', icon: Mail, label: 'Emails' },
     { href: '/admin/notifications', icon: Bell, label: 'Notifications' },
     { href: '/admin/downloads', icon: Download, label: 'Downloads' },
-    // { href: '/admin/roles', icon: UserCog, label: 'Roles' },
-    { href: '/admin/bookings', icon: CalendarCheck, label: 'Manage Bookings' },
   ];
 
   return (
@@ -116,9 +114,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium">Admin</p>
-                <p className="text-xs text-black">admin@gmail.com</p>
+                <p className="text-xs text-white">admin@gmail.com</p>
               </div>
-              <ChevronRight className="ml-auto h-5 w-5 text-black" />
+              <ChevronRight className="ml-auto h-5 w-5 text-white" />
             </div>
           </div>
         </Link>

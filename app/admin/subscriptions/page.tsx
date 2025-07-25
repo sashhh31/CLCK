@@ -17,6 +17,12 @@ interface Subscription {
     email: string;
     avatar: string | null;
   };
+  status: string;
+  currentPeriodEnd: string;
+  amount: number;
+  currency: string;
+  interval: string;
+  stripeSubscriptionId: string;
 }
 
 interface SubscriptionResponse {
@@ -29,13 +35,14 @@ interface SubscriptionResponse {
   }
 }
 
-export default function SubscriptionsPage() {
+export default function AdminSubscriptionsPage() {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [totalSubscriptions, setTotalSubscriptions] = useState(0);
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
     fetchSubscriptions();
@@ -61,111 +68,78 @@ export default function SubscriptionsPage() {
   };
 
   return (
-    <div className="p-8">
-      <div className="border-t-2 mt-6 mb-2"></div>
-      <h1 className="text-3xl font-bold mb-2">Subscriptions</h1>
-      <p className="text-black mb-8">Total Subscription added : {totalSubscriptions}</p>
-
-      <div className="bg-white rounded-3xl shadow-sm p-8 border">
-        <div className="relative w-full max-w-md mb-6">
-          <input 
-            type="text" 
-            placeholder="Search" 
-            className="w-full pl-6 pr-4 py-2 border rounded-full"
-            value={searchQuery}
-            onChange={handleSearch}
-          />
-          <Search className="absolute right-5 top-2.5 h-5 w-5 text-black" />
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-gray-50">
-                <th className="px-4 py-3 text-left text-sm font-medium text-black">Added By</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-black">Plan</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-black">Duration</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-black">Charges</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-black">Billing Date</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-black">Expiry Date</th>
-                <th className="px-4 py-3 text-left text-sm font-medium text-black">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              {loading ? (
-                <tr>
-                  <td colSpan={7} className="px-4 py-4 text-center">
-                    Loading...
+    <div className="p-4 sm:p-8">
+      <h1 className="text-2xl font-bold mb-6">All Subscriptions</h1>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white rounded-xl shadow-md">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">User</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Plan</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Status</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Renewal Date</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {subscriptions.map((subscription, idx) => (
+              <>
+                <tr
+                  key={subscription.stripeSubscriptionId || subscription.id}
+                  className={
+                    `border-b ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-blue-50 transition-colors`
+                  }
+                >
+                  <td className="px-4 py-4">
+                    <div className="flex items-center">
+                      <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+                        <span className="text-black">{subscription.subscriber?.name?.charAt(0) || '?'}</span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium">{subscription.subscriber?.name || 'N/A'}</p>
+                        <p className="text-xs text-black">{subscription.subscriber?.email || 'N/A'}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-4 py-4 text-sm font-semibold capitalize">{subscription.plan}</td>
+                  <td className="px-4 py-4 text-sm">
+                    <span className={`px-2 py-1 rounded-full text-xs ${subscription.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{subscription.status}</span>
+                  </td>
+                  <td className="px-4 py-4 text-sm">{subscription.currentPeriodEnd ? new Date(subscription.currentPeriodEnd).toLocaleDateString() : 'N/A'}</td>
+                  <td className="px-4 py-4 text-sm">
+                    <button
+                      className="text-blue-600 hover:underline text-xs"
+                      onClick={() => setExpanded(expanded === (subscription.stripeSubscriptionId || subscription.id) ? null : (subscription.stripeSubscriptionId || subscription.id))}
+                    >
+                      {expanded === (subscription.stripeSubscriptionId || subscription.id) ? 'Hide Details' : 'Show Details'}
+                    </button>
                   </td>
                 </tr>
-              ) : subscriptions.length === 0 ? (
-                <tr>
-                  <td colSpan={7} className="px-4 py-4 text-center">
-                    No subscriptions found
-                  </td>
-                </tr>
-              ) : (
-                subscriptions.map((subscription) => (
-                  <tr key={subscription.id}>
-                    <td className="px-4 py-4">
-                      <div className="flex items-center">
-                        <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                          <span className="text-black">{subscription.subscriber.name.charAt(0)}</span>
+                {expanded === (subscription.stripeSubscriptionId || subscription.id) && (
+                  <tr className="bg-blue-50">
+                    <td colSpan={5} className="px-4 py-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <p className="text-xs text-gray-500 mb-1">Amount</p>
+                          <p className="text-sm font-mono">{subscription.amount ? `${subscription.amount} ${subscription.currency?.toUpperCase()}` : 'N/A'}</p>
                         </div>
                         <div>
-                          <p className="text-sm font-medium">{subscription.subscriber.name}</p>
-                          <p className="text-xs text-black">{subscription.subscriber.email}</p>
+                          <p className="text-xs text-gray-500 mb-1">Interval</p>
+                          <p className="text-sm font-mono">{subscription.interval || 'N/A'}</p>
+                        </div>
+                        <div className="md:col-span-2">
+                          <p className="text-xs text-gray-500 mb-1">Stripe Subscription ID</p>
+                          <p className="text-sm font-mono break-all">{subscription.stripeSubscriptionId || 'N/A'}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-4 text-sm">{subscription.plan}</td>
-                    <td className="px-4 py-4 text-sm">{subscription.duration}</td>
-                    <td className="px-4 py-4 text-sm">{subscription.charges}</td>
-                    <td className="px-4 py-4 text-sm">{subscription.billingDate}</td>
-                    <td className="px-4 py-4 text-sm">{subscription.expiryDate}</td>
-                    <td className="px-4 py-4 text-sm">
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs ${
-                          new Date(subscription.expiryDate) > new Date() 
-                            ? "bg-blue-50 text-blue-600" 
-                            : "bg-yellow-50 text-yellow-600"
-                        }`}
-                      >
-                        {new Date(subscription.expiryDate) > new Date() ? "Current" : "Past"}
-                      </span>
-                    </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="px-6 py-4 flex items-center justify-between border-t border-gray-200">
-          <div className="flex items-center">
-            <button 
-              className="p-1 rounded-md hover:bg-gray-100"
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <div className="inline-flex items-center justify-center w-8 h-8 mx-1 text-sm font-medium text-white bg-blue-800 rounded-full">
-              {currentPage}
-            </div>
-            <button 
-              className="p-1 rounded-md hover:bg-gray-100"
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages}
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
-          <div className="text-sm text-black">
-            Total : {totalPages} Pages
-          </div>
-        </div>
+                )}
+              </>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
-  )
+  );
 }

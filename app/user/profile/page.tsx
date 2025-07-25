@@ -11,8 +11,6 @@ import { authService } from "@/app/services/api"
 
 export default function ProfilePage() {
   const [activeSection, setActiveSection] = useState("personal")
-  const [verificationStep, setVerificationStep] = useState(0)
-  const [verificationCode, setVerificationCode] = useState(["", "", "", "", "", ""])
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingUser, setIsLoadingUser] = useState(true)
@@ -24,14 +22,10 @@ export default function ProfilePage() {
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
-    newEmail: "",
     subscription: {
       plan: "",
       status: "",
       currentPeriodEnd: ""
-    },
-    twoFactorAuth: {
-      enabled: false
     },
     profilePicture:{type:"",value: ""}
   })
@@ -59,9 +53,6 @@ export default function ProfilePage() {
           plan: userData.subscription?.plan || "",
           status: userData.subscription?.status || "",
           currentPeriodEnd: userData.subscription?.currentPeriodEnd || ""
-        },
-        twoFactorAuth: {
-          enabled: userData.twoFactorAuth?.enabled || false
         },
         profilePicture:{
           type:userData.profilePicture?.type || "",
@@ -132,20 +123,40 @@ export default function ProfilePage() {
       setIsLoading(true)
       await authService.updateProfile({
         firstName: formData.firstName,
-        lastName: formData.lastName,
+        lastName: formData.lastName
       })
-      
       toast({
         title: "Success",
-        description: "Personal information updated successfully"
+        description: "Name updated successfully"
       })
-      
-      // Refresh user data
       await fetchUserData()
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.response?.data?.message || "Failed to update personal information",
+        description: error.response?.data?.message || "Failed to update name",
+        variant: "destructive"
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleEmailUpdate = async () => {
+    try {
+      setIsLoading(true)
+      await authService.changeEmail({
+        newEmail: formData.email,
+        password: formData.currentPassword // or prompt for password if needed
+      })
+      toast({
+        title: "Success",
+        description: "Email updated successfully"
+      })
+      await fetchUserData()
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.response?.data?.message || "Failed to update email",
         variant: "destructive"
       })
     } finally {
@@ -169,64 +180,6 @@ export default function ProfilePage() {
         toast({ title: "Error", description: error.response?.data?.message || "Failed to upload profile picture", variant: "destructive" })
       } finally {
         setIsLoading(false)
-      }
-    }
-  }
-
-  // 2FA toggle
-  const handleToggle2FA = async () => {
-    try {
-      setIsLoading(true)
-      const response = await authService.toggleTwoFactorAuth(!formData.twoFactorAuth.enabled)
-      toast({ title: "Success", description: response.message || (formData.twoFactorAuth.enabled ? "2FA disabled" : "2FA enabled") })
-      await fetchUserData()
-    } catch (error: any) {
-      toast({ title: "Error", description: error.response?.data?.message || "Failed to toggle 2FA", variant: "destructive" })
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  // Email change flow
-  const handleEmailChange = async () => {
-    try {
-      setIsLoading(true)
-      if (verificationStep === 0) {
-        // Step 1: User enters new email, send code to new email
-        if (!formData.newEmail) {
-          toast({ title: "Error", description: "Please enter a new email address", variant: "destructive" })
-          setIsLoading(false)
-          return
-        }
-        await authService.initiateEmailChange(formData.newEmail)
-        setVerificationStep(1)
-        toast({ title: "Success", description: "Verification code sent to your new email" })
-      } else if (verificationStep === 1) {
-        // Step 2: User enters code, verify and change email
-        await authService.verifyAndChangeEmail({ newEmail: formData.newEmail, verificationCode: verificationCode.join("") })
-        toast({ title: "Success", description: "Email updated successfully" })
-        setVerificationStep(0)
-        setVerificationCode(["", "", "", "", "", ""])
-        setFormData(prev => ({ ...prev, newEmail: "" }))
-        await fetchUserData()
-      }
-    } catch (error: any) {
-      toast({ title: "Error", description: error.response?.data?.message || "Failed to update email", variant: "destructive" })
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  // Handle code input change (6 digits)
-  const handleCodeChange = (index:number, value:string) => {
-    if (value.length <= 1) {
-      const newCode = [...verificationCode]
-      newCode[index] = value
-      setVerificationCode(newCode)
-      // Auto-focus next input if value is entered
-      if (value && index < 5) {
-        const nextInput = document.getElementById(`code-${index + 1}`)
-        if (nextInput) (nextInput as HTMLElement).focus()
       }
     }
   }
@@ -304,18 +257,6 @@ export default function ProfilePage() {
                 <span>Change Password</span>
                 <ChevronRight className="h-5 w-5" />
               </button>
-              <button
-                onClick={() => {
-                  handleSectionChange("email")
-                  setVerificationStep(0)
-                }}
-                className={`w-full text-left flex items-center justify-between p-3 rounded-md ${
-                  activeSection === "email" ? "bg-gray-200" : "hover:bg-gray-100"
-                }`}
-              >
-                <span>Change Email</span>
-                <ChevronRight className="h-5 w-5" />
-              </button>
             </div>
           </CardContent>
         </Card>
@@ -363,18 +304,6 @@ export default function ProfilePage() {
                   }`}
                 >
                   <span>Change Password</span>
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-                <button
-                  onClick={() => {
-                    handleSectionChange("email")
-                    setVerificationStep(0)
-                  }}
-                  className={`w-full text-left flex items-center justify-between p-2 rounded-md ${
-                    activeSection === "email" ? "bg-gray-200" : "hover:bg-gray-100"
-                  }`}
-                >
-                  <span>Change Email</span>
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
@@ -473,7 +402,6 @@ export default function ProfilePage() {
                     <input type="file" accept="image/*" ref={fileInputRef} style={{ display: 'none' }} onChange={handleProfilePictureChange} />
                   </div>
                 </div>
-
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-medium mb-1">
@@ -500,7 +428,15 @@ export default function ProfilePage() {
                     />
                   </div>
                 </div>
-
+                <div className="flex justify-start mt-2 mb-6">
+                  <Button 
+                    className="bg-[#2A3356] rounded-lg text-white text-sm hover:bg-[#2A3356]/90"
+                    onClick={handlePersonalInfoUpdate}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Saving..." : "Save Name"}
+                  </Button>
+                </div>
                 <div className="mb-6">
                   <label htmlFor="email" className="block text-sm font-medium mb-1">
                     Email Address
@@ -510,9 +446,16 @@ export default function ProfilePage() {
                     type="email"
                     placeholder="Email Address"
                     value={formData.email}
-                    disabled
+                    onChange={handleInputChange}
                     className="rounded-lg"
                   />
+                  <Button
+                    className="mt-2 bg-[#2A3356] rounded-lg text-white text-sm hover:bg-[#2A3356]/90"
+                    onClick={handleEmailUpdate}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Saving..." : "Save Email"}
+                  </Button>
                 </div>
 
 
@@ -538,29 +481,6 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                <div className="mb-6">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h3 className="text-sm font-medium mb-2">Security</h3>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Two-Factor Authentication</span>
-                      <div className="flex items-center">
-                        <span className={`text-sm font-medium mr-2 ${formData.twoFactorAuth.enabled ? 'text-green-600' : 'text-gray-600'}`}>
-                          {formData.twoFactorAuth.enabled ? 'Enabled' : 'Disabled'}
-                        </span>
-                        <Button 
-                          variant="outline"
-                          size="sm"
-                          className="text-xs"
-                          onClick={handleToggle2FA}
-                          disabled={isLoading}
-                        >
-                          {formData.twoFactorAuth.enabled ? 'Disable' : 'Enable'}
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="flex justify-start mt-6 sm:mt-8">
                   <Button 
                     className="bg-[#2A3356] rounded-lg text-white text-sm hover:bg-[#2A3356]/90"
@@ -570,126 +490,6 @@ export default function ProfilePage() {
                     {isLoading ? "Saving..." : "Save Changes"}
                   </Button>
                 </div>
-              </>
-            )}
-
-            {activeSection === "email" && (
-              <>
-                <div className="mb-4 sm:mb-6">
-                  <h2 className="font-semibold text-xl sm:text-2xl mb-2">Change Email Address</h2>
-                  <p className="text-sm sm:text-base text-black">
-                    Enter your new email address to receive a verification code.
-                  </p>
-                </div>
-
-                {verificationStep === 0 && (
-                  <>
-                    <div className="mb-6">
-                      <label htmlFor="currentEmail" className="block text-sm font-medium mb-2">
-                        Current Email
-                      </label>
-                      <Input
-                        id="currentEmail"
-                        type="email"
-                        value={formData.email}
-                        className="bg-gray-200 rounded-lg"
-                        disabled
-                      />
-                      <div className="mt-2">
-                        <Button
-                          className="text-[#2A3356] text-sm font-medium"
-                          onClick={() => setVerificationStep(1)}
-                          disabled={isLoading}
-                        >
-                          Change Email
-                        </Button>
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {verificationStep === 1 && (
-                  <>
-                    <div className="mb-6">
-                      <label htmlFor="newEmail" className="block text-sm font-medium mb-2">
-                        New Email Address
-                      </label>
-                      <Input
-                        id="newEmail"
-                        type="email"
-                        placeholder="Enter new email address"
-                        className="rounded-lg"
-                        value={formData.newEmail}
-                        onChange={handleInputChange}
-                        disabled={isLoading}
-                      />
-                      <div className="mt-2">
-                        <Button
-                          className="bg-[#2A3356] rounded-lg text-white text-sm hover:bg-[#2A3356]/90"
-                          onClick={handleEmailChange}
-                          disabled={isLoading || !formData.newEmail}
-                        >
-                          {isLoading ? "Sending..." : "Send Code"}
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          className="ml-4 text-xs"
-                          onClick={() => {
-                            setVerificationStep(0);
-                            setFormData(prev => ({ ...prev, newEmail: "" }));
-                          }}
-                          disabled={isLoading}
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {verificationStep === 2 && (
-                  <>
-                    <div className="mb-6">
-                      <label className="block text-sm font-medium mb-2">
-                        Enter the 6-digit code sent to your new email
-                      </label>
-                      <div className="flex justify-center gap-2 sm:gap-4 mt-4 sm:mt-6">
-                        {[0, 1, 2, 3, 4, 5].map((index) => (
-                          <Input
-                            key={index}
-                            id={`code-${index}`}
-                            type="text"
-                            maxLength={1}
-                            value={verificationCode[index]}
-                            onChange={(e) => handleCodeChange(index, e.target.value)}
-                            className="w-10 h-10 sm:w-12 sm:h-12 text-center text-lg sm:text-xl rounded-lg"
-                            disabled={isLoading}
-                          />
-                        ))}
-                      </div>
-                      <div className="flex justify-start mt-6 sm:mt-8">
-                        <Button
-                          className="bg-[#2A3356] rounded-lg text-white text-sm hover:bg-[#2A3356]/90"
-                          onClick={handleEmailChange}
-                          disabled={isLoading || verificationCode.some(c => !c)}
-                        >
-                          {isLoading ? "Verifying..." : "Verify & Update"}
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          className="ml-4 text-xs"
-                          onClick={() => {
-                            setVerificationStep(1);
-                            setVerificationCode(["", "", "", "", "", ""]);
-                          }}
-                          disabled={isLoading}
-                        >
-                          Back
-                        </Button>
-                      </div>
-                    </div>
-                  </>
-                )}
               </>
             )}
           </CardContent>

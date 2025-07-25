@@ -2,12 +2,28 @@
 import { ArrowUp, Users, Download, FileText, Mail } from "lucide-react"
 import { useEffect, useState } from "react"
 import api, { statsService, authService } from "../services/api";
+// Remove Recharts imports and only use Chart.js imports
+// import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, LineChart, Line, CartesianGrid } from 'recharts';
+import ChartJSChart from "../components/ui/ChartJSChart";
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip as ChartJSTooltip,
+  Legend as ChartJSLegend,
+} from 'chart.js';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, ChartJSTooltip, ChartJSLegend);
 
 interface DashboardStats {
   totalUsers: number;
   totalDownloads: number;
   totalDocuments: number;
   totalEmails: number;
+  newUsersMonthly?: number[]; // Added for new users per month
 }
 
 interface SubscriptionStats {
@@ -58,6 +74,11 @@ export default function DashboardPage() {
   const [timeframe, setTimeframe] = useState<'monthly' | 'yearly'>('monthly');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [useChartJS, setUseChartJS] = useState({
+    documents: false,
+    subscriptions: false,
+    earnings: false,
+  });
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -129,238 +150,145 @@ export default function DashboardPage() {
     );
   }
 
+  // Remove the new users chart and arrange the three charts in a column
+
   return (
-    <div className="flex flex-col lg:flex-row">
-      <div className="border-t-2 mt-6 mb-2"></div>
-      {/* Main content */}
-      <div className="flex-1 p-4 lg:p-8 bg-white">
-        <h1 className="text-2xl lg:text-3xl font-montserrat font-bold mb-6 lg:mb-8">Dashboard</h1>
-        
-        {/* First row - Statistics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {/* Total Users Added */}
-          <div className="bg-gray-100 rounded-lg p-4 lg:p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-3 lg:p-4 rounded-full bg-white">
-                <Users className="h-5 w-5 lg:h-6 lg:w-6 text-black" />
-              </div>
-            </div>
-            <h3 className="text-sm text-black mt-6 lg:mt-11">Total Users Added</h3>
-            <div className="flex items-baseline justify-between">
-              <p className="text-2xl lg:text-3xl font-montserrat font-semibold mt-2 lg:mt-4">{stats.totalUsers}</p>
-            </div>
-          </div>
-
-          {/* Total Downloads */}
-          <div className="bg-gray-100 rounded-lg p-4 lg:p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-3 lg:p-4 rounded-full bg-white">
-                <Download className="h-5 w-5 lg:h-6 lg:w-6 text-black" />
-              </div>
-            </div>
-            <h3 className="text-sm text-black mt-6 lg:mt-11">Total Downloads</h3>
-            <div className="flex items-baseline justify-between">
-              <p className="text-2xl lg:text-3xl font-montserrat font-semibold mt-2 lg:mt-4">{stats.totalDownloads}</p>
-            </div>
-          </div>
-
-          {/* Total Documents Added */}
-          <div className="bg-gray-100 rounded-lg p-4 lg:p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-3 lg:p-4 rounded-full bg-white">
-                <FileText className="h-5 w-5 lg:h-6 lg:w-6 text-black" />
-              </div>
-            </div>
-            <h3 className="text-sm text-black mt-6 lg:mt-11">Total Documents Added</h3>
-            <div className="flex items-baseline justify-between">
-              <p className="text-2xl lg:text-3xl font-montserrat font-semibold mt-2 lg:mt-4">{stats.totalDocuments}</p>
-            </div>
-          </div>
-
-          {/* Total Emails sent */}
-          <div className="bg-gray-100 rounded-lg p-4 lg:p-6 shadow-sm border border-gray-100">
-            <div className="flex items-center">
-              <div className="p-3 lg:p-4 rounded-full bg-white">
-                <Mail className="h-5 w-5 lg:h-6 lg:w-6 text-black" />
-              </div>
-            </div>
-            <h3 className="text-sm text-black mt-6 lg:mt-11">Total Emails sent</h3>
-            <div className="flex items-baseline justify-between">
-              <p className="text-2xl lg:text-3xl font-montserrat font-semibold mt-2 lg:mt-4">{stats.totalEmails}</p>
-            </div>
+    <div className="min-h-screen bg-gray-50 p-4 lg:p-8">
+      <h1 className="text-2xl lg:text-3xl font-montserrat font-bold mb-8">Dashboard</h1>
+      {/* Stats Row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        {/* Total Users Added */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-start border border-gray-100">
+          <div className="p-3 rounded-full bg-blue-100 mb-4"><Users className="h-6 w-6 text-blue-600" /></div>
+          <span className="text-gray-500 text-sm mb-1">Total Users</span>
+          <span className="text-2xl font-bold text-gray-900">{stats.totalUsers}</span>
+        </div>
+        {/* Total Downloads */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-start border border-gray-100">
+          <div className="p-3 rounded-full bg-yellow-100 mb-4"><Download className="h-6 w-6 text-yellow-500" /></div>
+          <span className="text-gray-500 text-sm mb-1">Total Downloads</span>
+          <span className="text-2xl font-bold text-gray-900">{stats.totalDownloads}</span>
+        </div>
+        {/* Total Documents Added */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-start border border-gray-100">
+          <div className="p-3 rounded-full bg-blue-50 mb-4"><FileText className="h-6 w-6 text-blue-800" /></div>
+          <span className="text-gray-500 text-sm mb-1">Total Documents</span>
+          <span className="text-2xl font-bold text-gray-900">{stats.totalDocuments}</span>
+        </div>
+        {/* Total Emails sent */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-start border border-gray-100">
+          <div className="p-3 rounded-full bg-green-100 mb-4"><Mail className="h-6 w-6 text-green-600" /></div>
+          <span className="text-gray-500 text-sm mb-1">Total Emails Sent</span>
+          <span className="text-2xl font-bold text-gray-900">{stats.totalEmails}</span>
+        </div>
+      </div>
+      {/* Charts Column */}
+      <div className="flex flex-col gap-8 max-w-3xl mx-auto">
+        {/* Documents Bar Chart */}
+        <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col border border-gray-100" style={{ height: 250 }}>
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">Documents Overview</h2>
+          <Bar
+            data={{
+              labels: ["Documents"],
+              datasets: [
+                {
+                  label: "Total Documents",
+                  data: [stats.totalDocuments],
+                  backgroundColor: "#3b82f6",
+                },
+                {
+                  label: "Total Downloads",
+                  data: [stats.totalDownloads],
+                  backgroundColor: "#eab308",
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: { position: "top" },
+                title: { display: false },
+                tooltip: { enabled: true },
+              },
+              scales: {
+                y: { beginAtZero: true, ticks: { precision: 0 } },
+              },
+            }}
+          />
+        </div>
+        {/* Subscription Distribution Pie Chart */}
+        <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center border border-gray-100">
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">Subscription Distribution</h2>
+          <ChartJSChart
+            type="pie"
+            data={{
+              labels: ["Basic", "Professional", "Entrepreneur"],
+              datasets: [
+                {
+                  label: "Subscriptions",
+                  data: [subscriptionStats.basic, subscriptionStats.professional, subscriptionStats.entrepreneur],
+                  backgroundColor: ["#3b82f6", "#eab308", "#22c55e"],
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: { position: "top" },
+                title: { display: false },
+                tooltip: { enabled: true },
+              },
+            }}
+            height={250}
+          />
+          <div className="flex justify-center gap-4 mt-4">
+            <span className="flex items-center"><span className="h-3 w-3 rounded-full bg-blue-600 mr-2"></span>Basic: {subscriptionStats.basic}</span>
+            <span className="flex items-center"><span className="h-3 w-3 rounded-full bg-yellow-500 mr-2"></span>Professional: {subscriptionStats.professional}</span>
+            <span className="flex items-center"><span className="h-3 w-3 rounded-full bg-green-500 mr-2"></span>Entrepreneur: {subscriptionStats.entrepreneur}</span>
           </div>
         </div>
-
-        {/* Documents Chart */}
-        <div className="bg-gray-100 rounded-lg p-4 lg:p-6 shadow-sm border border-gray-100 mb-8 w-full lg:w-[700px]">
-          <h2 className="text-lg lg:text-xl font-montserrat font-bold mb-4">Documents Overview</h2>
-          <div className="flex items-center mb-4">
-            <div className="flex items-center mr-4">
-              <div className="h-3 w-3 rounded-full bg-blue-600 mr-2"></div>
-              <span className="text-sm text-black">Total Documents ({stats.totalDocuments})</span>
-            </div>
-            <div className="flex items-center">
-              <div className="h-3 w-3 rounded-full bg-yellow-500 mr-2"></div>
-              <span className="text-sm text-black">Downloads ({stats.totalDownloads})</span>
-            </div>
+        {/* Monthly Earnings Line Chart */}
+        <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col border border-gray-100">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold text-gray-800">Monthly Earnings</h2>
+            <select 
+              className="text-sm border rounded-md px-2 py-1"
+              value={timeframe}
+              onChange={(e) => setTimeframe(e.target.value as 'monthly' | 'yearly')}
+            >
+              <option value="yearly">Yearly</option>
+              <option value="monthly">Monthly</option>
+            </select>
           </div>
-          <div className="h-48 lg:h-64 w-full">
-            <svg viewBox="0 0 400 200" className="w-full h-full">
-              {/* Grid lines */}
-              <line x1="0" y1="0" x2="400" y2="0" stroke="#999999" strokeWidth="1" />
-              <line x1="0" y1="50" x2="400" y2="50" stroke="#999999" strokeWidth="1" />
-              <line x1="0" y1="100" x2="400" y2="100" stroke="#999999" strokeWidth="1" />
-              <line x1="0" y1="150" x2="400" y2="150" stroke="#999999" strokeWidth="1" />
-              <line x1="0" y1="200" x2="400" y2="200" stroke="#999999" strokeWidth="1" />
-              
-              {/* Blue line (total documents) */}
-              <path 
-                d={`M0,${200 - (stats.totalDocuments * 10)} C100,${200 - (stats.totalDocuments * 10)} 200,${200 - (stats.totalDocuments * 10)} 300,${200 - (stats.totalDocuments * 10)} C350,${200 - (stats.totalDocuments * 10)} 400,${200 - (stats.totalDocuments * 10)}`}
-                fill="none" 
-                stroke="#3b82f6" 
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-              
-              {/* Yellow line (downloads) */}
-              <path 
-                d={`M0,${200 - (stats.totalDownloads * 10)} C100,${200 - (stats.totalDownloads * 10)} 200,${200 - (stats.totalDownloads * 10)} 300,${200 - (stats.totalDownloads * 10)} C350,${200 - (stats.totalDownloads * 10)} 400,${200 - (stats.totalDownloads * 10)}`}
-                fill="none" 
-                stroke="#eab308" 
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-          <div className="flex justify-between mt-2 text-xs text-black">
-            <span>Jan</span>
-            <span>Feb</span>
-            <span>Mar</span>
-            <span>Apr</span>
-            <span>May</span>
-            <span>Jun</span>
-            <span>Jul</span>
-          </div>
-        </div>
-
-        {/* Subscription Stats */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
-          <div className="bg-gray-100 rounded-lg p-4 lg:p-6 shadow-sm border border-gray-100">
-            <div className="flex flex-col justify-between items-center gap-4 lg:gap-6 mb-4">
-              <h2 className="text-lg lg:text-xl font-montserrat font-bold">Subscription Distribution</h2>
-              <div className="relative w-24 h-24 lg:w-32 lg:h-32">
-                <svg viewBox="0 0 100 100" className="w-full h-full">
-                  {/* Calculate percentages for the pie chart */}
-                  {(() => {
-                    const total = subscriptionStats.total;
-                    const basicPercent = (subscriptionStats.basic / total) * 100;
-                    const professionalPercent = (subscriptionStats.professional / total) * 100;
-                    const entrepreneurPercent = (subscriptionStats.entrepreneur / total) * 100;
-
-                    return (
-                      <>
-                        {/* Basic Segment */}
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="40"
-                          fill="none"
-                          stroke="#3b82f6"
-                          strokeWidth="15"
-                          strokeDasharray={`${basicPercent * 2.51} ${251}`}
-                          transform="rotate(-90 50 50)"
-                          strokeLinecap="round"
-                        />
-                        {/* Professional Segment */}
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="40"
-                          fill="none"
-                          stroke="#eab308"
-                          strokeWidth="15"
-                          strokeDasharray={`${professionalPercent * 2.51} ${251}`}
-                          transform={`rotate(${basicPercent * 3.6 - 90} 50 50)`}
-                          strokeLinecap="round"
-                        />
-                        {/* Entrepreneur Segment */}
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="40"
-                          fill="none"
-                          stroke="#22c55e"
-                          strokeWidth="15"
-                          strokeDasharray={`${entrepreneurPercent * 2.51} ${251}`}
-                          transform={`rotate(${(basicPercent + professionalPercent) * 3.6 - 90} 50 50)`}
-                          strokeLinecap="round"
-                        />
-                      </>
-                    );
-                  })()}
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-xl lg:text-2xl font-montserrat font-medium">{subscriptionStats.total}</span>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div className="flex items-center">
-                <div className="h-3 w-3 rounded-full bg-blue-600 mr-2"></div>
-                <span className="text-sm">Basic</span>
-                <span className="ml-auto font-montserrat font-medium">{subscriptionStats.basic}</span>
-              </div>
-              <div className="flex items-center">
-                <div className="h-3 w-3 rounded-full bg-yellow-500 mr-2"></div>
-                <span className="text-sm">Professional</span>
-                <span className="ml-auto font-montserrat font-medium">{subscriptionStats.professional}</span>
-              </div>
-              <div className="flex items-center">
-                <div className="h-3 w-3 rounded-full bg-green-500 mr-2"></div>
-                <span className="text-sm">EnterPreneur</span>
-                <span className="ml-auto font-montserrat font-medium">{subscriptionStats.entrepreneur}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gray-100 rounded-lg p-4 lg:p-6 shadow-sm border border-gray-100">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg lg:text-xl font-montserrat font-medium text-black">Monthly Earnings</h2>
-              <select 
-                className="text-sm border rounded-md px-2 py-1"
-                value={timeframe}
-                onChange={(e) => setTimeframe(e.target.value as 'monthly' | 'yearly')}
-              >
-                <option value="yearly">Yearly</option>
-                <option value="monthly">Monthly</option>
-              </select>
-            </div>
-            <p className="text-2xl lg:text-3xl font-montserrat font-bold mb-4">{earnings.total}</p>
-            <div className="h-24 lg:h-32 w-full">
-              <div className="h-full w-full flex items-end justify-between">
-                {earnings.monthly.map((value, index) => (
-                  <div key={index} className="h-24 w-6 lg:w-8 bg-white rounded relative overflow-hidden">
-                    <div 
-                      className="absolute bottom-0 w-full bg-blue-600 rounded-b"
-                      style={{ height: `${(value / Math.max(...earnings.monthly, 1)) * 100}%` }}
-                    ></div>
-                    <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-600">
-                      £{value}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex justify-between mt-8 text-xs text-black">
-              <span>Jan</span>
-              <span>Feb</span>
-              <span>Mar</span>
-              <span>Apr</span>
-              <span>May</span>
-              <span>Jun</span>
-              <span>Jul</span>
-            </div>
-          </div>
+          <p className="text-2xl font-bold mb-4 text-gray-900">{earnings.total}</p>
+          <ChartJSChart
+            type="line"
+            data={{
+              labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+              datasets: [
+                {
+                  label: "Earnings",
+                  data: earnings.monthly,
+                  borderColor: "#3b82f6",
+                  backgroundColor: "rgba(59,130,246,0.2)",
+                  tension: 0.4,
+                  fill: true,
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: { position: "top" },
+                title: { display: false },
+                tooltip: { enabled: true },
+              },
+              scales: {
+                y: { beginAtZero: true, ticks: { precision: 0 } },
+              },
+            }}
+            height={200}
+          />
         </div>
       </div>
     </div>
