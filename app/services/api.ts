@@ -11,6 +11,12 @@ const api = axios.create({
   },
 });
 
+// Set token from cookie on page load (if exists)
+const token = Cookies.get('token');
+if (token) {
+  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
 // Add token to requests if it exists
 api.interceptors.request.use((config) => {
   const token = Cookies.get('token');
@@ -79,7 +85,10 @@ export const authService = {
   login: async (credentials: { email: string; password: string }) => {
     try {
       const response = await api.post('/auth/login', credentials);
-      console.log('API login response:', response.data); // Debug log
+      if (response.data?.data?.token) {
+        Cookies.set('token', response.data.data.token, { expires: 7, path: '/' });
+        api.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.token}`;
+      }
       return response.data;
     } catch (error) {
       console.error('API login error:', error); // Debug log
@@ -92,6 +101,7 @@ export const authService = {
       const response = await api.post('/auth/verify-2fa', data);
       if (response.data?.data?.token) {
         Cookies.set('token', response.data.data.token, { expires: 7, path: '/' });
+        api.defaults.headers.common['Authorization'] = `Bearer ${response.data.data.token}`;
       }
       return response.data;
     } catch (error) {
@@ -101,7 +111,7 @@ export const authService = {
   },
 
   changePassword: async (data: { currentPassword: string; newPassword: string }) => {
-    const response = await api.put('/auth/change-password', data);
+    const response = await api.put('/profile/change-password', data);
     return response.data;
   },
 
@@ -126,8 +136,8 @@ export const authService = {
     return response.data;
   },
 
-  initiateEmailChange: async () => {
-    const response = await api.post('/profile/initiate-email-change');
+  initiateEmailChange: async (newEmail: string) => {
+    const response = await api.post('/profile/initiate-email-change', { newEmail });
     return response.data;
   },
 
@@ -166,6 +176,21 @@ export const authService = {
 
   resetPassword: async (data: { email: string; code: string; newPassword: string }) => {
     return await api.post('/auth/reset-password', data);
+  },
+
+  uploadProfilePicture: async (file: File) => {
+    const formData = new FormData();
+    formData.append('profilePicture', file);
+    const response = await api.post('/profile/update-picture', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+
+  toggleTwoFactorAuth: async (enable: boolean) => {
+    // This endpoint should be implemented in the backend
+    const response = await api.post('/profile/toggle-2fa', { enable });
+    return response.data;
   },
 };
 

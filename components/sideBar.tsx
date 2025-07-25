@@ -5,11 +5,14 @@ import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { authService } from '@/app/services/api'
 
 const Sidebar = () => {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [user, setUser] = useState<{ firstName: string; lastName: string; email: string } | null>(null)
+  const [isLoadingUser, setIsLoadingUser] = useState(true)
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -31,6 +34,26 @@ const Sidebar = () => {
     return () => window.removeEventListener('resize', checkScreenSize)
   }, [])
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        setIsLoadingUser(true)
+        const response = await authService.getUserProfile()
+        const userData = response.data.user
+        setUser({
+          firstName: userData.firstName || '',
+          lastName: userData.lastName || '',
+          email: userData.email || '',
+        })
+      } catch (error) {
+        setUser(null)
+      } finally {
+        setIsLoadingUser(false)
+      }
+    }
+    fetchUser()
+  }, [])
+
   const toggleSidebar = () => {
     setIsOpen(!isOpen)
   }
@@ -40,7 +63,6 @@ const Sidebar = () => {
     { href: '/user/subscription', label: 'Subscription Plan', icon: CreditCard },
     { href: '/user/education', label: 'Education', icon: Video },
     { href: '/user/downloads', label: 'Downloads', icon: Download },
-    { href: '/user/calendly', label: 'My Calendar', icon: Calendar },
     { href: '/user/notifications', label: 'Notifications', icon: Bell },
   ]
 
@@ -107,11 +129,33 @@ const Sidebar = () => {
             <div className="p-3 md:p-4 border-t border-[#3A4366] cursor-pointer">
               <div className="flex items-center">
                 <div className="h-8 w-8 md:h-10 md:w-10 rounded-full bg-white text-[#2A3356] flex items-center justify-center font-bold text-xs md:text-base">
-                  K
+                  {isLoadingUser ? (
+                    <span className="animate-pulse">...</span>
+                  ) : user ? (
+                    user.firstName.charAt(0) || ''
+                  ) : (
+                    'U'
+                  )}
                 </div>
                 <div className="ml-2 md:ml-3">
-                  <p className="text-xs md:text-sm font-medium truncate">Alex Havaidai</p>
-                  <p className="text-[10px] md:text-xs text-gray-300 truncate">alexhavaidai23@gmail.com</p>
+                  <p className="text-xs md:text-sm font-medium truncate">
+                    {isLoadingUser ? (
+                      <span className="animate-pulse">Loading...</span>
+                    ) : user ? (
+                      `${user.firstName} ${user.lastName}`
+                    ) : (
+                      'User'
+                    )}
+                  </p>
+                  <p className="text-[10px] md:text-xs text-gray-300 truncate">
+                    {isLoadingUser ? (
+                      <span className="animate-pulse">...</span>
+                    ) : user ? (
+                      user.email
+                    ) : (
+                      ''
+                    )}
+                  </p>
                 </div>
                 <ChevronRight className="ml-auto h-4 w-4 md:h-5 md:w-5 text-gray-300" />
               </div>
