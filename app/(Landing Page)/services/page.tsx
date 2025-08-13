@@ -9,6 +9,9 @@ import TaxSection from "@/components/Tax-section"
 import { fetchServices, fetchPricingPlans, fetchServicePageData, fetchCtaSectionData, fetchServiceSectionData } from "@/lib/contentful"
 import PricingSectionLoginRedirect from "@/components/pricing-section-login-redirect"
 
+// Add ISR revalidation - pages will be regenerated every 60 seconds
+export const revalidate = 60
+
 export default async function ServicesPage() {
   // Fetch data from Contentful
   const services = await fetchServices();

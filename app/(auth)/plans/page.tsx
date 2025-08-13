@@ -4,6 +4,9 @@ import Footer from "@/components/footer";
 import { fetchPricingPlans } from "@/lib/contentful";
 import PlansContent from "./plans-content";
 
+// Add ISR revalidation - pages will be regenerated every 60 seconds
+export const revalidate = 60
+
 // This is now a server component that fetches data
 async function PlansPage() {
   const pricingPlans = await fetchPricingPlans();

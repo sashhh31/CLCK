@@ -3,6 +3,9 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { fetchFAQs } from "@/lib/contentful"
 
+// Add ISR revalidation - pages will be regenerated every 60 seconds
+export const revalidate = 60
+
 export default async function FaqsPage() {
   // Fetch FAQs from Contentful
   const faqs = await fetchFAQs();

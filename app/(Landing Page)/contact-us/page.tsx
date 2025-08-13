@@ -8,6 +8,9 @@ import { fetchContactPageData } from "@/lib/contentful"
 import { ContactPageFields, RichTextContent } from "@/lib/contentful-types"
 import Image from 'next/image'
 
+// Add ISR revalidation - pages will be regenerated every 60 seconds
+export const revalidate = 60
+
 // Simple rich text renderer component
 const RichTextRenderer = ({ richTextField }: { richTextField: RichTextContent }) => {
   try {

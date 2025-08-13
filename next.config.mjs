@@ -33,7 +33,7 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
-  // Add static file handling
+  // Add static file handling with ISR-friendly cache settings
   async headers() {
     return [
       {
@@ -41,7 +41,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'public, max-age=60, s-maxage=60, stale-while-revalidate=300',
           },
         ],
       },

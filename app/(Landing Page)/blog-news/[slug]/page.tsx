@@ -7,6 +7,9 @@ import { fetchBlogNewsItemBySlug, fetchBlogNewsItems } from "@/lib/contentful"
 import { formatDate } from "@/lib/utils"
 import { notFound } from "next/navigation"
 
+// Add ISR revalidation - pages will be regenerated every 60 seconds
+export const revalidate = 60
+
 // Generate static paths for all blog posts
 export async function generateStaticParams() {
   const blogPosts = await fetchBlogNewsItems();

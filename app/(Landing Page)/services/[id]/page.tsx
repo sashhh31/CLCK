@@ -9,6 +9,9 @@ import CtaSection from '@/components/cta-section';
 import { fetchServiceDetailsPage, fetchAllServiceDetailsPages, fetchCtaSectionData } from '@/lib/contentful';
 import { ServiceDetailsPage } from '@/lib/contentful-types';
 
+// Add ISR revalidation - pages will be regenerated every 60 seconds
+export const revalidate = 60
+
 // Generate static params for all service detail pages
 export async function generateStaticParams() {
   const serviceDetails = await fetchAllServiceDetailsPages();

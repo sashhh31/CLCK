@@ -6,6 +6,9 @@ import Header from "@/components/header"
 import { fetchBlogNewsItems } from "@/lib/contentful"
 import { formatDate } from "@/lib/utils"
 
+// Add ISR revalidation - pages will be regenerated every 60 seconds
+export const revalidate = 60
+
 export default async function BlogNewsPage() {
   // Fetch blog posts from Contentful
   const blogPosts = await fetchBlogNewsItems();

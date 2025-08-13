@@ -4,6 +4,10 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { fetchPricingPlans, fetchCtaSectionData } from "@/lib/contentful"
 import PricingSectionLoginRedirect from "@/components/pricing-section-login-redirect"
+
+// Add ISR revalidation - pages will be regenerated every 60 seconds
+export const revalidate = 60
+
 export default async function PricingPage() {
   const pricingPlans = await fetchPricingPlans();
   const ctaData = await fetchCtaSectionData();

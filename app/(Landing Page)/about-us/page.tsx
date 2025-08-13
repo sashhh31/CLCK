@@ -12,6 +12,8 @@ import { fetchAboutUsData, fetchTestimonials, fetchPricingPlans, fetchCtaSection
 import ImagesSection from "@/components/ImagesSection"
 import PricingSectionLoginRedirect from "@/components/pricing-section-login-redirect"
 
+// Add ISR revalidation - pages will be regenerated every 60 seconds
+export const revalidate = 60
 
 export default async function AboutUsPage() {
  
